@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/startup_nav_graph"
+    app:startDestination="@id/initializationFragment">
+
+    <fragment
+        android:id="@+id/firebaseLoginFragment"
+        android:name="com.uniwa.moviender.ui.fragments.FirebaseLoginFragment"
+        android:label="fragment_firebase_login"
+        tools:layout="@layout/fragment_firebase_login" >
+        <action
+            android:id="@+id/action_firebaseLoginFragment_to_initializationFragment"
+            app:destination="@id/initializationFragment"
+            app:popUpTo="@id/initializationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/initializationFragment"
+        android:name="com.uniwa.moviender.ui.fragments.InitializationFragment"
+        android:label="fragment_initialization"
+        tools:layout="@layout/fragment_initialization" />
+</navigation>
