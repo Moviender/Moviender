@@ -14,6 +14,19 @@
         android:layout_height="match_parent"
         tools:context="com.uniwa.moviender.ui.fragments.InitializationFragment" >
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/rate_hint_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_init_hit"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/movies_grid"
+            android:textSize="20sp"
+            android:padding="8dp"
+            style="?attr/textAppearanceBody1"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_grid"
             android:layout_width="0dp"
@@ -24,7 +37,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rate_hint_tv"
             app:listData="@{viewModel.movies}"
             app:spanCount="2"
             tools:itemCount="16"

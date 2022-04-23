@@ -9,63 +9,45 @@
             type="com.uniwa.moviender.network.Movie" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+   <com.google.android.material.card.MaterialCardView
+       android:id="@+id/movie_cv"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_margin="8dp"
+       app:strokeWidth="0.4dp"
+       android:padding="8dp">
 
-        <TextView
-            android:id="@+id/imdb_id_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{movie.imdb_id}"
-            app:layout_constraintBottom_toTopOf="@id/genre_ids_tv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="IMDB_ID" />
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/genre_ids_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:genreIds="@{movie.genre_ids}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imdb_id_tv"
-            app:layout_constraintBottom_toTopOf="@id/poster_path_tv"
-            tools:text="GENRES" />
+           <ImageView
+               android:id="@+id/poster_iv"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:scaleType="fitXY"
+               android:adjustViewBounds="true"
+               android:padding="2dp"
+               app:imageUrl="@{movie.poster_path}"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintBottom_toTopOf="@id/rating_rb"
+               tools:src="@tools:sample/backgrounds/scenic"/>
 
-        <TextView
-            android:id="@+id/poster_path_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{movie.poster_path}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/genre_ids_tv"
-            app:layout_constraintBottom_toTopOf="@id/title_tv"
-            tools:text="POSTER" />
+           <RatingBar
+               android:id="@+id/rating_rb"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:layout_constraintTop_toBottomOf="@id/poster_iv"
+               app:layout_constraintStart_toStartOf="parent"
+               android:stepSize="1"
+               android:rating="0"
+               android:numStars="5"
+               android:isIndicator="false"
+               style="?attr/ratingBarStyleIndicator"
+               />
+       </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{movie.title}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/poster_path_tv"
-            app:layout_constraintBottom_toTopOf="@id/overview_tv"
-            tools:text="TITLE" />
-
-        <TextView
-            android:id="@+id/overview_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{movie.overview}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_tv"
-            tools:text="OVERVIEW" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+   </com.google.android.material.card.MaterialCardView>
 </layout>

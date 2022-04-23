@@ -3,6 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="movie_init_hit">Rate the movies below to initialize profile</string>
+
     <!-- Genres -->
     <string name="genre_action">Action</string>
     <string name="genre_adventure">Adventure</string>
