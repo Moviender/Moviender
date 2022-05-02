@@ -84,4 +84,14 @@ dependencies {
 
     // Material rating bar
     implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

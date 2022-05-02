@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Louk/AndroidStudioProjects/Moviender/app/src/main/res/layout/activity_startup.xml" value="0.24954710144927536" />
+        <entry key="..\:/Users/Louk/AndroidStudioProjects/Moviender/app/src/main/res/layout/fragment_firebase_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Louk/AndroidStudioProjects/Moviender/app/src/main/res/layout/fragment_initialization.xml" value="0.2884963768115942" />
         <entry key="..\:/Users/Louk/AndroidStudioProjects/Moviender/app/src/main/res/layout/grid_view_item.xml" value="0.36666666666666664" />
       </map>

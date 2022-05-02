@@ -1,10 +1,16 @@
 package com.uniwa.moviender.model
 
+import android.content.Context
 import android.widget.RatingBar
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.uniwa.moviender.data.UserDataStore
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.Rating
@@ -71,6 +77,12 @@ class LoginViewModel : ViewModel() {
 
         viewModelScope.launch {
             MovienderApi.movienderApiService.sendStarterRating(UserRatings(_uid.value!!, ratings))
+        }
+    }
+
+    fun saveUID(context: Context) {
+        viewModelScope.launch {
+            UserDataStore(context).saveUserUid(_uid.value!!, context)
         }
     }
 }

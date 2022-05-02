@@ -33,6 +33,7 @@ class InitializationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
+            initializationFragment = this@InitializationFragment
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
             moviesGrid.adapter = MovieGridAdapter(sharedViewModel)
@@ -40,5 +41,22 @@ class InitializationFragment : Fragment() {
 
         sharedViewModel.getStarterMovies()
     }
+
+    fun finishInitilization() {
+        sendRatings()
+        saveUid()
+
+    }
+
+    private fun sendRatings() {
+        sharedViewModel.sendRatings()
+    }
+
+    private fun saveUid() {
+        sharedViewModel.saveUID(requireContext())
+    }
+
+
+
 
 }
