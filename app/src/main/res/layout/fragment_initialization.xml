@@ -43,5 +43,16 @@
             tools:itemCount="16"
             tools:listitem="@layout/grid_view_item" />
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@{@string/ready_button(viewModel.ratedMovies, viewModel.REQUIRED_RATES)}"
+            android:layout_margin="10dp"
+            android:clickable="@{viewModel.ratedMovies >= viewModel.REQUIRED_RATES ? true : false}"
+            android:onClick="@{() -> viewModel.sendRatings()}"
+            tools:text="READY! 10/10"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

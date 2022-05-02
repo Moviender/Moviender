@@ -37,6 +37,10 @@ interface MovienderApiService {
 
     @GET("/starter")
     suspend fun getStarterMovies(): List<Movie>
+
+    @Headers("Content-Type: application/json")
+    @POST("/userInitialization")
+    suspend fun sendStarterRating(@Body userRatings: UserRatings)
 }
 
 object MovienderApi {
