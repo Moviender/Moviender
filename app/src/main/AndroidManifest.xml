@@ -10,8 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moviender">
         <activity
+            android:name=".ui.HubActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.Startup"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

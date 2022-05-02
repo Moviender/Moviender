@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentInitializationBinding
 
@@ -45,7 +46,7 @@ class InitializationFragment : Fragment() {
     fun finishInitilization() {
         sendRatings()
         saveUid()
-
+        navigate()
     }
 
     private fun sendRatings() {
@@ -56,7 +57,8 @@ class InitializationFragment : Fragment() {
         sharedViewModel.saveUID(requireContext())
     }
 
-
-
+    private fun navigate() {
+        findNavController().navigate(R.id.action_initializationFragment_to_hubActivity)
+    }
 
 }

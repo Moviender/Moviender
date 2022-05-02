@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/startup_nav_graph"
-    app:startDestination="@id/firebaseLoginFragment">
+    app:startDestination="@id/hubActivity">
 
     <fragment
         android:id="@+id/firebaseLoginFragment"
@@ -15,10 +15,26 @@
             app:destination="@id/initializationFragment"
             app:popUpTo="@id/initializationFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_firebaseLoginFragment_to_hubActivity"
+            app:destination="@id/hubActivity"
+            app:popUpTo="@id/hubActivity"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/initializationFragment"
         android:name="com.uniwa.moviender.ui.fragments.InitializationFragment"
         android:label="fragment_initialization"
-        tools:layout="@layout/fragment_initialization" />
+        tools:layout="@layout/fragment_initialization" >
+        <action
+            android:id="@+id/action_initializationFragment_to_hubActivity"
+            app:destination="@id/hubActivity"
+            app:popUpTo="@id/hubActivity"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <activity
+        android:id="@+id/hubActivity"
+        android:name="com.uniwa.moviender.ui.HubActivity"
+        android:label="activity_hub"
+        tools:layout="@layout/activity_hub" />
 </navigation>
