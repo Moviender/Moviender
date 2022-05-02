@@ -1,15 +1,10 @@
 package com.uniwa.moviender.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
-import androidx.transition.Visibility
 import com.uniwa.moviender.databinding.GridViewItemBinding
 import com.uniwa.moviender.model.LoginViewModel
 import com.uniwa.moviender.network.Movie

@@ -81,4 +81,7 @@ dependencies {
 
     // Material
     implementation 'com.google.android.material:material:1.5.0'
+
+    // Material rating bar
+    implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
 }

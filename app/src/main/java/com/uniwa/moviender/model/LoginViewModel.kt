@@ -68,6 +68,7 @@ class LoginViewModel : ViewModel() {
                 Rating(movieRatingBar[entry.key]!!, entry.value)
             }
 
+
         viewModelScope.launch {
             MovienderApi.movienderApiService.sendStarterRating(UserRatings(_uid.value!!, ratings))
         }
