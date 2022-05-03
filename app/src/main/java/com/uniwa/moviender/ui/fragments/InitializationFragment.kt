@@ -44,20 +44,20 @@ class InitializationFragment : Fragment() {
     }
 
     fun finishInitilization() {
-        sendRatings()
-        saveUid()
-        navigate()
+        sendRatingsToDB()
+        saveUidToDataStore()
+        navigateToHub()
     }
 
-    private fun sendRatings() {
+    private fun sendRatingsToDB() {
         sharedViewModel.sendRatings()
     }
 
-    private fun saveUid() {
+    private fun saveUidToDataStore() {
         sharedViewModel.saveUID(requireContext())
     }
 
-    private fun navigate() {
+    private fun navigateToHub() {
         findNavController().navigate(R.id.action_initializationFragment_to_hubActivity)
     }
 
