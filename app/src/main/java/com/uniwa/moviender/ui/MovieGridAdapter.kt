@@ -20,14 +20,14 @@ class MovieGridAdapter(private var viewModel: LoginViewModel) :
                 binding.movie = movie
                 binding.viewModel = viewModel
                 viewModel.addRatingBar(binding.ratingRb)
-                viewModel.addMovieRatingBar(binding.ratingRb, movie.movielens_id)
+                viewModel.addMovieRatingBar(binding.ratingRb, movie.movielensId)
                 binding.executePendingBindings()
             }
         }
 
     companion object Diffcallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.movielens_id == newItem.movielens_id
+            return oldItem.movielensId == newItem.movielensId
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {

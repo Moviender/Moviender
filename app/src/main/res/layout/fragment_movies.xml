@@ -4,13 +4,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="MoviesFragment"
+            type="com.uniwa.moviender.ui.fragments.MoviesFragment" />
+        <variable
+            name="viewModel"
+            type="com.uniwa.moviender.ui.MoviesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.fragments.MoviesFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/hub_movies_grid"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/recycle_view_padding"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/grid_view_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,10 +8,7 @@ import okhttp3.OkHttpClient
 import org.json.JSONArray
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 private const val BASE_URL = "http://10.0.2.2:8000"
 
@@ -37,6 +34,9 @@ interface MovienderApiService {
 
     @GET("/starter")
     suspend fun getStarterMovies(): List<Movie>
+
+    @GET("/movies/{page}")
+    suspend fun getMovies(@Path("page") page: Int, @Query("genres") genres: List<Int>): List<Movie>
 
     @Headers("Content-Type: application/json")
     @POST("/userInitialization")

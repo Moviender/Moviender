@@ -30,7 +30,7 @@ fun bindPosterImage(imageView: ImageView, filePath: String?) {
     filePath?.let {
         val posterUri = POSTER_BASE_URL.plus(filePath).toUri().buildUpon().scheme("https").build()
         imageView.load(posterUri) {
-
+            // TODO Images for error and loading
         }
     }
 }

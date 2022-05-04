@@ -23,6 +23,7 @@ plugins {
 
 ext {
     room_version = '2.4.2'
+    paging_version = "3.1.1"
 }
 
 task clean(type: Delete) {

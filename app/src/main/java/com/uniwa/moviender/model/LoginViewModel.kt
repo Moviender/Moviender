@@ -48,6 +48,7 @@ class LoginViewModel : ViewModel() {
     }
 
     fun changeCounter(rating: Float, ratingBar: RatingBar) {
+        // FIXME
         if (oldRatings[ratingBar] == 0f && rating > 0f) {
             _ratedMovies.value = _ratedMovies.value?.inc()
         }

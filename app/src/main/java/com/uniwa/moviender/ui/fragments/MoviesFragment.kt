@@ -6,12 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
+import com.uniwa.moviender.model.MoviesViewModelFactory
+import com.uniwa.moviender.network.MovienderApi
+import com.uniwa.moviender.network.MovienderApiService
+import com.uniwa.moviender.ui.MoviesHorizontalAdapter
+import com.uniwa.moviender.ui.MoviesViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MoviesFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesBinding
+    private lateinit var adapter: MoviesHorizontalAdapter
+
+    private val viewModel: MoviesViewModel by viewModels {
+        MoviesViewModelFactory(MovienderApi.movienderApiService, emptyList<Int>())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,9 +38,19 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter = MoviesHorizontalAdapter()
 
         binding?.apply {
+            moviesFragment = this@MoviesFragment
             lifecycleOwner = viewLifecycleOwner
+            hubMoviesGrid.adapter = adapter
+        }
+
+        // TODO dataBinding
+        lifecycleScope.launch {
+            viewModel.movies.collectLatest { pagedData ->
+                adapter.submitData(pagedData)
+            }
         }
     }
 

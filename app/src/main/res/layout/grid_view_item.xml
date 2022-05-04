@@ -31,7 +31,7 @@
 
                 <ImageView
                     android:id="@+id/poster_iv"
-                    app:imageUrl="@{movie.poster_path}"
+                    app:imageUrl="@{movie.posterPath}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
