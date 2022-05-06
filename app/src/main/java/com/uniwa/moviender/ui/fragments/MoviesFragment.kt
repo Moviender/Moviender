@@ -24,7 +24,7 @@ class MoviesFragment : Fragment() {
     private lateinit var adapter: MoviesHorizontalAdapter
 
     private val viewModel: MoviesViewModel by viewModels {
-        MoviesViewModelFactory(MovienderApi.movienderApiService, emptyList<Int>())
+        MoviesViewModelFactory(MovienderApi.movienderApiService, listOf(16))
     }
 
     override fun onCreateView(

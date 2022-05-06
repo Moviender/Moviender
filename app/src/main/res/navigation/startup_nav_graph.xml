@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/startup_nav_graph"
-    app:startDestination="@id/hubActivity">
+    app:startDestination="@id/initializationFragment">
 
     <fragment
         android:id="@+id/firebaseLoginFragment"

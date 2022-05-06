@@ -21,6 +21,8 @@
             android:id="@+id/hub_movies_grid"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:scrollbars="horizontal"
             android:padding="@dimen/recycle_view_padding"
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -28,6 +30,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_gravity="center"
             tools:listitem="@layout/grid_view_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
