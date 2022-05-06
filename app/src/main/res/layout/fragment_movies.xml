@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="MoviesFragment"
             type="com.uniwa.moviender.ui.fragments.MoviesFragment" />
+
         <variable
             name="viewModel"
             type="com.uniwa.moviender.ui.MoviesViewModel" />
@@ -21,17 +23,16 @@
             android:id="@+id/hub_movies_grid"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:scrollbars="horizontal"
-            android:padding="@dimen/recycle_view_padding"
             android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintTop_toTopOf="parent"
+            android:padding="@dimen/recycle_view_padding"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_gravity="center"
-            tools:listitem="@layout/grid_view_item" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/movie_category_row" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

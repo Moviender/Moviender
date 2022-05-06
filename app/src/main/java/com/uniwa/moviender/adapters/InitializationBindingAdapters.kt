@@ -7,13 +7,13 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.uniwa.moviender.network.Movie
-import com.uniwa.moviender.ui.MovieGridAdapter
+import com.uniwa.moviender.ui.MoviesRowAdapter
 import java.lang.StringBuilder
 import com.uniwa.moviender.data.genres
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
-    val adapter = recyclerView.adapter as MovieGridAdapter
+    val adapter = recyclerView.adapter as MoviesRowAdapter
     adapter.submitList(data)
 }
 

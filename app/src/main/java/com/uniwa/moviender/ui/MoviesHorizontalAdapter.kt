@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.MovieItemThumbnailBinding
 import com.uniwa.moviender.network.Movie
 
-class MoviesHorizontalAdapter :
+class MoviesHorizontalAdapter() :
     PagingDataAdapter<Movie, MoviesHorizontalAdapter.MoviesViewHolder>(Diffcallback) {
 
         inner class MoviesViewHolder(

@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -13,7 +12,7 @@ import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentInitializationBinding
 
 import com.uniwa.moviender.model.LoginViewModel
-import com.uniwa.moviender.ui.MovieGridAdapter
+import com.uniwa.moviender.ui.MoviesRowAdapter
 
 class InitializationFragment : Fragment() {
 
@@ -37,7 +36,7 @@ class InitializationFragment : Fragment() {
             initializationFragment = this@InitializationFragment
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
-            moviesGrid.adapter = MovieGridAdapter(sharedViewModel)
+            moviesGrid.adapter = MoviesRowAdapter(sharedViewModel)
         }
 
         sharedViewModel.getStarterMovies()
