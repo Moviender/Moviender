@@ -6,6 +6,7 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.uniwa.moviender.R
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.MoviesRowAdapter
 import java.lang.StringBuilder
@@ -31,6 +32,7 @@ fun bindPosterImage(imageView: ImageView, filePath: String?) {
         val posterUri = POSTER_BASE_URL.plus(filePath).toUri().buildUpon().scheme("https").build()
         imageView.load(posterUri) {
             // TODO Images for error and loading
+            placeholder(R.drawable.movies_poster_placeholder)
         }
     }
 }

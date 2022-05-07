@@ -42,7 +42,7 @@ class InitializationFragment : Fragment() {
         sharedViewModel.getStarterMovies()
     }
 
-    fun finishInitilization() {
+    fun finishInitialization() {
         sendRatingsToDB()
         saveUidToDataStore()
         navigateToHub()

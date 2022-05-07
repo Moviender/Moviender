@@ -25,7 +25,7 @@ class MoviesFragment : Fragment() {
     private lateinit var adapter: MoviesGridAdapter
 
     private val viewModel: MoviesViewModel by viewModels {
-        MoviesViewModelFactory(MovienderApi.movienderApiService, listOf(16, 37))
+        MoviesViewModelFactory(MovienderApi.movienderApiService, listOf(16, 878, 37, 28, 53))
     }
 
     override fun onCreateView(
@@ -47,7 +47,7 @@ class MoviesFragment : Fragment() {
             hubMoviesGrid.adapter = adapter
         }
 
-        adapter.submitList(listOf(16, 37))
+        adapter.submitList(listOf(16, 878, 37, 28, 53))
     }
 
 }
