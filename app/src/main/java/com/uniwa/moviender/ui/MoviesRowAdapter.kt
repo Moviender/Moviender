@@ -31,7 +31,7 @@ class MoviesRowAdapter(private var viewModel: LoginViewModel) :
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem.movielensId == newItem.movielensId
         }
 
     }

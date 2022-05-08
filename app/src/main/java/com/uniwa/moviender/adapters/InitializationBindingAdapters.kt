@@ -18,11 +18,11 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
     adapter.submitList(data)
 }
 
-@BindingAdapter("genreIds")
+@BindingAdapter("genres")
 fun bindGenres(textView: TextView, genresIds: Array<Int>?) {
-    val builder = StringBuilder()
-    genresIds?.forEach { id -> builder.append(textView.resources.getString(genres[id]!!)).append(" ")}
-    textView.text = builder.toString()
+    textView.text = genresIds?.map { genreId ->
+        textView.resources.getString(genres[genreId]!!) }
+        ?.joinToString(separator = " | ")
 }
 
 @BindingAdapter("imageUrl")

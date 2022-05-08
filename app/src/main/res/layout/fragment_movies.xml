@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="MoviesFragment"
             type="com.uniwa.moviender.ui.fragments.MoviesFragment" />
@@ -33,6 +35,107 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/movie_category_row" />
+
+        <FrameLayout
+            android:id="@+id/movie_details_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:visibility="@{viewModel.frameVisibility}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/movie_details_poster_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/movie_details_poster"
+                                imageUrl="@{viewModel.selectedMovie.posterPath}"
+                                android:layout_width="@dimen/poster_image_width"
+                                android:layout_height="@dimen/poster_image_height"
+                                android:scaleType="fitXY"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:src="@tools:sample/backgrounds/scenic" />
+
+                            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                                android:id="@+id/movie_details_rating"
+                                style="@style/Widget.MaterialRatingBar.RatingBar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:isIndicator="false"
+                                android:minHeight="28dp"
+                                android:numStars="5"
+                                android:rating="@{viewModel.selectedMovie.movieDetails.userRating}"
+                                android:stepSize="1"
+                                app:layout_constraintEnd_toEndOf="@id/movie_details_poster"
+                                app:layout_constraintStart_toStartOf="@id/movie_details_poster"
+                                app:layout_constraintTop_toBottomOf="@id/movie_details_poster" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <ImageView
+                        android:id="@+id/movie_details_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_close_24"
+                        android:onClick="@{() -> MoviesFragment.closeMovieDetailsFrame()}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/movie_details_poster_card" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/movie_details_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="@{viewModel.selectedMovieDetails.title}"
+                        app:layout_constraintLeft_toRightOf="@id/movie_details_poster_card"
+                        app:layout_constraintTop_toTopOf="@id/movie_details_poster_card"
+                        tools:text="Title" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/movie_details_genres"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@id/movie_details_title"
+                        app:layout_constraintTop_toBottomOf="@id/movie_details_title"
+                        app:genres="@{viewModel.selectedMovieDetails.genreIds}"
+                        tools:text="Action | Comedy" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.selectedMovieDetails.overview}"
+                        app:layout_constraintBottom_toBottomOf="@id/movie_details_poster_card"
+                        app:layout_constraintLeft_toLeftOf="@id/movie_details_genres"
+                        app:layout_constraintTop_toBottomOf="@id/movie_details_genres"
+                        app:layout_constraintVertical_bias="0.2"
+                        tools:text="Overview" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

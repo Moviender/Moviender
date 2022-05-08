@@ -20,7 +20,7 @@ class MoviesGridAdapter(
         private val binding: MovieCategoryRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dataPosition: Int) {
-            val adapter = MoviesHorizontalAdapter()
+            val adapter = MoviesHorizontalAdapter(viewModel)
             binding.movieCategory.text = genres[viewModel.genres[dataPosition]]?.let {
                 binding.movieCategory.resources.getText(
                     it
@@ -53,4 +53,6 @@ class MoviesGridAdapter(
     override fun onBindViewHolder(holder: MoviesGridViewHolder, position: Int) {
         holder.bind(position)
     }
+
+
 }

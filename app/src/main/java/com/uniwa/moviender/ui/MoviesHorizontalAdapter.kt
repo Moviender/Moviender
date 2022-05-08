@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.MovieItemThumbnailBinding
 import com.uniwa.moviender.network.Movie
 
-class MoviesHorizontalAdapter() :
+class MoviesHorizontalAdapter(
+    private val viewModel: MoviesViewModel
+) :
     PagingDataAdapter<Movie, MoviesHorizontalAdapter.MoviesViewHolder>(Diffcallback) {
 
         inner class MoviesViewHolder(
@@ -16,6 +18,9 @@ class MoviesHorizontalAdapter() :
         ) : RecyclerView.ViewHolder(binding.root) {
             fun bind(movie: Movie) {
                 binding.movie = movie
+                binding.thumbnailPosterIv.setOnClickListener {
+                    viewModel.setSelectedMovie(movie)
+                }
                 binding.executePendingBindings()
             }
         }
@@ -26,7 +31,7 @@ class MoviesHorizontalAdapter() :
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem.movielensId == newItem.movielensId
         }
 
     }

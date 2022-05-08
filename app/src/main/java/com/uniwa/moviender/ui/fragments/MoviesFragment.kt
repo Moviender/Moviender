@@ -46,8 +46,15 @@ class MoviesFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             hubMoviesGrid.adapter = adapter
         }
+        binding.viewModel = viewModel
+
+
 
         adapter.submitList(listOf(16, 878, 37, 28, 53))
+    }
+
+    fun closeMovieDetailsFrame() {
+        viewModel.changeFrameVisibility(View.GONE)
     }
 
 }
