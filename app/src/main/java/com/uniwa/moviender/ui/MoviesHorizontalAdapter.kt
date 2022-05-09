@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.MovieItemThumbnailBinding
 import com.uniwa.moviender.network.Movie
+import com.uniwa.moviender.ui.fragments.MoviesFragment
 
 class MoviesHorizontalAdapter(
-    private val viewModel: MoviesViewModel
+    private val moviesFragment: MoviesFragment
 ) :
     PagingDataAdapter<Movie, MoviesHorizontalAdapter.MoviesViewHolder>(Diffcallback) {
 
@@ -18,9 +19,7 @@ class MoviesHorizontalAdapter(
         ) : RecyclerView.ViewHolder(binding.root) {
             fun bind(movie: Movie) {
                 binding.movie = movie
-                binding.thumbnailPosterIv.setOnClickListener {
-                    viewModel.setSelectedMovie(movie)
-                }
+                binding.moviesFragment = moviesFragment
                 binding.executePendingBindings()
             }
         }
@@ -38,7 +37,7 @@ class MoviesHorizontalAdapter(
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val movie = getItem(position)
-        movie?.let { holder.bind(it) }
+        holder.bind(movie!!)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {

@@ -21,7 +21,8 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
 @BindingAdapter("genres")
 fun bindGenres(textView: TextView, genresIds: Array<Int>?) {
     textView.text = genresIds?.map { genreId ->
-        textView.resources.getString(genres[genreId]!!) }
+        textView.resources.getString(genres[genreId]!!)
+    }
         ?.joinToString(separator = " | ")
 }
 

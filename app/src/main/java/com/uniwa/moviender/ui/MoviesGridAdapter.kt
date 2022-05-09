@@ -10,26 +10,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.databinding.MovieCategoryRowBinding
+import com.uniwa.moviender.ui.fragments.MoviesFragment
 
 class MoviesGridAdapter(
     private val context: Context,
-    private val viewModel: MoviesViewModel
-) : ListAdapter<Int, MoviesGridAdapter.MoviesGridViewHolder>(Diffcallback) { // TODO: check for list adapter
+    private val viewModel: MoviesViewModel,
+    private val moviesFragment: MoviesFragment,
+) : ListAdapter<Int, MoviesGridAdapter.MoviesGridViewHolder>(Diffcallback) {
 
     inner class MoviesGridViewHolder(
         private val binding: MovieCategoryRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dataPosition: Int) {
-            val adapter = MoviesHorizontalAdapter(viewModel)
-            binding.movieCategory.text = genres[viewModel.genres[dataPosition]]?.let {
-                binding.movieCategory.resources.getText(
-                    it
-                )
-            }
-            binding.movieRowRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.genreResourceId = genres[viewModel.genres[dataPosition]]!!
+            val adapter = MoviesHorizontalAdapter(moviesFragment)
+            viewModel.submitData(adapter, dataPosition)
+            binding.movieRowRv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.movieRowRv.adapter = adapter
             binding.executePendingBindings()
-            viewModel.submitData(adapter, dataPosition)
         }
     }
 
@@ -53,6 +52,7 @@ class MoviesGridAdapter(
     override fun onBindViewHolder(holder: MoviesGridViewHolder, position: Int) {
         holder.bind(position)
     }
+
 
 
 }

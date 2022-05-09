@@ -5,6 +5,13 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.uniwa.moviender.ui.MoviesViewModel" />
+
+        <variable
+            name="genreResourceId"
+            type="int" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,12 +20,12 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/movie_category"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:text="Category"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:text="@{context.getString(genreResourceId)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Action" />
@@ -35,7 +42,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.01"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_category"
-             />
+            app:layout_constraintTop_toBottomOf="@+id/movie_category" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

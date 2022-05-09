@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.model.MoviesViewModelFactory
+import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.MovienderApiService
 import com.uniwa.moviender.ui.MoviesGridAdapter
@@ -39,18 +41,21 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MoviesGridAdapter(requireContext(), viewModel)
 
-        binding?.apply {
+        adapter = MoviesGridAdapter(requireContext(), viewModel, this)
+
+        binding.apply {
             moviesFragment = this@MoviesFragment
             lifecycleOwner = viewLifecycleOwner
             hubMoviesGrid.adapter = adapter
+            viewModel = this@MoviesFragment.viewModel
         }
-        binding.viewModel = viewModel
 
+        adapter.submitList(viewModel.genres)
+    }
 
-
-        adapter.submitList(listOf(16, 878, 37, 28, 53))
+    fun setSelectedMovie(movie: Movie) {
+        viewModel.setSelectedMovie(movie)
     }
 
     fun closeMovieDetailsFrame() {

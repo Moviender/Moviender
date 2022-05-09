@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="MoviesFragment"
             type="com.uniwa.moviender.ui.fragments.MoviesFragment" />
@@ -33,17 +31,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/movie_category_row" />
+            tools:listitem="@layout/movie_category_row"
+            android:focusable="true"
+            android:focusedByDefault="true"/>
 
         <FrameLayout
             android:id="@+id/movie_details_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="9dp"
+            android:layout_margin="9dp"
             android:visibility="@{viewModel.frameVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintLeft_toRightOf="parent">
+            app:layout_constraintLeft_toRightOf="parent"
+            android:focusable="true"
+            android:focusedByDefault="false">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -99,37 +101,53 @@
                         android:onClick="@{() -> MoviesFragment.closeMovieDetailsFrame()}"
                         android:src="@drawable/ic_close_24"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/movie_details_poster_card" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/movie_details_title"
                         style="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_marginStart="@dimen/movie_details_frame_margin"
+                        android:layout_marginTop="@dimen/movie_details_frame_margin"
+                        android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
                         android:text="@{viewModel.selectedMovieDetails.title}"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintLeft_toRightOf="@id/movie_details_poster_card"
+                        app:layout_constraintRight_toLeftOf="@id/movie_details_close"
                         app:layout_constraintTop_toTopOf="@id/movie_details_poster_card"
                         tools:text="Title" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/movie_details_genres"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
+                        android:layout_marginBottom="@dimen/movie_details_frame_margin"
                         app:genres="@{viewModel.selectedMovieDetails.genreIds}"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/movie_details_title"
                         app:layout_constraintTop_toBottomOf="@id/movie_details_title"
                         tools:text="Action | Comedy" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.selectedMovieDetails.overview}"
+                    <ScrollView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
                         app:layout_constraintBottom_toBottomOf="@id/movie_details_poster_card"
                         app:layout_constraintLeft_toLeftOf="@id/movie_details_genres"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/movie_details_genres"
-                        app:layout_constraintVertical_bias="0.2"
-                        tools:text="Overview" />
+                        app:layout_constraintVertical_bias="0.2">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:inputType="textMultiLine"
+                            android:text="@{viewModel.selectedMovieDetails.overview}"
+                            tools:text="Overview " />
+                    </ScrollView>
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
