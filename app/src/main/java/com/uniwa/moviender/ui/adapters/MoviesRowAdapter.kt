@@ -1,4 +1,4 @@
-package com.uniwa.moviender.ui
+package com.uniwa.moviender.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.GridViewItemBinding
-import com.uniwa.moviender.model.LoginViewModel
+import com.uniwa.moviender.ui.viewmodel.LoginViewModel
 import com.uniwa.moviender.network.Movie
 
 class MoviesRowAdapter(private var viewModel: LoginViewModel) :

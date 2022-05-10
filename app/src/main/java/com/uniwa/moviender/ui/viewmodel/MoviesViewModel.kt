@@ -1,4 +1,4 @@
-package com.uniwa.moviender.ui
+package com.uniwa.moviender.ui.viewmodel
 
 import android.view.View
 import androidx.lifecycle.*
@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.uniwa.moviender.data.ServerPagingSource
 import com.uniwa.moviender.network.*
+import com.uniwa.moviender.ui.adapters.MoviesHorizontalAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

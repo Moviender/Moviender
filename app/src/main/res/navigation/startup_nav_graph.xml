@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/firebaseLoginFragment"
-        android:name="com.uniwa.moviender.ui.fragments.FirebaseLoginFragment"
+        android:name="com.uniwa.moviender.ui.fragment.FirebaseLoginFragment"
         android:label="fragment_firebase_login"
         tools:layout="@layout/fragment_firebase_login" >
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/initializationFragment"
-        android:name="com.uniwa.moviender.ui.fragments.InitializationFragment"
+        android:name="com.uniwa.moviender.ui.fragment.InitializationFragment"
         android:label="fragment_initialization"
         tools:layout="@layout/fragment_initialization" >
         <action

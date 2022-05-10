@@ -1,4 +1,4 @@
-package com.uniwa.moviender.ui
+package com.uniwa.moviender.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.MovieItemThumbnailBinding
 import com.uniwa.moviender.network.Movie
-import com.uniwa.moviender.ui.fragments.MoviesFragment
+import com.uniwa.moviender.ui.fragment.MoviesFragment
 
 class MoviesHorizontalAdapter(
     private val moviesFragment: MoviesFragment

@@ -1,4 +1,4 @@
-package com.uniwa.moviender.ui.fragments
+package com.uniwa.moviender.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentInitializationBinding
 
-import com.uniwa.moviender.model.LoginViewModel
-import com.uniwa.moviender.ui.MoviesRowAdapter
+import com.uniwa.moviender.ui.viewmodel.LoginViewModel
+import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
 
 class InitializationFragment : Fragment() {
 

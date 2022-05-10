@@ -1,27 +1,20 @@
-package com.uniwa.moviender.ui.fragments
+package com.uniwa.moviender.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.RatingBar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
-import com.uniwa.moviender.model.MoviesViewModelFactory
+import com.uniwa.moviender.ui.viewmodel.MoviesViewModelFactory
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.network.MovienderApi
-import com.uniwa.moviender.network.MovienderApiService
-import com.uniwa.moviender.network.UserRatings
-import com.uniwa.moviender.ui.MoviesGridAdapter
-import com.uniwa.moviender.ui.MoviesHorizontalAdapter
-import com.uniwa.moviender.ui.MoviesViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import com.uniwa.moviender.ui.adapters.MoviesGridAdapter
+import com.uniwa.moviender.ui.viewmodel.MoviesViewModel
 
 class MoviesFragment : Fragment() {
 

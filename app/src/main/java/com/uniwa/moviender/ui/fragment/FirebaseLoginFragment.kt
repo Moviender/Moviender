@@ -1,4 +1,4 @@
-package com.uniwa.moviender.ui.fragments
+package com.uniwa.moviender.ui.fragment
 
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
@@ -13,7 +13,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.uniwa.moviender.R
-import com.uniwa.moviender.model.LoginViewModel
+import com.uniwa.moviender.ui.viewmodel.LoginViewModel
 
 class FirebaseLoginFragment : Fragment() {
 

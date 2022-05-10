@@ -1,9 +1,8 @@
-package com.uniwa.moviender.model
+package com.uniwa.moviender.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.uniwa.moviender.network.MovienderApiService
-import com.uniwa.moviender.ui.MoviesViewModel
 
 class MoviesViewModelFactory(
     private val service: MovienderApiService,

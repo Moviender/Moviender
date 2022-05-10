@@ -1,4 +1,4 @@
-package com.uniwa.moviender.ui
+package com.uniwa.moviender.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.data.genres
-import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.databinding.MovieCategoryRowBinding
-import com.uniwa.moviender.ui.fragments.MoviesFragment
+import com.uniwa.moviender.ui.viewmodel.MoviesViewModel
+import com.uniwa.moviender.ui.fragment.MoviesFragment
 
 class MoviesGridAdapter(
     private val context: Context,
