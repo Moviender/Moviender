@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.RatingBar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +16,7 @@ import com.uniwa.moviender.model.MoviesViewModelFactory
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.MovienderApiService
+import com.uniwa.moviender.network.UserRatings
 import com.uniwa.moviender.ui.MoviesGridAdapter
 import com.uniwa.moviender.ui.MoviesHorizontalAdapter
 import com.uniwa.moviender.ui.MoviesViewModel
@@ -60,6 +62,10 @@ class MoviesFragment : Fragment() {
 
     fun closeMovieDetailsFrame() {
         viewModel.changeFrameVisibility(View.GONE)
+    }
+
+    fun updateRating(rating: Float, ratingBar: RatingBar) {
+        viewModel.sendRating(rating)
     }
 
 }

@@ -24,6 +24,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
+            android:focusable="true"
+            android:focusedByDefault="true"
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -31,21 +33,18 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/movie_category_row"
-            android:focusable="true"
-            android:focusedByDefault="true"/>
+            tools:listitem="@layout/movie_category_row" />
 
         <FrameLayout
             android:id="@+id/movie_details_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="9dp"
+            android:focusable="true"
+            android:focusedByDefault="false"
             android:visibility="@{viewModel.frameVisibility}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:focusable="true"
-            android:focusedByDefault="false">
+            app:layout_constraintLeft_toRightOf="parent">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -85,11 +84,13 @@
                                 android:isIndicator="false"
                                 android:minHeight="27dp"
                                 android:numStars="5"
-                                android:rating="@{viewModel.selectedMovie.movieDetails.userRating}"
+                                android:onRatingChanged="@{(ratingBar, rating, fromUser) -> MoviesFragment.updateRating(rating, ratingBar)}"
+                                android:rating="@{viewModel.selectedMovieDetails.userRating}"
                                 android:stepSize="1"
                                 app:layout_constraintEnd_toEndOf="@id/movie_details_poster"
                                 app:layout_constraintStart_toStartOf="@id/movie_details_poster"
-                                app:layout_constraintTop_toBottomOf="@id/movie_details_poster" />
+                                app:layout_constraintTop_toBottomOf="@id/movie_details_poster"
+                                tools:rating="2" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </com.google.android.material.card.MaterialCardView>
@@ -134,6 +135,7 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
+                        android:scrollbars="none"
                         app:layout_constraintBottom_toBottomOf="@id/movie_details_poster_card"
                         app:layout_constraintLeft_toLeftOf="@id/movie_details_genres"
                         app:layout_constraintRight_toRightOf="parent"
@@ -143,7 +145,7 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:inputType="textMultiLine"
+                            android:inputType="textMultiLine|textNoSuggestions"
                             android:text="@{viewModel.selectedMovieDetails.overview}"
                             tools:text="Overview " />
                     </ScrollView>

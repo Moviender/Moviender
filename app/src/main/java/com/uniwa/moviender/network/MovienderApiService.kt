@@ -44,6 +44,10 @@ interface MovienderApiService {
     @Headers("Content-Type: application/json")
     @POST("/userInitialization")
     suspend fun sendStarterRating(@Body userRatings: UserRatings)
+
+    @Headers("Content-Type: application/json")
+    @POST("/rating")
+    suspend fun updateRating(@Body userRating: UserRatings)
 }
 
 object MovienderApi {

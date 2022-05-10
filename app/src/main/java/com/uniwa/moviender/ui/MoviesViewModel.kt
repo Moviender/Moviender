@@ -1,18 +1,12 @@
 package com.uniwa.moviender.ui
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.uniwa.moviender.data.ServerPagingSource
-import com.uniwa.moviender.network.Movie
-import com.uniwa.moviender.network.MovieDetails
-import com.uniwa.moviender.network.MovienderApi
-import com.uniwa.moviender.network.MovienderApiService
-import kotlinx.coroutines.flow.Flow
+import com.uniwa.moviender.network.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -64,6 +58,17 @@ class MoviesViewModel(
             _movies[dataPosition].collectLatest { pageData ->
                 adapter.submitData(pageData)
             }
+        }
+    }
+
+    fun sendRating(rating: Float) {
+        viewModelScope.launch {
+            service.updateRating(
+                UserRatings(
+                    "123",
+                    listOf(Rating(_selectedMovie.value!!.movielensId, rating))
+                )
+            )
         }
     }
 
