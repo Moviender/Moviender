@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.uniwa.moviender.databinding.MovieItemSearchThumbnailBinding
 import com.uniwa.moviender.databinding.MovieItemThumbnailBinding
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.fragment.MoviesFragment
@@ -15,7 +16,7 @@ class MoviesSearchAdapter(
     ListAdapter<Movie, MoviesSearchAdapter.MoviesViewHolder>(Diffcallback) {
 
     inner class MoviesViewHolder(
-        private val binding: MovieItemThumbnailBinding
+        private val binding: MovieItemSearchThumbnailBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             binding.movie = movie
@@ -42,7 +43,7 @@ class MoviesSearchAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         return MoviesViewHolder(
-            MovieItemThumbnailBinding.inflate(LayoutInflater.from(parent.context))
+            MovieItemSearchThumbnailBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
 }

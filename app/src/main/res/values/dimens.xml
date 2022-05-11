@@ -3,6 +3,8 @@
     <dimen name="recycle_view_padding">4dp</dimen>
     <dimen name="poster_image_width">135dp</dimen>
     <dimen name="poster_image_height">195dp</dimen>
+    <dimen name="poster_image_search_width">120dp</dimen>
+    <dimen name="poster_image_search_height">175dp</dimen>
     <dimen name="movie_details_frame_margin_end">3dp</dimen>
     <dimen name="movie_details_frame_margin">8dp</dimen>
 </resources>
