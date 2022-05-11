@@ -34,6 +34,16 @@
                 android:layout_height="?attr/actionBarSize"
                 app:menu="@menu/appbar_search_menu">
 
+                <TextView
+                    android:id="@+id/movies_toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/movies_fragment_appbar_title"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/white"
+                    tools:visibility="visible"/>
+
                 <ImageView
                     android:id="@+id/close_search"
                     android:layout_width="wrap_content"
@@ -41,7 +51,7 @@
                     android:onClick="@{() -> MoviesFragment.prepareForMovies()}"
                     android:src="@drawable/ic_close_24"
                     android:visibility="gone"
-                    tools:visibility="visible" />
+                    tools:visibility="gone" />
 
                 <EditText
                     android:id="@+id/search_tv"
@@ -49,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/title"
                     android:visibility="gone"
-                    tools:visibility="visible" />
+                    tools:visibility="gone" />
             </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>

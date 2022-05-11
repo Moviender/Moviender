@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.R
 import com.uniwa.moviender.adapters.bindPosterImage
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
@@ -61,7 +62,6 @@ class MoviesFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-
             }
 
         })
@@ -125,10 +125,13 @@ class MoviesFragment : Fragment() {
     fun prepareForSearch() {
         binding.closeSearch.visibility = View.VISIBLE
         binding.searchTv.visibility = View.VISIBLE
+        binding.moviesToolbarTitle.visibility = View.GONE
         binding.hubMoviesGrid.adapter = searchAdapter
         viewModel.changeLayoutManager(searchLayout)
         viewModel.searchedResults.observe(viewLifecycleOwner) { newList ->
-            searchAdapter.submitList(newList)
+            searchAdapter.submitList(newList) {
+                searchLayout.scrollToPosition(0)
+            }
         }
         callback.isEnabled = true
     }
@@ -136,6 +139,7 @@ class MoviesFragment : Fragment() {
     fun prepareForMovies() {
         binding.closeSearch.visibility = View.GONE
         binding.searchTv.visibility = View.GONE
+        binding.moviesToolbarTitle.visibility = View.VISIBLE
         binding.hubMoviesGrid.adapter = adapter
         binding.searchTv.text.clear()
         viewModel.changeLayoutManager(moviesLayout)
