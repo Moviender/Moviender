@@ -24,13 +24,6 @@ class HubActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.hub_nav_host)
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_movies
-            )
-        )
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 }
