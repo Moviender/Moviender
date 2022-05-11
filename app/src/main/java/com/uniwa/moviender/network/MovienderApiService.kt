@@ -48,6 +48,9 @@ interface MovienderApiService {
     @Headers("Content-Type: application/json")
     @POST("/rating")
     suspend fun updateRating(@Body userRating: UserRatings)
+
+    @GET("/search")
+    suspend fun searchByTitle(@Query("title") title: String): List<Movie>
 }
 
 object MovienderApi {

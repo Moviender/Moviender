@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.uniwa.moviender.R
 import com.uniwa.moviender.network.Movie
-import com.uniwa.moviender.ui.MoviesRowAdapter
-import java.lang.StringBuilder
+import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
 import com.uniwa.moviender.data.genres
 
 @BindingAdapter("listData")

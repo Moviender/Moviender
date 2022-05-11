@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.data.ServerPagingSource
 import com.uniwa.moviender.network.*
 import com.uniwa.moviender.ui.adapters.MoviesHorizontalAdapter
@@ -25,7 +26,10 @@ class MoviesViewModel(
         ).flow.cachedIn(viewModelScope)
     }
 
-    val movies = _movies
+    var movies = _movies
+
+    private val _searchedResults = MutableLiveData<List<Movie>>()
+    val searchedResults: LiveData<List<Movie>> = _searchedResults
 
     val genres = _genres
 
@@ -34,6 +38,9 @@ class MoviesViewModel(
 
     private val _selectedMovieDetails = MutableLiveData<MovieDetails>()
     val selectedMovieDetails: LiveData<MovieDetails> = _selectedMovieDetails
+
+    private val _layoutManager = MutableLiveData<RecyclerView.LayoutManager>()
+    val layoutManager: LiveData<RecyclerView.LayoutManager> = _layoutManager
 
     private fun getMovieDetails(movie: Movie) {
         viewModelScope.launch {
@@ -71,6 +78,21 @@ class MoviesViewModel(
                 )
             )
         }
+    }
+
+    fun searchByTitle(title: String) {
+        viewModelScope.launch {
+            _searchedResults.value = service.searchByTitle(title)
+        }
+    }
+
+    fun clearSearchResult() {
+        _searchedResults.value = listOf()
+    }
+
+
+    fun changeLayoutManager(layoutManager: RecyclerView.LayoutManager) {
+        _layoutManager.value = layoutManager
     }
 
 }

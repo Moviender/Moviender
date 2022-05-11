@@ -28,4 +28,6 @@
     <string name="genre_western">Western</string>
 
     <string name="navigation_movies">Movies</string>
+    <string name="search_action">Search</string>
+    <string name="title">Title...</string>
 </resources>
