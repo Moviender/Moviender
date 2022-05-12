@@ -69,8 +69,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            android:focusable="true"
-            android:focusedByDefault="true"
             android:scrollbars="vertical"
             app:layoutManager="@{viewModel.layoutManager}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
