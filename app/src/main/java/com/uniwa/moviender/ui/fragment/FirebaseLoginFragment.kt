@@ -25,7 +25,7 @@ class FirebaseLoginFragment : Fragment() {
     ) { res ->
         this.onSignInResult(res)
 
-        sharedViewModel.setUid(FirebaseAuth.getInstance().currentUser!!.uid)
+        sharedViewModel.setUser(FirebaseAuth.getInstance().currentUser!!)
         findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
     }
 
