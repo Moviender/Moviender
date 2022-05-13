@@ -46,4 +46,8 @@ class FriendsFragmentViewModel : ViewModel() {
     fun setErrorMessage(message: String){
         _errorText.value = message
     }
+
+    fun clearUserInput() {
+        friendUsername.value = ""
+    }
 }

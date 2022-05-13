@@ -1,5 +1,6 @@
 package com.uniwa.moviender.ui.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +18,14 @@ import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
 class FriendsFragment : Fragment() {
 
     private lateinit var binding: FragmentFriendsBinding
+    private lateinit var dialog: FriendRequestDialogFragment
 
     private val viewModel: FriendsFragmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_friends, container, false)
 
         return binding.root
@@ -41,24 +43,27 @@ class FriendsFragment : Fragment() {
 
         viewModel.getFriends()
 
-        viewModel.requestResponse.observe(
-            viewLifecycleOwner,
-            Observer<Int> { response ->
-                checkResponse()
-            })
+        viewModel.requestResponse.observe(viewLifecycleOwner) {
+            checkResponse()
+        }
     }
 
     private fun checkResponse() {
         when(viewModel.requestResponse.value) {
             -1 -> {
-                viewModel.setError(true)
                 viewModel.setErrorMessage("Username not found")
-                showFriendRequestDialog()
+                viewModel.setError(true)
+            }
+            1 -> {
+                viewModel.setError(false)
+                dialog.dismiss()
             }
         }
     }
 
     fun showFriendRequestDialog() {
-        FriendRequestDialogFragment().show(childFragmentManager, "request")
+        dialog = FriendRequestDialogFragment()
+        dialog.show(childFragmentManager, "request")
+
     }
 }
