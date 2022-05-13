@@ -50,13 +50,17 @@ class FriendsFragment : Fragment() {
 
     private fun checkResponse() {
         when(viewModel.requestResponse.value) {
-            -1 -> {
-                viewModel.setErrorMessage("Username not found")
-                viewModel.setError(true)
-            }
             1 -> {
                 viewModel.setError(false)
                 dialog.dismiss()
+            }
+            -1 -> {
+                viewModel.setError(true)
+                viewModel.setErrorMessage("Username not found")
+            }
+            -2 -> {
+                viewModel.setError(true)
+                viewModel.setErrorMessage("User already in list")
             }
         }
     }
