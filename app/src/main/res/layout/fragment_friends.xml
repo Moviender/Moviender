@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="friendsFragment"
+            type="com.uniwa.moviender.ui.fragment.FriendsFragment" />
+
+        <variable
             name="viewModel"
             type="com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel" />
     </data>
@@ -44,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:contentDescription="@string/add_new_friend_description"
+            android:onClick="@{() -> friendsFragment.showFriendRequestDialog()}"
             android:src="@drawable/ic_person_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

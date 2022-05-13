@@ -12,5 +12,6 @@ data class Friend(
         REQUEST(2),
         FRIEND(3)
     }
+
 }
 

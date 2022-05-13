@@ -4,6 +4,7 @@ package com.uniwa.moviender.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.uniwa.moviender.model.Friend
+import com.uniwa.moviender.model.ResponseCode
 import com.uniwa.moviender.model.User
 import okhttp3.OkHttpClient
 import org.json.JSONArray
@@ -56,8 +57,9 @@ interface MovienderApiService {
     @GET("/search")
     suspend fun searchByTitle(@Query("title") title: String): List<Movie>
 
+    @Headers("Content-Type: application/json")
     @POST("/friend_request/{uid}")
-    suspend fun friendRequest(@Path("uid") uid: String, @Body friendUsername: String)
+    suspend fun friendRequest(@Path("uid") uid: String, @Query("friend_username") friendUsername: String) : Int
 
     @POST("/respond_friend_request/(uid)")
     suspend fun respondFriendRequest(

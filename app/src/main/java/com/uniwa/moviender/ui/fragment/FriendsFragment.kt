@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
+import com.uniwa.moviender.model.ResponseCode
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
 import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
 import okhttp3.OkHttpClient
@@ -36,11 +38,28 @@ class FriendsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            friendsFragment = this@FriendsFragment
             fragmentFriendsRv.adapter = ProfileAdapter()
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@FriendsFragment.viewModel
         }
 
-            viewModel.getFriends()
+        viewModel.getFriends()
+
+        viewModel.requestResponse.observe(
+            viewLifecycleOwner,
+            Observer<Int> { response ->
+                checkResponse()
+            })
+    }
+
+    private fun checkResponse() {
+        when(viewModel.requestResponse.value) {
+            -1 -> showFriendRequestDialog()
+        }
+    }
+
+    fun showFriendRequestDialog() {
+        FriendRequestDialogFragment().show(childFragmentManager, "request")
     }
 }
