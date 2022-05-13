@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.ProfileItemBinding
 import com.uniwa.moviender.model.Friend
+import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
 
 class ProfileAdapter : ListAdapter<Friend, ProfileAdapter.ProfileViewHolder>(Diffcallback) {
 

@@ -29,6 +29,9 @@ class FriendRequestDialogFragment : DialogFragment() {
         )
         binding.viewModel = this@FriendRequestDialogFragment.viewModel
         binding.lifecycleOwner = this
+        if (viewModel.isErrorEnabled.value == true){
+            binding.usernameTi.error = viewModel.errorText.value
+        }
 
         return activity?.let { fragmentActivity ->
             val builder = AlertDialog.Builder(fragmentActivity)

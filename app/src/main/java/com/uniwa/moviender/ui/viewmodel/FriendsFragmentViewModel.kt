@@ -14,6 +14,12 @@ class FriendsFragmentViewModel : ViewModel() {
     private val _friendList = MutableLiveData<List<Friend>>()
     val friendList: LiveData<List<Friend>> = _friendList
 
+    private val _isErrorEnabled = MutableLiveData<Boolean>()
+    val isErrorEnabled: LiveData<Boolean> = _isErrorEnabled
+
+    private val _errorText = MutableLiveData<String>()
+    val errorText: LiveData<String> = _errorText
+
     val friendUsername = MutableLiveData<String>()
 
     private val _requestResponse = MutableLiveData<Int>()
@@ -31,5 +37,13 @@ class FriendsFragmentViewModel : ViewModel() {
             _requestResponse.value =
                 MovienderApi.movienderApiService.friendRequest("123", friendUsername.value!!)
         }
+    }
+
+    fun setError(isError: Boolean){
+        _isErrorEnabled.value = isError
+    }
+
+    fun setErrorMessage(message: String){
+        _errorText.value = message
     }
 }

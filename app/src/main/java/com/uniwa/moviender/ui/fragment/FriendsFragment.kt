@@ -1,22 +1,17 @@
 package com.uniwa.moviender.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
-import com.uniwa.moviender.model.ResponseCode
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
 import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.WebSocket
-import okhttp3.WebSocketListener
 
 
 class FriendsFragment : Fragment() {
@@ -55,7 +50,11 @@ class FriendsFragment : Fragment() {
 
     private fun checkResponse() {
         when(viewModel.requestResponse.value) {
-            -1 -> showFriendRequestDialog()
+            -1 -> {
+                viewModel.setError(true)
+                viewModel.setErrorMessage("Username not found")
+                showFriendRequestDialog()
+            }
         }
     }
 
