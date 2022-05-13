@@ -6,26 +6,26 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.ProfileItemBinding
-import com.uniwa.moviender.model.User
+import com.uniwa.moviender.model.Friend
 
-class ProfileAdapter : ListAdapter<User, ProfileAdapter.ProfileViewHolder>(Diffcallback) {
+class ProfileAdapter : ListAdapter<Friend, ProfileAdapter.ProfileViewHolder>(Diffcallback) {
 
     inner class ProfileViewHolder(
         private val binding: ProfileItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User) {
-            binding.user = user
+        fun bind(friend: Friend) {
+            binding.friend = friend
             binding.executePendingBindings()
         }
     }
 
-    companion object Diffcallback : DiffUtil.ItemCallback<User>() {
-        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+    companion object Diffcallback : DiffUtil.ItemCallback<Friend>() {
+        override fun areItemsTheSame(oldItem: Friend, newItem: Friend): Boolean {
             return oldItem.uid == newItem.uid
         }
 
-        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem.userName == newItem.userName
+        override fun areContentsTheSame(oldItem: Friend, newItem: Friend): Boolean {
+            return oldItem.username == newItem.username
         }
     }
 

@@ -32,5 +32,6 @@
     <string name="title">Title...</string>
     <string name="movies_fragment_appbar_title">Movies</string>
     <string name="add_new_friend_description">Add new friend</string>
+    <string name="profile_title">Profile</string>
 
 </resources>

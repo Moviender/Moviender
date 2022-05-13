@@ -3,6 +3,7 @@ package com.uniwa.moviender.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.model.User
 import okhttp3.OkHttpClient
 import org.json.JSONArray
@@ -39,7 +40,10 @@ interface MovienderApiService {
     suspend fun getMovies(@Path("page") page: Int, @Query("genres") genres: List<Int>): List<Movie>
 
     @GET("movie_details/{movielens_id}")
-    suspend fun getMovieDetails(@Path("movielens_id") movielens_id: String, @Query("uid") uid: String): MovieDetails
+    suspend fun getMovieDetails(
+        @Path("movielens_id") movielens_id: String,
+        @Query("uid") uid: String
+    ): MovieDetails
 
     @Headers("Content-Type: application/json")
     @POST("/userInitialization")
@@ -51,8 +55,21 @@ interface MovienderApiService {
 
     @GET("/search")
     suspend fun searchByTitle(@Query("title") title: String): List<Movie>
+
+    @POST("/friend_request/{uid}")
+    suspend fun friendRequest(@Path("uid") uid: String, @Body friendUsername: String)
+
+    @POST("/respond_friend_request/(uid)")
+    suspend fun respondFriendRequest(
+        @Path("uid") uid: String,
+        @Body friendUid: String,
+        @Body response: Friend.State
+    )
+
+    @GET("/friends/{uid}")
+    suspend fun getFriendList(@Path("uid") uid: String): List<Friend>
 }
 
 object MovienderApi {
-    val movienderApiService: MovienderApiService by lazy { retrofit.create(MovienderApiService::class.java)}
+    val movienderApiService: MovienderApiService by lazy { retrofit.create(MovienderApiService::class.java) }
 }

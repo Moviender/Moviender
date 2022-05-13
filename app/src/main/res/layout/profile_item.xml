@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="user"
-            type="com.uniwa.moviender.model.User" />
+            name="friend"
+            type="com.uniwa.moviender.model.Friend" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,12 +15,11 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.Material3.ActionBar.Subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:padding="9dp"
-            android:text="@{user.userName}"
+            android:text="@{friend.username}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Username" />

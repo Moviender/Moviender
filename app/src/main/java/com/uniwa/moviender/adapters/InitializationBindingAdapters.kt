@@ -10,6 +10,7 @@ import com.uniwa.moviender.R
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
 import com.uniwa.moviender.data.genres
+import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.model.User
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
 
@@ -20,7 +21,7 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
 }
 
 @BindingAdapter("friendList")
-fun bindFriendList(recyclerView: RecyclerView, friendList: List<User>?) {
+fun bindFriendList(recyclerView: RecyclerView, friendList: List<Friend>?) {
     val adapter = recyclerView.adapter as ProfileAdapter
     adapter.submitList(friendList)
 }
