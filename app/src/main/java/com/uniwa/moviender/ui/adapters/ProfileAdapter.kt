@@ -20,7 +20,10 @@ class ProfileAdapter(
             binding.friend = friend
             if (friend.state == 1) {
                 binding.requestPendingTv.visibility = View.VISIBLE
+                binding.requestAcceptBtn.visibility = View.GONE
+                binding.requestRejectBtn.visibility = View.GONE
             } else if (friend.state == 2) {
+                binding.requestPendingTv.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.VISIBLE
                 binding.requestRejectBtn.visibility = View.VISIBLE
                 binding.requestAcceptBtn.setOnClickListener {
@@ -73,5 +76,9 @@ class ProfileAdapter(
                     true
                 }
         }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 }
