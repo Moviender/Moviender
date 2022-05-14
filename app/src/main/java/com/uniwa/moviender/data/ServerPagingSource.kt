@@ -25,8 +25,7 @@ class ServerPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         val position = params.key ?: API_STARTING_PAGE_INDEX
         return try {
-            val response = service.getMovies(position, genres)
-            val movies = response
+            val movies = service.getMovies(position, genres)
             val nextKey = if (movies.size < 15 || movies.isEmpty()) {
                 null
             }

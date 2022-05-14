@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
@@ -34,7 +35,7 @@ class FriendsFragment : Fragment() {
 
         binding.apply {
             friendsFragment = this@FriendsFragment
-            fragmentFriendsRv.adapter = ProfileAdapter()
+            fragmentFriendsRv.adapter = ProfileAdapter(this@FriendsFragment.viewModel)
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@FriendsFragment.viewModel
             friendsSwipeRefresh.setOnRefreshListener {

@@ -1,9 +1,11 @@
 package com.uniwa.moviender.ui.viewmodel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.model.ResponseCode
 import com.uniwa.moviender.network.MovienderApi
@@ -33,6 +35,12 @@ class FriendsFragmentViewModel : ViewModel() {
         viewModelScope.launch {
             _requestResponse.value =
                 MovienderApi.movienderApiService.friendRequest("123", friendUsername.value!!)
+        }
+    }
+
+    fun respondToFriendRequest(friendUid: String, response: Int) {
+        viewModelScope.launch {
+            MovienderApi.movienderApiService.respondFriendRequest("123", friendUid, response)
         }
     }
 

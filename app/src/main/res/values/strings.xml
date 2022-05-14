@@ -39,5 +39,8 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_username_error_message">Username not found</string>
     <string name="dialog_exists_error_message">User already in the list</string>
+    <string name="friend_request_pending">Pending…</string>
+    <string name="accept_request">Accept</string>
+    <string name="reject_request">Reject</string>
 
 </resources>

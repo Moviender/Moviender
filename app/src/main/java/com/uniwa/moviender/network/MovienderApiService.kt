@@ -61,11 +61,11 @@ interface MovienderApiService {
     @POST("/friend_request/{uid}")
     suspend fun friendRequest(@Path("uid") uid: String, @Query("friend_username") friendUsername: String) : Int
 
-    @POST("/respond_friend_request/(uid)")
+    @POST("/respond_friend_request/{uid}")
     suspend fun respondFriendRequest(
         @Path("uid") uid: String,
-        @Body friendUid: String,
-        @Body response: Friend.State
+        @Query("friend_uid") friendUid: String,
+        @Query("response") response: Int
     )
 
     @GET("/friends/{uid}")
