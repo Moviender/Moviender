@@ -2,6 +2,7 @@ package com.uniwa.moviender.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -26,6 +27,8 @@ class FriendsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_friends, container, false)
+
+        registerForContextMenu(binding.fragmentFriendsRv)
 
         return binding.root
     }

@@ -42,5 +42,6 @@
     <string name="friend_request_pending">Pending…</string>
     <string name="accept_request">Accept</string>
     <string name="reject_request">Reject</string>
+    <string name="friend_delete_action_title">Delete</string>
 
 </resources>

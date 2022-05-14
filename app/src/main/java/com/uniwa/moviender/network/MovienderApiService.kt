@@ -57,9 +57,11 @@ interface MovienderApiService {
     @GET("/search")
     suspend fun searchByTitle(@Query("title") title: String): List<Movie>
 
-    @Headers("Content-Type: application/json")
     @POST("/friend_request/{uid}")
-    suspend fun friendRequest(@Path("uid") uid: String, @Query("friend_username") friendUsername: String) : Int
+    suspend fun friendRequest(
+        @Path("uid") uid: String,
+        @Query("friend_username") friendUsername: String
+    ): Int
 
     @POST("/respond_friend_request/{uid}")
     suspend fun respondFriendRequest(
@@ -70,6 +72,9 @@ interface MovienderApiService {
 
     @GET("/friends/{uid}")
     suspend fun getFriendList(@Path("uid") uid: String): List<Friend>
+
+    @POST("/delete_friend/{uid}")
+    suspend fun deleteFriend(@Path("uid") uid: String, @Query("friend_uid") friendUid: String)
 }
 
 object MovienderApi {

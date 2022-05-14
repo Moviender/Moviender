@@ -51,4 +51,11 @@ class FriendsFragmentViewModel : ViewModel() {
     fun clearUserInput() {
         friendUsername.value = ""
     }
+
+    fun deleteFriend(friend: Friend) {
+        viewModelScope.launch {
+            MovienderApi.movienderApiService.deleteFriend("123", friend.uid)
+        }
+        getFriends()
+    }
 }

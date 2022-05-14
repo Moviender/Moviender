@@ -1,8 +1,6 @@
 package com.uniwa.moviender.ui.adapters
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +19,7 @@ class ProfileAdapter(
             binding.friend = friend
             if (friend.state == 1) {
                 binding.requestPendingTv.visibility = View.VISIBLE
-            }
-            else if (friend.state == 2) {
+            } else if (friend.state == 2) {
                 binding.requestAcceptBtn.visibility = View.VISIBLE
                 binding.requestRejectBtn.visibility = View.VISIBLE
                 binding.requestAcceptBtn.setOnClickListener {
@@ -55,6 +52,16 @@ class ProfileAdapter(
     }
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
+        val friend = getItem(position)
         holder.bind(getItem(position))
+        holder.itemView.setOnCreateContextMenuListener { contextMenu, view, contextMenuInfo ->
+            contextMenu.add("Delete")
+                .setOnMenuItemClickListener {
+                    viewModel.deleteFriend(friend)
+
+                    true
+                }
+        }
+        holder.bind(friend)
     }
 }
