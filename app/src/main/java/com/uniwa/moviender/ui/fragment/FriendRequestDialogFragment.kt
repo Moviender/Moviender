@@ -14,7 +14,7 @@ import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FriendRequestDialogBinding
 import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
 
-class FriendRequestDialogFragment: DialogFragment() {
+class FriendRequestDialogFragment : DialogFragment() {
 
     private lateinit var binding: FriendRequestDialogBinding
 
@@ -32,11 +32,16 @@ class FriendRequestDialogFragment: DialogFragment() {
 
         viewModel.isErrorEnabled.observe(this) {
             if (viewModel.isErrorEnabled.value == true) {
-                if(viewModel.requestResponse.value == -1) {
-                    binding.usernameTi.error = getString(R.string.dialog_username_error_message)
-                }
-                else if (viewModel.requestResponse.value == -2) {
-                    binding.usernameTi.error = getString(R.string.dialog_exists_error_message)
+                when (viewModel.requestResponse.value) {
+                    -1 -> {
+                        binding.usernameTi.error = getString(R.string.dialog_username_error_message)
+                    }
+                    -2 -> {
+                        binding.usernameTi.error = getString(R.string.dialog_exists_error_message)
+                    }
+                    -3 -> {
+                        binding.usernameTi.error = getString(R.string.same_uid_error_message)
+                    }
                 }
             }
         }

@@ -61,7 +61,7 @@ class FriendsFragment : Fragment() {
                 dialog.dismiss()
                 viewModel.getFriends()
             }
-            -1, -2 -> {
+            -1, -2, -3 -> {
                 viewModel.setError(true)
             }
         }

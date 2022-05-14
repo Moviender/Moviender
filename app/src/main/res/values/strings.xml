@@ -43,5 +43,6 @@
     <string name="accept_request">Accept</string>
     <string name="decline_request">Decline</string>
     <string name="friend_delete_action_title">Delete</string>
+    <string name="same_uid_error_message">You silly!</string>
 
 </resources>
