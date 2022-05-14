@@ -37,6 +37,11 @@ class FriendsFragment : Fragment() {
             fragmentFriendsRv.adapter = ProfileAdapter()
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@FriendsFragment.viewModel
+            friendsSwipeRefresh.setOnRefreshListener {
+                this@FriendsFragment.viewModel.getFriends()
+                friendsSwipeRefresh.isRefreshing = false
+            }
+
         }
 
         viewModel.getFriends()
