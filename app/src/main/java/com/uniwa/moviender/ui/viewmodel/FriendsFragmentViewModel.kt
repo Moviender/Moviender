@@ -41,7 +41,9 @@ class FriendsFragmentViewModel : ViewModel() {
     fun respondToFriendRequest(friendUid: String, response: Int) {
         viewModelScope.launch {
             MovienderApi.movienderApiService.respondFriendRequest("123", friendUid, response)
+            getFriends()
         }
+
     }
 
     fun setError(isError: Boolean){
@@ -55,7 +57,8 @@ class FriendsFragmentViewModel : ViewModel() {
     fun deleteFriend(friend: Friend) {
         viewModelScope.launch {
             MovienderApi.movienderApiService.deleteFriend("123", friend.uid)
+            getFriends()
         }
-        getFriends()
+
     }
 }

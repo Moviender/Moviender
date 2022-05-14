@@ -1,6 +1,7 @@
 package com.uniwa.moviender.ui.adapters
 
 import android.view.*
+import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -24,12 +25,14 @@ class ProfileAdapter(
                 binding.requestRejectBtn.visibility = View.VISIBLE
                 binding.requestAcceptBtn.setOnClickListener {
                     viewModel.respondToFriendRequest(friend.uid, 1)
-                    viewModel.getFriends()
                 }
                 binding.requestRejectBtn.setOnClickListener {
                     viewModel.respondToFriendRequest(friend.uid, 0)
-                    viewModel.getFriends()
                 }
+            } else if (friend.state == 3) {
+                binding.requestPendingTv.visibility = View.GONE
+                binding.requestAcceptBtn.visibility = View.GONE
+                binding.requestRejectBtn.visibility = View.GONE
             }
             binding.executePendingBindings()
         }
@@ -53,8 +56,16 @@ class ProfileAdapter(
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         val friend = getItem(position)
-        holder.bind(getItem(position))
-        holder.itemView.setOnCreateContextMenuListener { contextMenu, view, contextMenuInfo ->
+
+        if (friend.state == 3) {
+            addDeleteOption(holder.itemView, friend)
+        }
+
+        holder.bind(friend)
+    }
+
+    private fun addDeleteOption(itemView: View, friend: Friend) {
+        itemView.setOnCreateContextMenuListener { contextMenu, view, contextMenuInfo ->
             contextMenu.add("Delete")
                 .setOnMenuItemClickListener {
                     viewModel.deleteFriend(friend)
@@ -62,6 +73,5 @@ class ProfileAdapter(
                     true
                 }
         }
-        holder.bind(friend)
     }
 }
