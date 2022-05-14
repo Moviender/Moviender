@@ -1,6 +1,5 @@
 package com.uniwa.moviender.ui.fragment
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
@@ -51,16 +49,11 @@ class FriendsFragment : Fragment() {
     private fun checkResponse() {
         when(viewModel.requestResponse.value) {
             1 -> {
-                viewModel.setError(false)
                 dialog.dismiss()
+                viewModel.getFriends()
             }
-            -1 -> {
+            -1, -2 -> {
                 viewModel.setError(true)
-                viewModel.setErrorMessage("Username not found")
-            }
-            -2 -> {
-                viewModel.setError(true)
-                viewModel.setErrorMessage("User already in list")
             }
         }
     }

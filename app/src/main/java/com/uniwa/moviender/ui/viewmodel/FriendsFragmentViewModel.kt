@@ -17,9 +17,6 @@ class FriendsFragmentViewModel : ViewModel() {
     private val _isErrorEnabled = MutableLiveData<Boolean>()
     val isErrorEnabled: LiveData<Boolean> = _isErrorEnabled
 
-    private val _errorText = MutableLiveData<String>()
-    val errorText: LiveData<String> = _errorText
-
     val friendUsername = MutableLiveData<String>()
 
     private val _requestResponse = MutableLiveData<Int>()
@@ -41,10 +38,6 @@ class FriendsFragmentViewModel : ViewModel() {
 
     fun setError(isError: Boolean){
         _isErrorEnabled.value = isError
-    }
-
-    fun setErrorMessage(message: String){
-        _errorText.value = message
     }
 
     fun clearUserInput() {

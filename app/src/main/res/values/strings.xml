@@ -29,7 +29,7 @@
 
     <string name="navigation_movies">Movies</string>
     <string name="search_action">Search</string>
-    <string name="title">Title...</string>
+    <string name="title">Title…</string>
     <string name="movies_fragment_appbar_title">Movies</string>
     <string name="add_new_friend_description">Add new friend</string>
     <string name="profile_title">Profile</string>
@@ -37,5 +37,7 @@
 
     <string name="dialog_add_friend">Add friend</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_username_error_message">Username not found</string>
+    <string name="dialog_exists_error_message">User already in the list</string>
 
 </resources>
