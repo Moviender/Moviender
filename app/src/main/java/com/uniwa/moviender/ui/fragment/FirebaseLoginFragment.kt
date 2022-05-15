@@ -2,6 +2,7 @@ package com.uniwa.moviender.ui.fragment
 
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,8 +28,6 @@ class FirebaseLoginFragment : Fragment() {
         FirebaseAuthUIActivityResultContract()
     ) { res ->
         this.onSignInResult(res)
-
-        findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
     }
 
     override fun onCreateView(
@@ -42,10 +41,25 @@ class FirebaseLoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // set observer
+        sharedViewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
+            Log.d("test", "User is $initialized")
+            if (initialized) {
+                findNavController().navigate(R.id.action_firebaseLoginFragment_to_hubActivity)
+            } else {
+                sharedViewModel.setUser(firebaseUser!!)
+                findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
+            }
+        }
+
+        FirebaseAuth.getInstance().signOut()
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+
         if (isUserSignedIn()) {
             sharedViewModel.setUser(firebaseUser!!)
             checkInitialization()
-        } else {
+        }
+        else {
             createSignInIntent()
         }
     }
@@ -56,6 +70,7 @@ class FirebaseLoginFragment : Fragment() {
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.GoogleBuilder().build()
         )
+
 
         // Create and launch sign-in intent
         val signInIntent = AuthUI.getInstance()
@@ -75,7 +90,8 @@ class FirebaseLoginFragment : Fragment() {
             sharedViewModel.setUser(firebaseUser!!)
             if (response?.isNewUser == true) {
                 sharedViewModel.insertUser()
-            } else {
+            }
+            else {
                 checkInitialization()
             }
         } else {
@@ -90,13 +106,5 @@ class FirebaseLoginFragment : Fragment() {
 
     private fun checkInitialization() {
         sharedViewModel.isUserInitialized()
-        sharedViewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
-            if (initialized) {
-                findNavController().navigate(R.id.action_firebaseLoginFragment_to_hubActivity)
-            } else {
-                sharedViewModel.setUser(firebaseUser!!)
-                findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
-            }
-        }
     }
 }

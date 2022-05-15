@@ -21,6 +21,7 @@
             app:popUpTo="@id/hubActivity"
             app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/initializationFragment"
         android:name="com.uniwa.moviender.ui.fragment.InitializationFragment"
@@ -32,6 +33,7 @@
             app:popUpTo="@id/hubActivity"
             app:popUpToInclusive="true" />
     </fragment>
+
     <activity
         android:id="@+id/hubActivity"
         android:name="com.uniwa.moviender.ui.HubActivity"
