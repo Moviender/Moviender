@@ -12,6 +12,7 @@ import com.uniwa.moviender.network.MovienderApi
 import kotlinx.coroutines.launch
 
 class FriendsFragmentViewModel : ViewModel() {
+    
 
     private val _friendList = MutableLiveData<List<Friend>>()
     val friendList: LiveData<List<Friend>> = _friendList
@@ -23,24 +24,30 @@ class FriendsFragmentViewModel : ViewModel() {
 
     private val _requestResponse = MutableLiveData<Int>()
     val requestResponse: LiveData<Int> = _requestResponse
+    
+    private lateinit var uid: String
+    
+    fun setUid(uid: String) {
+        this@FriendsFragmentViewModel.uid = uid
+    }
 
     fun getFriends() {
         viewModelScope.launch {
             _friendList.value =
-                MovienderApi.movienderApiService.getFriendList("123")
+                MovienderApi.movienderApiService.getFriendList(uid)
         }
     }
 
     fun addFriend() {
         viewModelScope.launch {
             _requestResponse.value =
-                MovienderApi.movienderApiService.friendRequest("123", friendUsername.value!!)
+                MovienderApi.movienderApiService.friendRequest(uid, friendUsername.value!!)
         }
     }
 
     fun respondToFriendRequest(friendUid: String, response: Int) {
         viewModelScope.launch {
-            MovienderApi.movienderApiService.respondFriendRequest("123", friendUid, response)
+            MovienderApi.movienderApiService.respondFriendRequest(uid, friendUid, response)
             getFriends()
         }
 
@@ -56,7 +63,7 @@ class FriendsFragmentViewModel : ViewModel() {
 
     fun deleteFriend(friend: Friend) {
         viewModelScope.launch {
-            MovienderApi.movienderApiService.deleteFriend("123", friend.uid)
+            MovienderApi.movienderApiService.deleteFriend(uid, friend.uid)
             getFriends()
         }
 

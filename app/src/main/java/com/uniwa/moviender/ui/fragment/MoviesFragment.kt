@@ -11,8 +11,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +27,8 @@ import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.ui.adapters.MoviesGridAdapter
 import com.uniwa.moviender.ui.adapters.MoviesHorizontalAdapter
 import com.uniwa.moviender.ui.adapters.MoviesSearchAdapter
+import com.uniwa.moviender.ui.viewmodel.HubViewModel
+import com.uniwa.moviender.ui.viewmodel.HubViewModelFactory
 import com.uniwa.moviender.ui.viewmodel.MoviesViewModel
 
 class MoviesFragment : Fragment() {
@@ -37,6 +41,10 @@ class MoviesFragment : Fragment() {
     private lateinit var moviesLayout: LinearLayoutManager
     private lateinit var searchLayout: GridLayoutManager
     private lateinit var callback: OnBackPressedCallback
+
+    private val sharedViewModel: HubViewModel by activityViewModels {
+        HubViewModelFactory(findNavController())
+    }
 
     private val viewModel: MoviesViewModel by viewModels {
         MoviesViewModelFactory(MovienderApi.movienderApiService, listOf(16, 878, 37, 28, 53))
@@ -84,6 +92,8 @@ class MoviesFragment : Fragment() {
             prepareForMovies()
         }
         callback.isEnabled = false
+
+        viewModel.setUid(sharedViewModel.uid)
 
         return binding.root
     }

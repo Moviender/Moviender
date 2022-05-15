@@ -15,4 +15,19 @@
         android:name="com.uniwa.moviender.ui.fragment.FriendsFragment"
         tools:layout="@layout/fragment_friends"
         android:label="FriendsFragment" />
+    <activity
+        android:id="@+id/startup"
+        android:name="com.uniwa.moviender.ui.Startup"
+        android:label="activity_startup"
+        tools:layout="@layout/activity_startup" />
+    <activity
+        android:id="@+id/hubActivity2"
+        android:name="com.uniwa.moviender.ui.HubActivity"
+        tools:layout="@layout/activity_startup"
+        android:label="HubActivity" />
+    <action
+        android:id="@+id/action_hubActivity_to_startupActivity"
+        app:destination="@id/startup"
+        app:popUpTo="@id/startup"
+        app:popUpToInclusive="true" />
 </navigation>

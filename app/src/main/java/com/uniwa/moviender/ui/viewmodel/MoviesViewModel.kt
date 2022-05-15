@@ -27,6 +27,8 @@ class MoviesViewModel(
     }
 
     var movies = _movies
+    
+    private lateinit var _uid: String
 
     private val _searchedResults = MutableLiveData<List<Movie>>()
     val searchedResults: LiveData<List<Movie>> = _searchedResults
@@ -44,7 +46,7 @@ class MoviesViewModel(
 
     private fun getMovieDetails(movie: Movie) {
         viewModelScope.launch {
-            _selectedMovieDetails.value = service.getMovieDetails(movie.movielensId, "123")
+            _selectedMovieDetails.value = service.getMovieDetails(movie.movielensId, _uid)
         }
     }
 
@@ -73,7 +75,7 @@ class MoviesViewModel(
         viewModelScope.launch {
             service.updateRating(
                 UserRatings(
-                    "123",
+                    _uid,
                     listOf(Rating(_selectedMovie.value!!.movielensId, rating))
                 )
             )
@@ -93,6 +95,10 @@ class MoviesViewModel(
 
     fun changeLayoutManager(layoutManager: RecyclerView.LayoutManager) {
         _layoutManager.value = layoutManager
+    }
+    
+    fun setUid(uid: String) {
+        this@MoviesViewModel._uid = uid
     }
 
 }

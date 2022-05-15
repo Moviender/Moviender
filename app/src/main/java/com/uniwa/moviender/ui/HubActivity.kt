@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.ActivityHubBinding
+import com.uniwa.moviender.ui.viewmodel.HubViewModel
 
 class HubActivity : AppCompatActivity() {
 
