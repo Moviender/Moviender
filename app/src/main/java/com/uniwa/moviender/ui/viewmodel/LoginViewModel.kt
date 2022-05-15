@@ -13,7 +13,7 @@ import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.Rating
 import com.uniwa.moviender.network.UserRatings
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class LoginViewModel : ViewModel() {
 
@@ -30,9 +30,14 @@ class LoginViewModel : ViewModel() {
     private val _ratedMovies = MutableLiveData<Int>(0)
     val ratedMovies: LiveData<Int> = _ratedMovies
 
+    private val _isInitialized = MutableLiveData<Boolean>()
+    val isInitialized: LiveData<Boolean> = _isInitialized
+
     fun setUser(user: FirebaseUser) {
         this@LoginViewModel.user = user
+    }
 
+    fun insertUser() {
         viewModelScope.launch {
             MovienderApi.movienderApiService.insertUser(User(user.uid, user.displayName!!))
         }
@@ -63,6 +68,12 @@ class LoginViewModel : ViewModel() {
 
     fun addMovieRatingBar(ratingBar: RatingBar, movieId: String) {
         movieRatingBar.getOrPut(ratingBar) { movieId }
+    }
+
+    fun isUserInitialized() {
+        viewModelScope.launch {
+            _isInitialized.value = MovienderApi.movienderApiService.isInitialized(user.uid)
+        }
     }
 
     fun sendRatings() {

@@ -12,6 +12,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.uniwa.moviender.R
 import com.uniwa.moviender.ui.viewmodel.LoginViewModel
 
@@ -19,13 +20,14 @@ class FirebaseLoginFragment : Fragment() {
 
     private val sharedViewModel: LoginViewModel by activityViewModels()
 
+    private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+
     // See: https://developer.android.com/training/basics/intents/result
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
         this.onSignInResult(res)
 
-        sharedViewModel.setUser(FirebaseAuth.getInstance().currentUser!!)
         findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
     }
 
@@ -40,9 +42,13 @@ class FirebaseLoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        createSignInIntent()
+        if (isUserSignedIn()) {
+            sharedViewModel.setUser(firebaseUser!!)
+            checkInitialization()
+        } else {
+            createSignInIntent()
+        }
     }
-
 
     private fun createSignInIntent() {
         // Choose authentication providers
@@ -55,6 +61,7 @@ class FirebaseLoginFragment : Fragment() {
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
+            .setIsSmartLockEnabled(false)
             .build()
         signInLauncher.launch(signInIntent)
     }
@@ -62,16 +69,15 @@ class FirebaseLoginFragment : Fragment() {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
 
-        if (response?.isNewUser == true) {
-            print("New")
-        }
-        else {
-            print("Old")
-        }
+        firebaseUser = FirebaseAuth.getInstance().currentUser
 
         if (result.resultCode == RESULT_OK) {
-            // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser
+            sharedViewModel.setUser(firebaseUser!!)
+            if (response?.isNewUser == true) {
+                sharedViewModel.insertUser()
+            } else {
+                checkInitialization()
+            }
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check
@@ -80,13 +86,17 @@ class FirebaseLoginFragment : Fragment() {
         }
     }
 
-    /*
-    private fun signOut() {
-        AuthUI.getInstance()
-            .signOut(this)
-            .addOnCompleteListener {
-                // ...
+    private fun isUserSignedIn(): Boolean = firebaseUser != null
+
+    private fun checkInitialization() {
+        sharedViewModel.isUserInitialized()
+        sharedViewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
+            if (initialized) {
+                findNavController().navigate(R.id.action_firebaseLoginFragment_to_hubActivity)
+            } else {
+                sharedViewModel.setUser(firebaseUser!!)
+                findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
             }
+        }
     }
-    */
 }

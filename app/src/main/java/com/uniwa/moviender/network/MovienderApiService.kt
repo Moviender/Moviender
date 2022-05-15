@@ -4,10 +4,8 @@ package com.uniwa.moviender.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.uniwa.moviender.model.Friend
-import com.uniwa.moviender.model.ResponseCode
 import com.uniwa.moviender.model.User
 import okhttp3.OkHttpClient
-import org.json.JSONArray
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
@@ -75,6 +73,9 @@ interface MovienderApiService {
 
     @POST("/delete_friend/{uid}")
     suspend fun deleteFriend(@Path("uid") uid: String, @Query("friend_uid") friendUid: String)
+
+    @GET("/initialized/{uid}")
+    suspend fun isInitialized(@Path("uid") uid: String): Boolean
 }
 
 object MovienderApi {
