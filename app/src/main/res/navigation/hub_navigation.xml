@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/hub_navigation"
-    app:startDestination="@id/friendsFragment">
+    app:startDestination="@id/navigation_friends">
 
     <fragment
-        android:id="@+id/moviesFragment"
+        android:id="@id/navigation_movies"
         android:name="com.uniwa.moviender.ui.fragment.MoviesFragment"
         android:label="MoviesFragment"
         tools:layout="@layout/fragment_movies"/>
     <fragment
-        android:id="@+id/friendsFragment"
+        android:id="@id/navigation_friends"
         android:name="com.uniwa.moviender.ui.fragment.FriendsFragment"
+        tools:layout="@layout/fragment_friends"
         android:label="FriendsFragment" />
 </navigation>
