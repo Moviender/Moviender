@@ -53,7 +53,7 @@ class ProfileAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
         return ProfileViewHolder(
-            ProfileItemBinding.inflate(LayoutInflater.from(parent.context))
+            ProfileItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
