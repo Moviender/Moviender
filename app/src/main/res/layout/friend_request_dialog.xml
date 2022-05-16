@@ -9,9 +9,9 @@
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_ti"
@@ -23,18 +23,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dialog_friend_username"
                 android:inputType="textPersonName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={viewModel.friendUsername}"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
-                android:hint="@string/hint_username" />
-
+                android:hint="@string/hint_username"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </layout>

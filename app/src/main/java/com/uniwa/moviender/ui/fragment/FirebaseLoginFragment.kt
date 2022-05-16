@@ -43,7 +43,6 @@ class FirebaseLoginFragment : Fragment() {
 
         // set observer
         sharedViewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
-            Log.d("test", "User is $initialized")
             if (initialized) {
                 findNavController().navigate(R.id.action_firebaseLoginFragment_to_hubActivity)
             } else {
@@ -90,6 +89,7 @@ class FirebaseLoginFragment : Fragment() {
             sharedViewModel.setUser(firebaseUser!!)
             if (response?.isNewUser == true) {
                 sharedViewModel.insertUser()
+                findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
             }
             else {
                 checkInitialization()
