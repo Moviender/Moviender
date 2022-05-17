@@ -97,4 +97,7 @@ dependencies {
 
     // OkHttp
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+
+    // FCM
+    implementation 'com.google.firebase:firebase-messaging'
 }

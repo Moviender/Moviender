@@ -76,6 +76,9 @@ interface MovienderApiService {
 
     @GET("/initialized/{uid}")
     suspend fun isInitialized(@Path("uid") uid: String): Boolean
+
+    @POST("/fcm_token/{uid}")
+    suspend fun storeToken(@Path("uid") uid: String, @Query("token") token: String)
 }
 
 object MovienderApi {

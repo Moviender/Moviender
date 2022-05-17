@@ -51,9 +51,6 @@ class FirebaseLoginFragment : Fragment() {
             }
         }
 
-        FirebaseAuth.getInstance().signOut()
-        firebaseUser = FirebaseAuth.getInstance().currentUser
-
         if (isUserSignedIn()) {
             sharedViewModel.setUser(firebaseUser!!)
             checkInitialization()
@@ -93,6 +90,7 @@ class FirebaseLoginFragment : Fragment() {
             }
             else {
                 checkInitialization()
+                sharedViewModel.storeToken()
             }
         } else {
             // Sign in failed. If response is null the user canceled the

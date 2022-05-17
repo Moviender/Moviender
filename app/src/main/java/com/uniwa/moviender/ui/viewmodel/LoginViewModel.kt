@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.messaging.FirebaseMessaging
 import com.uniwa.moviender.data.UserDataStore
 import com.uniwa.moviender.model.User
 import com.uniwa.moviender.network.Movie
@@ -38,8 +39,19 @@ class LoginViewModel : ViewModel() {
     }
 
     fun insertUser() {
-        viewModelScope.launch {
-            MovienderApi.movienderApiService.insertUser(User(user.uid, user.displayName!!))
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            viewModelScope.launch {
+                MovienderApi.movienderApiService.insertUser(User(user.uid, user.displayName!!))
+                MovienderApi.movienderApiService.storeToken(user.uid, token)
+            }
+        }
+    }
+
+    fun storeToken() {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            viewModelScope.launch {
+                MovienderApi.movienderApiService.storeToken(user.uid, token)
+            }
         }
     }
 
