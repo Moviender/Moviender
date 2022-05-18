@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
+import com.uniwa.moviender.HubNavigationDirections
 import com.uniwa.moviender.R
+import com.uniwa.moviender.adapters.bindPosterImage
 import com.uniwa.moviender.databinding.SessionDialogBinding
 
 class StartSessionDialogFragment : DialogFragment() {
@@ -22,6 +25,12 @@ class StartSessionDialogFragment : DialogFragment() {
             false
         )
         binding.lifecycleOwner = this
+        binding.apply {
+            svdBtn.setOnClickListener {
+                val action = HubNavigationDirections.actionHubActivityToSessionActivity(1)
+                findNavController().navigate(action)
+            }
+        }
 
         return activity?.let {
             val builder = AlertDialog.Builder(it)

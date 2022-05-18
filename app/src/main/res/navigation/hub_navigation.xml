@@ -25,6 +25,18 @@
         android:name="com.uniwa.moviender.ui.HubActivity"
         tools:layout="@layout/activity_startup"
         android:label="HubActivity" />
+    <activity
+        android:id="@+id/sessionActivity"
+        android:name="com.uniwa.moviender.ui.SessionActivity"
+        tools:layout="@layout/activity_session"
+        android:label="SessionActivity" >
+        <argument
+            android:name="type"
+            app:argType="integer" />
+    </activity>
+    <action
+        android:id="@+id/action_hubActivity_to_sessionActivity"
+        app:destination="@id/sessionActivity"/>
     <action
         android:id="@+id/action_hubActivity_to_startupActivity"
         app:destination="@id/startup"

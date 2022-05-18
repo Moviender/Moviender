@@ -13,6 +13,7 @@ import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.model.User
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
+import com.uniwa.moviender.ui.adapters.SessionGenresAdapter
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
@@ -24,6 +25,15 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
 fun bindFriendList(recyclerView: RecyclerView, friendList: List<Friend>?) {
     val adapter = recyclerView.adapter as ProfileAdapter
     adapter.submitList(friendList)
+}
+
+@BindingAdapter("genresList")
+fun bindGenreList(recyclerView: RecyclerView, genres: List<Int>?) {
+    val adapter = recyclerView.adapter as SessionGenresAdapter
+    val list = genres?.map { genreId ->
+        recyclerView.resources.getString(genreId)
+    }?.sorted()
+    adapter.submitList(list)
 }
 
 @BindingAdapter("genres")

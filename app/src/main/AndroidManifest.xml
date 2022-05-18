@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moviender">
+        <activity
+            android:name=".ui.SessionActivity"
+            android:exported="false" />
+
         <service
             android:name=".services.NotificationService"
             android:exported="false">
@@ -16,6 +20,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".ui.HubActivity"
             android:exported="false" />
