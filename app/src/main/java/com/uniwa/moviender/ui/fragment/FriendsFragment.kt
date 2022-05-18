@@ -1,5 +1,7 @@
 package com.uniwa.moviender.ui.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -11,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
@@ -46,7 +49,8 @@ class FriendsFragment : Fragment() {
 
         binding.apply {
             friendsFragment = this@FriendsFragment
-            fragmentFriendsRv.adapter = ProfileAdapter(this@FriendsFragment.viewModel)
+            fragmentFriendsRv.adapter =
+                ProfileAdapter(this@FriendsFragment.viewModel, this@FriendsFragment)
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@FriendsFragment.viewModel
             friendsSwipeRefresh.setOnRefreshListener {
@@ -64,7 +68,7 @@ class FriendsFragment : Fragment() {
     }
 
     private fun checkResponse() {
-        when(viewModel.requestResponse.value) {
+        when (viewModel.requestResponse.value) {
             1 -> {
                 dialog.dismiss()
                 viewModel.getFriends()
@@ -78,6 +82,10 @@ class FriendsFragment : Fragment() {
     fun showFriendRequestDialog() {
         dialog = FriendRequestDialogFragment()
         dialog.show(childFragmentManager, "request")
-
     }
+
+    fun showSessionDialog() {
+        StartSessionDialogFragment().show(childFragmentManager, "session")
+    }
+
 }

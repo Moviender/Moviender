@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.ProfileItemBinding
 import com.uniwa.moviender.model.Friend
+import com.uniwa.moviender.ui.fragment.FriendsFragment
 import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
 
 class ProfileAdapter(
-    private val viewModel: FriendsFragmentViewModel
+    private val viewModel: FriendsFragmentViewModel,
+    private val friendsFragment: FriendsFragment
 ) : ListAdapter<Friend, ProfileAdapter.ProfileViewHolder>(Diffcallback) {
 
     inner class ProfileViewHolder(
@@ -36,6 +38,9 @@ class ProfileAdapter(
                 }
             } else if (friend.state == 3) {
                 binding.startSessionBtn.visibility = View.VISIBLE
+                binding.startSessionBtn.setOnClickListener {
+                    friendsFragment.showSessionDialog()
+                }
                 binding.requestPendingTv.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.GONE
                 binding.requestRejectBtn.visibility = View.GONE
