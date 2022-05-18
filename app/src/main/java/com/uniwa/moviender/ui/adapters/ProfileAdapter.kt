@@ -22,8 +22,10 @@ class ProfileAdapter(
                 binding.requestPendingTv.visibility = View.VISIBLE
                 binding.requestAcceptBtn.visibility = View.GONE
                 binding.requestRejectBtn.visibility = View.GONE
+                binding.startSessionBtn.visibility = View.GONE
             } else if (friend.state == 2) {
                 binding.requestPendingTv.visibility = View.GONE
+                binding.startSessionBtn.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.VISIBLE
                 binding.requestRejectBtn.visibility = View.VISIBLE
                 binding.requestAcceptBtn.setOnClickListener {
@@ -33,6 +35,7 @@ class ProfileAdapter(
                     viewModel.respondToFriendRequest(friend.uid, 0)
                 }
             } else if (friend.state == 3) {
+                binding.startSessionBtn.visibility = View.VISIBLE
                 binding.requestPendingTv.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.GONE
                 binding.requestRejectBtn.visibility = View.GONE

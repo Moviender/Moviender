@@ -45,5 +45,6 @@
     <string name="friend_delete_action_title">Delete</string>
     <string name="same_uid_error_message">You silly!</string>
     <string name="navigation_friends">Friends</string>
+    <string name="start_session">Start session</string>
 
 </resources>
