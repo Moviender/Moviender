@@ -2,12 +2,17 @@ package com.uniwa.moviender.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
+import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.uniwa.moviender.R
 import com.uniwa.moviender.network.MovienderApi
+import com.uniwa.moviender.ui.HubActivity
 import kotlinx.coroutines.*
 
 private const val CHANNEL_ID = "1"
@@ -34,6 +39,16 @@ class NotificationService : FirebaseMessagingService() {
     }
 
     private fun postNotification(message: RemoteMessage) {
+        val intent = Intent(this, HubActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+
+        val pendingIntent = NavDeepLinkBuilder(this)
+            .setComponentName(HubActivity::class.java)
+            .setGraph(R.navigation.hub_navigation)
+            .setDestination(R.id.navigation_friends)
+            .createPendingIntent()
+
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -41,6 +56,8 @@ class NotificationService : FirebaseMessagingService() {
             .setContentTitle("New friend request")
             .setContentText(message.data["name"])
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
             .build()
 
         notificationManager.notify(1, builder)
