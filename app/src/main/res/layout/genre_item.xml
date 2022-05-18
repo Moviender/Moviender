@@ -6,8 +6,12 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="com.uniwa.moviender.ui.viewmodel.SessionGenresViewModel" />
+
+        <variable
             name="genre"
-            type="String" />
+            type="int" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="@{genre}"
+            app:idToString="@{genre}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Action" />
@@ -28,6 +32,7 @@
         <com.google.android.material.checkbox.MaterialCheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onCheckedChanged="@{(compound, checked) -> viewModel.onCheckedChanged(genre, checked)}"
             app:layout_constraintBottom_toBottomOf="@id/genre_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/genre_title" />

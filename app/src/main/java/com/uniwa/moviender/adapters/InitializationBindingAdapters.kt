@@ -6,6 +6,7 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.android.material.textview.MaterialTextView
 import com.uniwa.moviender.R
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
@@ -30,10 +31,15 @@ fun bindFriendList(recyclerView: RecyclerView, friendList: List<Friend>?) {
 @BindingAdapter("genresList")
 fun bindGenreList(recyclerView: RecyclerView, genres: List<Int>?) {
     val adapter = recyclerView.adapter as SessionGenresAdapter
-    val list = genres?.map { genreId ->
+    val list = genres?.sortedBy { genreId ->
         recyclerView.resources.getString(genreId)
-    }?.sorted()
+    }
     adapter.submitList(list)
+}
+
+@BindingAdapter("idToString")
+fun bindResourceId(materialTextView: MaterialTextView, resourceId: Int) {
+    materialTextView.text = materialTextView.resources.getString(resourceId)
 }
 
 @BindingAdapter("genres")

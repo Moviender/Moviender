@@ -33,7 +33,7 @@ class SessionGenresFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@SessionGenresFragment.viewModel
-            genresRv.adapter = SessionGenresAdapter()
+            genresRv.adapter = SessionGenresAdapter(this@SessionGenresFragment.viewModel)
         }
     }
 }
