@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        
+        <variable
+            name="sessionGenresFragment"
+            type="com.uniwa.moviender.ui.fragment.SessionGenresFragment" />
         <variable
             name="viewModel"
             type="com.uniwa.moviender.ui.viewmodel.SessionGenresViewModel" />
@@ -49,6 +52,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.97"
             android:gravity="center"
+            android:onClick="@{() -> sessionGenresFragment.startSession()}"
             android:text="@string/genre_selection_start"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

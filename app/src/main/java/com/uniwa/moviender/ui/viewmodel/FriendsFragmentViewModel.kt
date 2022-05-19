@@ -24,6 +24,8 @@ class FriendsFragmentViewModel : ViewModel() {
 
     private val _requestResponse = MutableLiveData<Int>()
     val requestResponse: LiveData<Int> = _requestResponse
+
+    private lateinit var friendUid: String
     
     private lateinit var uid: String
     
@@ -56,6 +58,12 @@ class FriendsFragmentViewModel : ViewModel() {
     fun setError(isError: Boolean){
         _isErrorEnabled.value = isError
     }
+
+    fun setFriendUid(uid: String) {
+        friendUid = uid
+    }
+
+    fun getFriendUid(): String = friendUid
 
     fun clearUserInput() {
         friendUsername.value = ""

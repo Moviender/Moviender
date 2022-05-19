@@ -33,6 +33,9 @@
         <argument
             android:name="type"
             app:argType="integer" />
+        <argument
+            android:name="friend_uid"
+            app:argType="string" />
     </activity>
     <action
         android:id="@+id/action_hubActivity_to_sessionActivity"

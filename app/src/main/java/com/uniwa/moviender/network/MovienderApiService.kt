@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.model.User
+import com.uniwa.moviender.model.helper.SessionRequestBody
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -79,6 +80,13 @@ interface MovienderApiService {
 
     @POST("/fcm_token/{uid}")
     suspend fun storeToken(@Path("uid") uid: String, @Query("token") token: String)
+
+    @Headers("Content-Type: application/json")
+    @POST("/session/{uid}")
+    suspend fun initFriendsSession(
+        @Path("uid") uid: String,
+        @Body requestBody: SessionRequestBody
+    ) : Int
 }
 
 object MovienderApi {

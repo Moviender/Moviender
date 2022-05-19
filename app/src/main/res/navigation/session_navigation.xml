@@ -10,5 +10,26 @@
         android:name="com.uniwa.moviender.ui.fragment.SessionGenresFragment"
         android:label="SessionGenresFragment"
         tools:layout="@layout/fragment_session_genres"
-        />
+        >
+        <action
+            android:id="@+id/action_sessionGenresFragment_to_hubActivity"
+            app:destination="@id/hubActivity"
+            app:popUpTo="@id/hubActivity"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_sessionGenresFragment_to_votingFragment"
+            app:destination="@id/votingFragment"
+            app:popUpTo="@id/votingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <activity
+        android:id="@id/hubActivity"
+        android:name="com.uniwa.moviender.ui.HubActivity"
+        tools:layout="@layout/activity_hub"
+        android:label="HubActivity" />
+    <fragment
+        android:id="@+id/votingFragment"
+        android:name="com.uniwa.moviender.ui.fragment.VotingFragment"
+        android:label="fragment_voting"
+        tools:layout="@layout/fragment_voting" />
 </navigation>
