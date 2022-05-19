@@ -25,9 +25,11 @@ class ProfileAdapter(
                 binding.requestAcceptBtn.visibility = View.GONE
                 binding.requestRejectBtn.visibility = View.GONE
                 binding.startSessionBtn.visibility = View.GONE
+                binding.showSessionBtn.visibility = View.GONE
             } else if (friend.state == 2) {
                 binding.requestPendingTv.visibility = View.GONE
                 binding.startSessionBtn.visibility = View.GONE
+                binding.showSessionBtn.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.VISIBLE
                 binding.requestRejectBtn.visibility = View.VISIBLE
                 binding.requestAcceptBtn.setOnClickListener {
@@ -37,13 +39,18 @@ class ProfileAdapter(
                     viewModel.respondToFriendRequest(friend.uid, 0)
                 }
             } else if (friend.state == 3) {
-                binding.startSessionBtn.visibility = View.VISIBLE
-                binding.startSessionBtn.setOnClickListener {
-                    friendsFragment.showSessionDialog()
-                }
                 binding.requestPendingTv.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.GONE
                 binding.requestRejectBtn.visibility = View.GONE
+                binding.showSessionBtn.visibility = View.GONE
+                binding.startSessionBtn.visibility = View.VISIBLE
+                binding.startSessionBtn.setOnClickListener {
+                    viewModel.setFriendUid(friend.uid)
+                    friendsFragment.showSessionDialog()
+                }
+            } else if (friend.state == 4) {
+                binding.showSessionBtn.visibility = View.VISIBLE
+                //TODO go to session
             }
             binding.executePendingBindings()
         }
