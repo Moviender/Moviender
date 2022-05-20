@@ -36,13 +36,13 @@
 
                 <TextView
                     android:id="@+id/movies_toolbar_title"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/movies_fragment_appbar_title"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:textColor="@color/white"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/close_search"
@@ -91,16 +91,22 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="-9dp"
+                app:cardCornerRadius="12dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="9dp"
+                    android:background="@color/movie_details_background">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/movie_details_poster_card"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
                         app:cardCornerRadius="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -124,6 +130,7 @@
                                 style="@style/Widget.MaterialRatingBar.RatingBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:background="@color/movie_details_background"
                                 android:isIndicator="false"
                                 android:minHeight="27dp"
                                 android:numStars="5"
