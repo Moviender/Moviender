@@ -10,8 +10,7 @@ data class Movie(
     val movielensId: String,
     @ColumnInfo(name = "poster_path") @Json(name = "poster_path")
     val posterPath: String?,
-    @Ignore
-    @Json(name = "genre_ids")
+    @ColumnInfo(name = "genre_ids") @Json(name = "genre_ids")
     val genreIds: List<Int>,
     @ColumnInfo(name = "title") @Json(name = "title")
     val title: String,
@@ -21,23 +20,4 @@ data class Movie(
     val releaseDate: String,
     @ColumnInfo(name = "vote_average") @Json(name = "vote_average")
     val voteAverage: Double
-) {
-    // To solve problem with Room related to the ignored field (didn't match
-    // a constructor
-    constructor(
-        movielensId: String,
-        posterPath: String,
-        title: String,
-        overview: String,
-        releaseDate: String,
-        voteAverage: Double
-    ) : this(
-        movielensId,
-        posterPath,
-        listOf<Int>(),
-        title,
-        overview,
-        releaseDate,
-        voteAverage
-    )
-}
+)

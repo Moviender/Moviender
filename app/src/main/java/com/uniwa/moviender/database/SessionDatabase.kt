@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.uniwa.moviender.database.session.*
 
 @Database(
@@ -12,6 +13,7 @@ import com.uniwa.moviender.database.session.*
     ),
     version = 1
 )
+@TypeConverters(Converters::class)
 abstract class SessionDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao
 
