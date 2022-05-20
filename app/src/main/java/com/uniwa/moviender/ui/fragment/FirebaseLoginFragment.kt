@@ -54,8 +54,7 @@ class FirebaseLoginFragment : Fragment() {
         if (isUserSignedIn()) {
             sharedViewModel.setUser(firebaseUser!!)
             checkInitialization()
-        }
-        else {
+        } else {
             createSignInIntent()
         }
     }
@@ -73,6 +72,7 @@ class FirebaseLoginFragment : Fragment() {
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
             .setIsSmartLockEnabled(false)
+            .setTheme(R.style.Theme_Moviender)
             .build()
         signInLauncher.launch(signInIntent)
     }
@@ -87,8 +87,7 @@ class FirebaseLoginFragment : Fragment() {
             if (response?.isNewUser == true) {
                 sharedViewModel.insertUser()
                 findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
-            }
-            else {
+            } else {
                 checkInitialization()
                 sharedViewModel.storeToken()
             }
