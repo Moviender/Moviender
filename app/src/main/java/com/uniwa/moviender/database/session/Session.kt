@@ -1,10 +1,13 @@
 package com.uniwa.moviender.database.session
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity(tableName = "Sessions")
+@Entity(
+    tableName = "Sessions",
+    primaryKeys = ["uid", "friend_uid"]
+)
 data class Session(
-    @PrimaryKey val uid: String,
-    @PrimaryKey val friendUid: String
+    @ColumnInfo(name = "uid") val uid: String,
+    @ColumnInfo(name = "friend_uid") val friendUid: String
 )
