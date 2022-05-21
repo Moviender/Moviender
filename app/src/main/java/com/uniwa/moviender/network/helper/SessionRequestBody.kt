@@ -1,4 +1,4 @@
-package com.uniwa.moviender.model.helper
+package com.uniwa.moviender.network.helper
 
 import com.squareup.moshi.Json
 

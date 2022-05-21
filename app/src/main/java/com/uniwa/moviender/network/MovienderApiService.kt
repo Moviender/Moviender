@@ -5,7 +5,8 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.model.User
-import com.uniwa.moviender.model.helper.SessionRequestBody
+import com.uniwa.moviender.network.helper.SessionMoviesPage
+import com.uniwa.moviender.network.helper.SessionRequestBody
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -86,7 +87,13 @@ interface MovienderApiService {
     suspend fun initFriendsSession(
         @Path("uid") uid: String,
         @Body requestBody: SessionRequestBody
-    ) : Int
+    ): Int
+
+    @GET("/session_movies/{session_id}")
+    suspend fun getSessionMovies(
+        @Path("session_id") sessionId: String,
+        @Query("next_page_key") nextPageKey: Int?
+    ): SessionMoviesPage
 }
 
 object MovienderApi {
