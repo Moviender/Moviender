@@ -6,7 +6,15 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
+    tableName = "movies_votes",
+    primaryKeys = ["session_id", "movielens_id"],
     foreignKeys = [
+        ForeignKey(
+            entity = Session::class,
+            parentColumns = ["session_id"],
+            childColumns = ["session_id"],
+            onDelete = ForeignKey.CASCADE
+        ),
         ForeignKey(
             entity = Movie::class,
             parentColumns = ["movielens_id"],
@@ -15,8 +23,10 @@ import androidx.room.PrimaryKey
         )
     ]
 )
-data class VotedMovies(
-    @PrimaryKey @ColumnInfo(name = "movielens_id")
+data class MovieVote(
+    @ColumnInfo(name = "session_id")
+    val sessionId: String,
+    @ColumnInfo(name = "movielens_id")
     val movielensId: String,
     val liked: Boolean
 )
