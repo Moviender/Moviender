@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.textview.MaterialTextView
@@ -15,6 +16,10 @@ import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.model.User
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
 import com.uniwa.moviender.ui.adapters.SessionGenresAdapter
+import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
+import com.yuyakaido.android.cardstackview.CardStackView
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {

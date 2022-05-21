@@ -115,4 +115,7 @@ dependencies {
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$roomVersion")
+
+    // CardStackView
+    implementation 'com.github.yuyakaido:cardstackview:2.3.4'
 }
