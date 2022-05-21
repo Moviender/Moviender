@@ -1,13 +1,12 @@
 package com.uniwa.moviender.ui.viewmodel
 
-import android.widget.CompoundButton
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.data.nameToId
-import com.uniwa.moviender.model.helper.SessionRequestBody
+import com.uniwa.moviender.network.helper.SessionRequestBody
 import com.uniwa.moviender.network.MovienderApi
 import kotlinx.coroutines.launch
 

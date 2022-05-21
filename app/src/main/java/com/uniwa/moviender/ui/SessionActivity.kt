@@ -12,7 +12,7 @@ import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 
 class SessionActivity : AppCompatActivity() {
 
-    private val args: SessionActivityArgs by navArgs()
+    //private val args: SessionActivityArgs by navArgs()
     private lateinit var binding: ActivitySessionBinding
     private val sharedViewModel: SessionActivityViewModel by viewModels()
 
@@ -22,9 +22,9 @@ class SessionActivity : AppCompatActivity() {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_session, null, false)
         setContentView(binding.root)
 
-        sharedViewModel.setFriendUid(args.friendUid)
+        //sharedViewModel.setFriendUid(args.friendUid)
 
-        navigate(args.type)
+        //navigate(args.type)
     }
 
     private fun navigate(type: Int) {
