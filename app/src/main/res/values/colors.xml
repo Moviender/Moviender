@@ -12,4 +12,5 @@
     <color name="red">#ff0000</color>
 
     <color name="movie_details_background">#eee7c8</color>
+    <color name="light_grey">#D4D4D4</color>
 </resources>

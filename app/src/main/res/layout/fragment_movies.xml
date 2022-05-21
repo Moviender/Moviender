@@ -93,13 +93,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="-9dp"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/light_grey"
+                app:strokeWidth="1dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="9dp"
-                    android:background="@color/movie_details_background">
+                    android:layout_marginBottom="9dp">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/movie_details_poster_card"
@@ -130,7 +131,6 @@
                                 style="@style/Widget.MaterialRatingBar.RatingBar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@color/movie_details_background"
                                 android:isIndicator="false"
                                 android:minHeight="27dp"
                                 android:numStars="5"
@@ -181,6 +181,25 @@
                         app:layout_constraintTop_toBottomOf="@id/movie_details_title"
                         tools:text="Action | Comedy" />
 
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/movie_details_vote_average"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/movie_vote_average(viewModel.selectedMovieDetails.voteAverage)}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/movie_details_title"
+                        app:layout_constraintTop_toBottomOf="@id/movie_details_genres"
+                        tools:text="TMDB: 8/10" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/movie_details_release_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/movie_release_date(viewModel.selectedMovieDetails.releaseDate)}"
+                        app:layout_constraintStart_toStartOf="@id/movie_details_title"
+                        app:layout_constraintTop_toBottomOf="@id/movie_details_vote_average"
+                        tools:text="Release date: 1995-10-30" />
+
                     <ScrollView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -189,7 +208,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/movie_details_poster_card"
                         app:layout_constraintLeft_toLeftOf="@id/movie_details_genres"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/movie_details_genres"
+                        app:layout_constraintTop_toBottomOf="@id/movie_details_release_date"
                         app:layout_constraintVertical_bias="0.2">
 
                         <com.google.android.material.textview.MaterialTextView

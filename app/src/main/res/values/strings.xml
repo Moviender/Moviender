@@ -50,4 +50,7 @@
     <string name="genre_selection_info">Select genres that you would like to receive from. By not choosing any it will count as all.</string>
     <string name="show_session">Show session</string>
 
+    <string name="movie_release_date">Release date: %1$s</string>
+    <string name="movie_vote_average">TMDB: %1$.1f/10</string>
+
 </resources>
