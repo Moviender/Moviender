@@ -10,19 +10,15 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class VotingViewModel(
-    private val sessionId: String,
-    private val database: SessionDatabase,
-    private val movienderApi: MovienderApiService
+    sessionId: String,
+    database: SessionDatabase,
+    movienderApi: MovienderApiService
 ) : ViewModel() {
     val movies = SessionRepository(database, movienderApi).getSessionMovies(sessionId)
 
     fun submitData(adapter: VoteCardStackViewAdapter) {
         viewModelScope.launch {
             movies.collectLatest { pageData ->
-                // Because of the bug that card adapter
-                // had empty item (NullPointerException)
-                // TODO find the bug
-                adapter.notifyDataSetChanged()
                 adapter.submitData(pageData)
             }
         }
