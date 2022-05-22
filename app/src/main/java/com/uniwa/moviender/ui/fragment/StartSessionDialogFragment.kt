@@ -31,7 +31,11 @@ class StartSessionDialogFragment : DialogFragment() {
         binding.lifecycleOwner = this
         binding.apply {
             svdBtn.setOnClickListener {
-                val action = HubNavigationDirections.actionHubActivityToSessionActivity(1, viewModel.getFriendUid())
+                val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                    1,
+                    viewModel.getFriendUid(),
+                    null
+                )
                 findNavController().navigate(action)
                 this@StartSessionDialogFragment.dismiss()
             }

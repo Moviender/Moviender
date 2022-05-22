@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.uniwa.moviender.HubNavigationDirections
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
@@ -86,6 +87,29 @@ class FriendsFragment : Fragment() {
 
     fun showSessionDialog() {
         StartSessionDialogFragment().show(childFragmentManager, "session")
+    }
+
+    fun navigate() {
+        viewModel.sessionId.observe(this) {
+            viewModel.sessionState.observe(this) { status ->
+                if (status == 0) {
+                    viewModel.userState.observe(this) {
+                        if (it == 0) {
+                            val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                                0,
+                                viewModel.getFriendUid(),
+                                viewModel.sessionId.value
+                            )
+
+                            findNavController().navigate(action)
+                        }
+                    }
+                    viewModel.getUserState()
+                }
+            }
+            viewModel.getSessionState()
+        }
+        viewModel.getSessionId()
     }
 
 }

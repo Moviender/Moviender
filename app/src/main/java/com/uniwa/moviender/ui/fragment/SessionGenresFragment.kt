@@ -45,7 +45,8 @@ class SessionGenresFragment : Fragment() {
 
     fun startSession() {
         viewModel.response.observe(this) { response ->
-            if (response == 1) {
+            if (response != null) {
+                sharedViewModel.setSessionId(response.sessionId!!)
                 findNavController().navigate(R.id.action_sessionGenresFragment_to_votingFragment)
             } else {
                 // TODO Notify user

@@ -8,14 +8,15 @@ import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.data.nameToId
 import com.uniwa.moviender.network.helper.SessionRequestBody
 import com.uniwa.moviender.network.MovienderApi
+import com.uniwa.moviender.network.helper.SessionInitResponse
 import kotlinx.coroutines.launch
 
 class SessionGenresViewModel : ViewModel() {
     val genresList = genres.values.toList()
     val selectedGenres = mutableListOf<Int>()
 
-    private val _response = MutableLiveData<Int>()
-    val response: LiveData<Int> = _response
+    private val _response = MutableLiveData<SessionInitResponse>()
+    val response: LiveData<SessionInitResponse> = _response
 
     fun onCheckedChanged(genre: Int, checked: Boolean) {
         if (checked) {

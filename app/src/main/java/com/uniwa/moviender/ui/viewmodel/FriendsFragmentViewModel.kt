@@ -12,7 +12,7 @@ import com.uniwa.moviender.network.MovienderApi
 import kotlinx.coroutines.launch
 
 class FriendsFragmentViewModel : ViewModel() {
-    
+
 
     private val _friendList = MutableLiveData<List<Friend>>()
     val friendList: LiveData<List<Friend>> = _friendList
@@ -25,10 +25,19 @@ class FriendsFragmentViewModel : ViewModel() {
     private val _requestResponse = MutableLiveData<Int>()
     val requestResponse: LiveData<Int> = _requestResponse
 
+    private val _sessionId = MutableLiveData<String>()
+    val sessionId: LiveData<String> = _sessionId
+
+    private val _sessionState = MutableLiveData<Int>()
+    val sessionState: LiveData<Int> = _sessionState
+
+    private val _userState = MutableLiveData<Int>()
+    val userState: LiveData<Int> = _userState
+
     private lateinit var friendUid: String
-    
+
     private lateinit var uid: String
-    
+
     fun setUid(uid: String) {
         this@FriendsFragmentViewModel.uid = uid
     }
@@ -55,7 +64,7 @@ class FriendsFragmentViewModel : ViewModel() {
 
     }
 
-    fun setError(isError: Boolean){
+    fun setError(isError: Boolean) {
         _isErrorEnabled.value = isError
     }
 
@@ -75,5 +84,23 @@ class FriendsFragmentViewModel : ViewModel() {
             getFriends()
         }
 
+    }
+
+    fun getSessionId() {
+        viewModelScope.launch {
+            _sessionId.value = MovienderApi.movienderApiService.getSessionId(uid, friendUid)
+        }
+    }
+
+    fun getSessionState() {
+        viewModelScope.launch {
+            _sessionState.value = MovienderApi.movienderApiService.getSessionState(_sessionId.value!!)
+        }
+    }
+
+    fun getUserState() {
+        viewModelScope.launch {
+            _userState.value = MovienderApi.movienderApiService.getUserState(_sessionId.value!!, uid)
+        }
     }
 }

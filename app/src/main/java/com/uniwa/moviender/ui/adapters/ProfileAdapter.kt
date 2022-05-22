@@ -50,7 +50,10 @@ class ProfileAdapter(
                 }
             } else if (friend.state == 4) {
                 binding.showSessionBtn.visibility = View.VISIBLE
-                //TODO go to session
+                binding.showSessionBtn.setOnClickListener {
+                    viewModel.setFriendUid(friend.uid)
+                    friendsFragment.navigate()
+                }
             }
             binding.executePendingBindings()
         }
@@ -75,7 +78,7 @@ class ProfileAdapter(
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         val friend = getItem(position)
 
-        if (friend.state == 3) {
+        if (friend.state >= 3) {
             addDeleteOption(holder.itemView, friend)
         }
 

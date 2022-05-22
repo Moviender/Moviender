@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/hub_navigation"
-    app:startDestination="@id/sessionActivity">
+    app:startDestination="@id/navigation_friends">
 
     <fragment
         android:id="@id/navigation_movies"
@@ -35,7 +35,12 @@
             app:argType="integer" />
         <argument
             android:name="friend_uid"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="sessionId"
+            app:argType="string"
+            app:nullable="true" />
     </activity>
     <action
         android:id="@+id/action_hubActivity_to_sessionActivity"
