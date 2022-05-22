@@ -49,6 +49,10 @@ class ProfileAdapter(
                     friendsFragment.showSessionDialog()
                 }
             } else if (friend.state == 4) {
+                binding.requestPendingTv.visibility = View.GONE
+                binding.requestAcceptBtn.visibility = View.GONE
+                binding.requestRejectBtn.visibility = View.GONE
+                binding.startSessionBtn.visibility = View.GONE
                 binding.showSessionBtn.visibility = View.VISIBLE
                 binding.showSessionBtn.setOnClickListener {
                     viewModel.setFriendUid(friend.uid)
