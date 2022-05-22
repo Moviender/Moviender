@@ -32,5 +32,7 @@ data class SessionMovieCrossRef(
     @ColumnInfo(name = "session_id")
     val sessionId: String,
     @ColumnInfo(name = "movielens_id")
-    val movielensId: String
+    val movielensId: String,
+    @ColumnInfo(name = "order_id")
+    val orderIndex: Int
 )

@@ -30,4 +30,7 @@ interface SessionDao {
     @Transaction
     @Query("DELETE FROM Sessions where session_id = :sessionId ")
     suspend fun deleteSession(sessionId: String)
+
+    @Query("SELECT COUNT(session_id) FROM SessionMovieCrossRef WHERE session_id = :sessionId")
+    suspend fun getLastOrder(sessionId: String): Int
 }
