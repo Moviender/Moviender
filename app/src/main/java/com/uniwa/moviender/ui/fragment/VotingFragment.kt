@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.uniwa.moviender.R
 import com.uniwa.moviender.database.SessionDatabase
@@ -14,15 +15,17 @@ import com.uniwa.moviender.databinding.FragmentVotingBinding
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.MovienderApiService
 import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
+import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModelFactory
 
 class VotingFragment : Fragment() {
 
     private lateinit var binding: FragmentVotingBinding
+    private val sharedViewModel: SessionActivityViewModel by activityViewModels()
     private val viewModel: VotingViewModel by viewModels {
         VotingViewModelFactory(
-            "6288ae26c28c2171f0137025",
+            sharedViewModel.getSessionId(),
             SessionDatabase.getInstance(requireContext()),
             MovienderApi.movienderApiService
         )
