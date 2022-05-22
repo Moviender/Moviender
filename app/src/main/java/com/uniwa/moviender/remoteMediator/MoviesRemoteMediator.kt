@@ -36,7 +36,7 @@ class MoviesRemoteMediator(
 //        } else {
 //            InitializeAction.LAUNCH_INITIAL_REFRESH
 //        }
-       return InitializeAction.LAUNCH_INITIAL_REFRESH
+        return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
     override suspend fun load(
@@ -65,37 +65,33 @@ class MoviesRemoteMediator(
 
             val movies = response.movies
 
-            Log.d("keys", "load: $loadKey")
-            Log.d("keys", "load: ${movies[0].movielensId}|${response.nextPageKey}")
+            if (movies.isNotEmpty()) {
+                database.withTransaction {
+                    if (loadType == LoadType.REFRESH) {
+                        sessionDao.deleteSession(sessionId)
+                        // See deleteSession(sessionId) comments on SessionDao.kt
+                        sessionDao.insertSession(Session(sessionId))
+                    }
 
-            database.withTransaction {
-                if (loadType == LoadType.REFRESH) {
-                    sessionDao.deleteSession(sessionId)
-                    // See deleteSession(sessionId) comments on SessionDao.kt
-                    sessionDao.insertSession(Session(sessionId))
-                }
+                    sessionDao.insertMovies(movies)
 
-                sessionDao.insertMovies(movies)
+                    var orderIndex = sessionDao.getLastOrder(sessionId)
 
-                val crossRefs = movies.map { movie ->
-                    SessionMovieCrossRef(sessionId, movie.movielensId)
-                }
+                    val crossRefs = movies.map { movie ->
+                        SessionMovieCrossRef(sessionId, movie.movielensId, orderIndex++)
+                    }
 
-                sessionDao.insertSessionMovieCrossRef(crossRefs)
-                remoteKeysDao.insertSessionRemoteKey(
-                    SessionRemoteKeys(
-                        sessionId,
-                        response.nextPageKey
+                    sessionDao.insertSessionMovieCrossRef(crossRefs)
+                    remoteKeysDao.insertSessionRemoteKey(
+                        SessionRemoteKeys(
+                            sessionId,
+                            response.nextPageKey
+                        )
                     )
-                )
+                }
             }
 
-            // TODO || movies.size < 10
-            // TODO find better solution
-            var flag = false
-            flag = response.nextPageKey == null
-            Log.d("keys", "load: $flag")
-            MediatorResult.Success(endOfPaginationReached = flag )
+            MediatorResult.Success(endOfPaginationReached = response.nextPageKey == null || movies.isEmpty())
         } catch (e: IOException) {
             MediatorResult.Error(e)
         } catch (e: HttpException) {
