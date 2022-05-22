@@ -13,9 +13,8 @@ class SessionRepository(
 ) {
     @OptIn(ExperimentalPagingApi::class)
     fun getSessionMovies(sessionId: String) = Pager(
-        // Todo pageSize
-        config = PagingConfig(1),
-        remoteMediator = MoviesRemoteMediator(movienderApi, database, sessionId)
+        config = PagingConfig(10),
+        remoteMediator = MoviesRemoteMediator(movienderApi, database, sessionId),
     ) {
         database.sessionDao().getSessionMovies(sessionId)
     }.flow
