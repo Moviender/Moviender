@@ -25,7 +25,8 @@ interface SessionDao {
         "SELECT * FROM Movies " +
                 "JOIN SessionMovieCrossRef ON Movies.movielens_id = SessionMovieCrossRef.movielens_id " +
                 "JOIN Sessions ON SessionMovieCrossRef.session_id = Sessions.session_id " +
-                "WHERE Sessions.session_id = :sessionId ORDER BY order_id ASC"
+                "WHERE Sessions.session_id = :sessionId ORDER BY order_id ASC " +
+                "LIMIT (SELECT COUNT(movielens_id) FROM movies_votes WHERE session_id = :sessionId), ${Int.MAX_VALUE}"
     )
     fun getSessionMovies(sessionId: String): PagingSource<Int, Movie>
 
