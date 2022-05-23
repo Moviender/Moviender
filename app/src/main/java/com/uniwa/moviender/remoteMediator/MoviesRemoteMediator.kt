@@ -29,19 +29,18 @@ class MoviesRemoteMediator(
         val remoteKey = database.withTransaction {
             remoteKeysDao.getLastUpdated(sessionId)
         }
-        if (remoteKey != null) {
+        return if (remoteKey != null) {
             val lastUpdated = remoteKey.lastUpdated
             val cacheTimeOut = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
-            return if (System.currentTimeMillis() - lastUpdated <= cacheTimeOut) {
+            if (System.currentTimeMillis() - lastUpdated <= cacheTimeOut) {
                 Log.d("session", "initialize: skip")
                 InitializeAction.SKIP_INITIAL_REFRESH
             } else {
                 Log.d("session", "initialize: launch")
                 InitializeAction.LAUNCH_INITIAL_REFRESH
             }
-        }
-        else {
-            return InitializeAction.LAUNCH_INITIAL_REFRESH
+        } else {
+            InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }
 
