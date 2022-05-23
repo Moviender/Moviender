@@ -11,6 +11,6 @@ interface SessionRemoteKeysDao {
     @Query("SELECT * FROM remote_keys WHERE session_id = :sessionId")
     suspend fun getRemoteKeyBySessionId(sessionId: String): SessionRemoteKeys
 
-    @Query("SELECT last_updated FROM remote_keys WHERE session_id = :sessionId")
-    suspend fun getLastUpdated(sessionId: String): Long
+    @Query("SELECT * FROM remote_keys WHERE session_id = :sessionId")
+    suspend fun getLastUpdated(sessionId: String): SessionRemoteKeys?
 }

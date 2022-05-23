@@ -26,17 +26,23 @@ class MoviesRemoteMediator(
     private val remoteKeysDao = database.remoteKeysDao()
 
     override suspend fun initialize(): InitializeAction {
-        //TODO fix
-//        val lastUpdated = database.withTransaction {
-//            remoteKeysDao.getLastUpdated(sessionId)
-//        }
-//        val cacheTimeOut = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
-//        return if (System.currentTimeMillis() - lastUpdated >= cacheTimeOut) {
-//            InitializeAction.SKIP_INITIAL_REFRESH
-//        } else {
-//            InitializeAction.LAUNCH_INITIAL_REFRESH
-//        }
-        return InitializeAction.LAUNCH_INITIAL_REFRESH
+        val remoteKey = database.withTransaction {
+            remoteKeysDao.getLastUpdated(sessionId)
+        }
+        if (remoteKey != null) {
+            val lastUpdated = remoteKey.lastUpdated
+            val cacheTimeOut = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
+            return if (System.currentTimeMillis() - lastUpdated <= cacheTimeOut) {
+                Log.d("session", "initialize: skip")
+                InitializeAction.SKIP_INITIAL_REFRESH
+            } else {
+                Log.d("session", "initialize: launch")
+                InitializeAction.LAUNCH_INITIAL_REFRESH
+            }
+        }
+        else {
+            return InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
     }
 
     override suspend fun load(
