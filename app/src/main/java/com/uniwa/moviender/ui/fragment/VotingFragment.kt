@@ -12,12 +12,14 @@ import androidx.fragment.app.viewModels
 import com.uniwa.moviender.R
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentVotingBinding
+import com.uniwa.moviender.listener.VotingListener
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.MovienderApiService
 import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
 import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModelFactory
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 
 class VotingFragment : Fragment() {
 
@@ -31,6 +33,9 @@ class VotingFragment : Fragment() {
         )
     }
 
+    private lateinit var votingListener: VotingListener
+    private lateinit var manager: CardStackLayoutManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,10 +47,16 @@ class VotingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        votingListener = VotingListener(viewModel)
+        manager = CardStackLayoutManager(requireContext(), votingListener)
+        votingListener.setManager(manager)
+
         val adapter = VoteCardStackViewAdapter()
 
         binding.apply {
             votingStackView.adapter = adapter
+            votingStackView.layoutManager = manager
+            lifecycleOwner = viewLifecycleOwner
         }
 
         viewModel.submitData(adapter)

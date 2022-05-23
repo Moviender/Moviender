@@ -2,6 +2,7 @@ package com.uniwa.moviender.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.withTransaction
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.network.MovienderApiService
 import com.uniwa.moviender.repository.SessionRepository
@@ -10,8 +11,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class VotingViewModel(
-    sessionId: String,
-    database: SessionDatabase,
+    private val sessionId: String,
+    private val database: SessionDatabase,
     movienderApi: MovienderApiService
 ) : ViewModel() {
     val movies = SessionRepository(database, movienderApi).getSessionMovies(sessionId)
@@ -20,6 +21,14 @@ class VotingViewModel(
         viewModelScope.launch {
             movies.collectLatest { pageData ->
                 adapter.submitData(pageData)
+            }
+        }
+    }
+
+    fun newVote(cardPosition: Int, liked: Boolean) {
+        viewModelScope.launch {
+            database.withTransaction {
+                database.sessionDao().insertVote(sessionId, cardPosition, liked)
             }
         }
     }

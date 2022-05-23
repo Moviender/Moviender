@@ -39,4 +39,10 @@ interface SessionDao {
 
     @Query("SELECT COUNT(session_id) FROM SessionMovieCrossRef WHERE session_id = :sessionId")
     suspend fun getLastOrder(sessionId: String): Int
+
+    // -1 to compensate for CardStackView position which starts from 1
+    @Query("INSERT INTO movies_votes(session_id, movielens_id, liked) VALUES (:sessionId, " +
+            "(SELECT movielens_id FROM SessionMovieCrossRef WHERE order_id = :position - 1)," +
+            ":liked)")
+    suspend fun insertVote(sessionId: String, position: Int, liked: Boolean)
 }
