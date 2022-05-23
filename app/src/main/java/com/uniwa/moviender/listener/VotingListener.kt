@@ -10,25 +10,17 @@ class VotingListener(
     private val viewModel: VotingViewModel
 ) : CardStackListener {
 
-    private lateinit var manager: CardStackLayoutManager
-
-    fun setManager(manager: CardStackLayoutManager) {
-        this.manager = manager
-    }
-
     override fun onCardDragging(direction: Direction?, ratio: Float) {
 
     }
 
     override fun onCardSwiped(direction: Direction?) {
-        val position = manager.topPosition
-
         when (direction) {
             Direction.Left -> {
-                viewModel.newVote(position, false)
+                viewModel.newVote( false)
             }
             Direction.Right -> {
-                viewModel.newVote(position, true)
+                viewModel.newVote(true)
             }
         }
     }

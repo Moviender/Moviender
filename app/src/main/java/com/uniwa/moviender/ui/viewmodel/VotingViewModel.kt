@@ -25,10 +25,10 @@ class VotingViewModel(
         }
     }
 
-    fun newVote(cardPosition: Int, liked: Boolean) {
+    fun newVote(liked: Boolean) {
         viewModelScope.launch {
             database.withTransaction {
-                database.sessionDao().insertVote(sessionId, cardPosition, liked)
+                database.sessionDao().insertVote(sessionId, liked)
             }
         }
     }

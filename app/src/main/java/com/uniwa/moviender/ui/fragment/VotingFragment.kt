@@ -34,7 +34,6 @@ class VotingFragment : Fragment() {
     }
 
     private lateinit var votingListener: VotingListener
-    private lateinit var manager: CardStackLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,14 +47,11 @@ class VotingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         votingListener = VotingListener(viewModel)
-        manager = CardStackLayoutManager(requireContext(), votingListener)
-        votingListener.setManager(manager)
-
         val adapter = VoteCardStackViewAdapter()
 
         binding.apply {
             votingStackView.adapter = adapter
-            votingStackView.layoutManager = manager
+            votingStackView.layoutManager = CardStackLayoutManager(requireContext(), votingListener)
             lifecycleOwner = viewLifecycleOwner
         }
 
