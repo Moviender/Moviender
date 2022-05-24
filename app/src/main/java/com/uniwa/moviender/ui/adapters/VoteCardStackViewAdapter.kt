@@ -1,10 +1,13 @@
 package com.uniwa.moviender.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.uniwa.moviender.database.session.Movie
 import com.uniwa.moviender.databinding.MovieVotingItemBinding
 
@@ -16,6 +19,22 @@ class VoteCardStackViewAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             binding.movie = movie
+            binding.voteMoviePoster.setOnClickListener { cardView ->
+                if (binding.voteMovieOverview.visibility == View.GONE) {
+                    TransitionManager.beginDelayedTransition(
+                        cardView.parent as ViewGroup,
+                        AutoTransition()
+                    )
+                    binding.voteMovieOverview.visibility = View.VISIBLE
+                }
+                else {
+                    TransitionManager.beginDelayedTransition(
+                        cardView.parent as ViewGroup,
+                        AutoTransition()
+                    )
+                    binding.voteMovieOverview.visibility = View.GONE
+                }
+            }
             binding.executePendingBindings()
         }
     }
