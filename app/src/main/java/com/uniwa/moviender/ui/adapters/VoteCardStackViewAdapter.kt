@@ -20,19 +20,24 @@ class VoteCardStackViewAdapter :
         fun bind(movie: Movie) {
             binding.movie = movie
             binding.voteMoviePoster.setOnClickListener { cardView ->
-                if (binding.voteMovieOverview.visibility == View.GONE) {
+                if (binding.voteMovieDetails.visibility == View.GONE) {
                     TransitionManager.beginDelayedTransition(
-                        cardView.parent as ViewGroup,
+                        binding.voteMovieCard,
                         AutoTransition()
                     )
                     binding.voteMovieOverview.visibility = View.VISIBLE
-                }
-                else {
+                    binding.voteMovieDetails.visibility = View.VISIBLE
+                    binding.voteMovieTopSpace.visibility = View.GONE
+                    binding.voteMovieBottomSpace.visibility = View.GONE
+                } else {
                     TransitionManager.beginDelayedTransition(
-                        cardView.parent as ViewGroup,
+                        binding.voteMovieCard,
                         AutoTransition()
                     )
                     binding.voteMovieOverview.visibility = View.GONE
+                    binding.voteMovieDetails.visibility = View.GONE
+                    binding.voteMovieTopSpace.visibility = View.VISIBLE
+                    binding.voteMovieBottomSpace.visibility = View.VISIBLE
                 }
             }
             binding.executePendingBindings()

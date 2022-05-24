@@ -2,7 +2,6 @@ package com.uniwa.moviender.listener
 
 import android.view.View
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
-import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
 

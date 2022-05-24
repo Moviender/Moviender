@@ -10,140 +10,102 @@
             type="com.uniwa.moviender.database.session.Movie" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="?attr/selectableItemBackground"
-        android:foreground="?attr/selectableItemBackground"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="8dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true">
+    <!-- 0dp to let views share the screen as fit
+        Remove top and bottom view to change the position
+        of growing
+    -->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/vote_movie_top_space"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/vote_movie_card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/vote_movie_card"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@id/vote_movie_bottom_space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vote_movie_top_space">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/vote_movie_fixed_layout"
                 android:layout_width="match_parent"
-                android:layout_height="630dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/vote_movie_poster"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
+                    android:layout_width="400dp"
+                    android:layout_height="500dp"
+                    android:scaleType="fitXY"
                     app:imageUrl="@{movie.posterPath}"
-                    app:layout_constraintBottom_toBottomOf="@id/vote_movie_fixed_layout"
-                    app:layout_constraintEnd_toEndOf="@id/vote_movie_fixed_layout"
-                    app:layout_constraintEnd_toStartOf="@id/vote_movie_fixed_layout"
-                    app:layout_constraintTop_toTopOf="@id/vote_movie_fixed_layout" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="@drawable/gradation_black"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    app:layout_constraintBottom_toBottomOf="@id/vote_movie_fixed_layout"
-                    app:layout_constraintStart_toStartOf="@id/vote_movie_fixed_layout">
-
-                    <TextView
-                        android:id="@+id/item_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{movie.title}"
-                        android:textColor="@android:color/white"
-                        android:textSize="26sp"
-                        android:textStyle="bold"
-                        tools:text="Title" />
-
-                    <TextView
-                        android:id="@+id/item_city"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </FrameLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/vote_movie_hidden_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/vote_movie_fixed_layout">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/vote_movie_overview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{movie.overview}"
-                    android:visibility="gone"
-                    tools:text="Overview"
-                    tools:visibility="visible"
+                    app:layout_constraintBottom_toTopOf="@id/vote_movie_details"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    tools:src="@tools:sample/backgrounds/scenic" />
 
+                <TextView
+                    android:id="@+id/vote_movie_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{movie.title}"
+                    android:textColor="@android:color/white"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/vote_movie_poster"
+                    app:layout_constraintEnd_toEndOf="@id/vote_movie_poster"
+                    app:layout_constraintHorizontal_bias="0.04"
+                    app:layout_constraintStart_toStartOf="@id/vote_movie_poster"
+                    app:layout_constraintTop_toTopOf="@id/vote_movie_poster"
+                    app:layout_constraintVertical_bias="0.98"
+                    tools:text="Title" />
+
+                <ScrollView
+                    android:id="@+id/vote_movie_details"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/vote_movie_poster"
+                    app:layout_constraintStart_toStartOf="@id/vote_movie_poster"
+                    app:layout_constraintTop_toBottomOf="@id/vote_movie_poster"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/vote_movie_overview"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movie.overview}"
+                        tools:text="Overview" />
+                </ScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
+        <View
+            android:id="@+id/vote_movie_bottom_space"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vote_movie_card" />
 
-            <FrameLayout
-                android:id="@+id/left_overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/overlay_black"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/skip_white_120dp" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/right_overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/overlay_black"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/like_white_120dp" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/top_overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <FrameLayout
-                android:id="@+id/bottom_overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

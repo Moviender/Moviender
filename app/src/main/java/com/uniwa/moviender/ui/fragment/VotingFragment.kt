@@ -1,12 +1,11 @@
 package com.uniwa.moviender.ui.fragment
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.uniwa.moviender.R
@@ -14,12 +13,13 @@ import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentVotingBinding
 import com.uniwa.moviender.listener.VotingListener
 import com.uniwa.moviender.network.MovienderApi
-import com.uniwa.moviender.network.MovienderApiService
 import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
 import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModelFactory
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
+import com.yuyakaido.android.cardstackview.Direction
+import com.yuyakaido.android.cardstackview.SwipeableMethod
 
 class VotingFragment : Fragment() {
 
@@ -49,9 +49,16 @@ class VotingFragment : Fragment() {
         votingListener = VotingListener(viewModel)
         val adapter = VoteCardStackViewAdapter()
 
+        val manager = CardStackLayoutManager(requireContext(), votingListener).apply {
+            setDirections(Direction.HORIZONTAL)
+            setCanScrollHorizontal(true)
+            setCanScrollVertical(false)
+            setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
+        }
+
         binding.apply {
             votingStackView.adapter = adapter
-            votingStackView.layoutManager = CardStackLayoutManager(requireContext(), votingListener)
+            votingStackView.layoutManager = manager
             lifecycleOwner = viewLifecycleOwner
         }
 
