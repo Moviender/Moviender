@@ -55,6 +55,14 @@ fun bindGenres(textView: TextView, genresIds: Array<Int>?) {
         ?.joinToString(separator = " | ")
 }
 
+@BindingAdapter("genres")
+fun bindGenres(textView: TextView, genresIds: List<Int>?) {
+    textView.text = genresIds?.map { genreId ->
+        textView.resources.getString(genres[genreId]!!)
+    }
+        ?.joinToString(separator = " | ")
+}
+
 @BindingAdapter("imageUrl")
 fun bindPosterImage(imageView: ImageView, filePath: String?) {
     val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500/"

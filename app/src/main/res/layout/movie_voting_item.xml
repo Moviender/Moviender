@@ -22,21 +22,23 @@
         <View
             android:id="@+id/vote_movie_top_space"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="90dp"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/vote_movie_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone"/>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/vote_movie_card"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="4dp"
             app:layout_constraintBottom_toTopOf="@id/vote_movie_bottom_space"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +50,7 @@
 
                 <ImageView
                     android:id="@+id/vote_movie_poster"
-                    android:layout_width="400dp"
+                    android:layout_width="360dp"
                     android:layout_height="500dp"
                     android:scaleType="fitXY"
                     app:imageUrl="@{movie.posterPath}"
@@ -56,7 +58,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@tools:sample/backgrounds/scenic" />
+                    tools:src="@drawable/sample_poster" />
 
                 <TextView
                     android:id="@+id/vote_movie_title"
@@ -64,35 +66,67 @@
                     android:layout_height="wrap_content"
                     android:text="@{movie.title}"
                     android:textColor="@android:color/white"
-                    android:textSize="26sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/vote_movie_poster"
                     app:layout_constraintEnd_toEndOf="@id/vote_movie_poster"
-                    app:layout_constraintHorizontal_bias="0.04"
+                    app:layout_constraintHorizontal_bias="0.05"
                     app:layout_constraintStart_toStartOf="@id/vote_movie_poster"
                     app:layout_constraintTop_toTopOf="@id/vote_movie_poster"
                     app:layout_constraintVertical_bias="0.98"
-                    tools:text="Title" />
+                    tools:text="Toy story" />
 
                 <ScrollView
                     android:id="@+id/vote_movie_details"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
                     android:visibility="gone"
+                    android:scrollbars="none"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/vote_movie_poster"
                     app:layout_constraintStart_toStartOf="@id/vote_movie_poster"
                     app:layout_constraintTop_toBottomOf="@id/vote_movie_poster"
                     tools:visibility="visible">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/vote_movie_overview"
-                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{movie.overview}"
-                        tools:text="Overview" />
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/genres_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/TextAppearance.AppCompat.Body2"
+                            app:genres="@{movie.genreIds}"
+                            tools:text="Action | Comedy"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/vote_average_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:text="@{@string/movie_vote_average(movie.voteAverage)}"
+                            tools:text="TMDB: 8/10"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/release_date_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:text="@{@string/movie_release_date(movie.releaseDate)}"
+                            tools:text="Release date: 1995-10-30"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/vote_movie_overview"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/movie_overview(movie.overview)}"
+                            tools:text="Led by Woody, Andy's toys live happily in his room until Andy's birthday brings Buzz Lightyear onto the scene. Afraid of losing his place in Andy's heart, Woody plots against Buzz. But when circumstances separate Buzz and Woody from their owner, the duo eventually learns to put aside their differences." />
+                    </LinearLayout>
                 </ScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -100,12 +134,13 @@
         <View
             android:id="@+id/vote_movie_bottom_space"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="90dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vote_movie_card" />
+            app:layout_constraintTop_toBottomOf="@id/vote_movie_card"
+            tools:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
