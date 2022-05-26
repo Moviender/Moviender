@@ -13,7 +13,6 @@ import com.uniwa.moviender.databinding.MovieVotingItemBinding
 
 class VoteCardStackViewAdapter :
     PagingDataAdapter<Movie, VoteCardStackViewAdapter.MovieVoteViewHolder>(Diffcallback) {
-
     inner class MovieVoteViewHolder(
         private val binding: MovieVotingItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -29,6 +28,7 @@ class VoteCardStackViewAdapter :
                     binding.voteMovieDetails.visibility = View.VISIBLE
                     binding.voteMovieTopSpace.visibility = View.GONE
                     binding.voteMovieBottomSpace.visibility = View.GONE
+                    setCardHeight(binding, 0)
                 } else {
                     TransitionManager.beginDelayedTransition(
                         binding.voteMovieCard,
@@ -38,6 +38,7 @@ class VoteCardStackViewAdapter :
                     binding.voteMovieDetails.visibility = View.GONE
                     binding.voteMovieTopSpace.visibility = View.VISIBLE
                     binding.voteMovieBottomSpace.visibility = View.VISIBLE
+                    setCardHeight(binding, WRAP_CONTENT)
                 }
             }
             binding.executePendingBindings()
@@ -53,6 +54,8 @@ class VoteCardStackViewAdapter :
             return oldItem.overview == newItem.overview
         }
 
+        private const val WRAP_CONTENT =  ViewGroup.LayoutParams.WRAP_CONTENT
+
     }
 
     override fun onBindViewHolder(holder: MovieVoteViewHolder, position: Int) {
@@ -65,4 +68,11 @@ class VoteCardStackViewAdapter :
             MovieVotingItemBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
+
+    private fun setCardHeight(binding: MovieVotingItemBinding, height: Int){
+        val Mylayoutparams = binding.voteMovieCard.layoutParams
+        Mylayoutparams.height = height
+        binding.voteMovieCard.layoutParams = Mylayoutparams
+    }
+
 }
