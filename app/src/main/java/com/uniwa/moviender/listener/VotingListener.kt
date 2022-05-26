@@ -1,8 +1,11 @@
 package com.uniwa.moviender.listener
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ScrollView
+import com.google.android.material.card.MaterialCardView
 import com.uniwa.moviender.R
+import com.uniwa.moviender.databinding.MovieVotingItemBinding
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
@@ -39,8 +42,21 @@ class VotingListener(
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
+
         view?.findViewById<ScrollView>(R.id.vote_movie_details)!!.visibility = View.GONE
-        view.findViewById<View>(R.id.vote_movie_bottom_space).visibility = View.VISIBLE
-        view.findViewById<View>(R.id.vote_movie_top_space).visibility = View.VISIBLE
+
+        val voteMovieCard = view.findViewById<MaterialCardView>(R.id.vote_movie_card)
+        setCardViewHeightToWrapContent(voteMovieCard)
+
+    }
+
+    private fun setCardViewHeightToWrapContent(voteMovieCard: MaterialCardView) {
+        val Mylayoutparams = voteMovieCard.layoutParams
+        Mylayoutparams.height = WRAP_CONTENT
+        voteMovieCard.layoutParams = Mylayoutparams
+    }
+
+    companion object {
+        private const val WRAP_CONTENT =  ViewGroup.LayoutParams.WRAP_CONTENT
     }
 }

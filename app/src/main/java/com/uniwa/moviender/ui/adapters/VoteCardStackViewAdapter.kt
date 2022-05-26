@@ -26,8 +26,6 @@ class VoteCardStackViewAdapter :
                     )
                     binding.voteMovieOverview.visibility = View.VISIBLE
                     binding.voteMovieDetails.visibility = View.VISIBLE
-                    binding.voteMovieTopSpace.visibility = View.GONE
-                    binding.voteMovieBottomSpace.visibility = View.GONE
                     setCardHeight(binding, 0)
                 } else {
                     TransitionManager.beginDelayedTransition(
@@ -36,8 +34,6 @@ class VoteCardStackViewAdapter :
                     )
                     binding.voteMovieOverview.visibility = View.GONE
                     binding.voteMovieDetails.visibility = View.GONE
-                    binding.voteMovieTopSpace.visibility = View.VISIBLE
-                    binding.voteMovieBottomSpace.visibility = View.VISIBLE
                     setCardHeight(binding, WRAP_CONTENT)
                 }
             }
