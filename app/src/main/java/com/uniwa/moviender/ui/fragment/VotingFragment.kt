@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,9 +18,7 @@ import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
 import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModelFactory
-import com.yuyakaido.android.cardstackview.CardStackLayoutManager
-import com.yuyakaido.android.cardstackview.Direction
-import com.yuyakaido.android.cardstackview.SwipeableMethod
+import com.yuyakaido.android.cardstackview.*
 
 class VotingFragment : Fragment() {
 
@@ -60,6 +59,26 @@ class VotingFragment : Fragment() {
             votingStackView.adapter = adapter
             votingStackView.layoutManager = manager
             lifecycleOwner = viewLifecycleOwner
+
+            prevMovieBtn.setOnClickListener {
+                val setting = SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Left)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(AccelerateInterpolator())
+                    .build()
+                manager.setSwipeAnimationSetting(setting)
+                votingStackView.swipe()
+            }
+
+            nextMovieBtn.setOnClickListener {
+                val setting = SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Right)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(AccelerateInterpolator())
+                    .build()
+                manager.setSwipeAnimationSetting(setting)
+                votingStackView.swipe()
+            }
         }
 
         viewModel.submitData(adapter)
