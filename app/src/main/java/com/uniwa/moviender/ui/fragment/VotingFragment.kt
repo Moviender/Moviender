@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateInterpolator
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -12,13 +11,16 @@ import androidx.fragment.app.viewModels
 import com.uniwa.moviender.R
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentVotingBinding
-import com.uniwa.moviender.listener.VotingListener
+import com.uniwa.moviender.listener.VotingButtonListener
+import com.uniwa.moviender.listener.VotingCardListener
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
 import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModelFactory
-import com.yuyakaido.android.cardstackview.*
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager
+import com.yuyakaido.android.cardstackview.Direction
+import com.yuyakaido.android.cardstackview.SwipeableMethod
 
 class VotingFragment : Fragment() {
 
@@ -32,7 +34,7 @@ class VotingFragment : Fragment() {
         )
     }
 
-    private lateinit var votingListener: VotingListener
+    private lateinit var votingListener: VotingCardListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +47,7 @@ class VotingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        votingListener = VotingListener(viewModel)
+        votingListener = VotingCardListener(viewModel)
         val adapter = VoteCardStackViewAdapter()
 
         val manager = CardStackLayoutManager(requireContext(), votingListener).apply {
@@ -60,25 +62,20 @@ class VotingFragment : Fragment() {
             votingStackView.layoutManager = manager
             lifecycleOwner = viewLifecycleOwner
 
-            prevMovieBtn.setOnClickListener {
-                val setting = SwipeAnimationSetting.Builder()
-                    .setDirection(Direction.Left)
-                    .setDuration(Duration.Normal.duration)
-                    .setInterpolator(AccelerateInterpolator())
-                    .build()
-                manager.setSwipeAnimationSetting(setting)
-                votingStackView.swipe()
-            }
-
-            nextMovieBtn.setOnClickListener {
-                val setting = SwipeAnimationSetting.Builder()
-                    .setDirection(Direction.Right)
-                    .setDuration(Duration.Normal.duration)
-                    .setInterpolator(AccelerateInterpolator())
-                    .build()
-                manager.setSwipeAnimationSetting(setting)
-                votingStackView.swipe()
-            }
+            prevMovieBtn.setOnClickListener(
+                VotingButtonListener(
+                    manager,
+                    Direction.Left,
+                    votingStackView
+                )
+            )
+            nextMovieBtn.setOnClickListener(
+                VotingButtonListener(
+                    manager,
+                    Direction.Right,
+                    votingStackView
+                )
+            )
         }
 
         viewModel.submitData(adapter)
