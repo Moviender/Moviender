@@ -55,5 +55,6 @@
     <string name="movie_overview">Overview: %1$s</string>
     <string name="movie_genres">Genres: %1$s</string>
     <string name="send_votes">Send</string>
+    <string name="session_results">Results</string>
 
 </resources>
