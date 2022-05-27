@@ -45,4 +45,7 @@ interface SessionDao {
             "(SELECT movielens_id FROM SessionMovieCrossRef WHERE order_id = (SELECT COUNT(movielens_id) FROM movies_votes WHERE session_id = :sessionId)), " +
             ":liked)")
     suspend fun insertVote(sessionId: String, liked: Boolean)
+
+    @Query("SELECT liked FROM movies_votes WHERE session_id = :sessionId")
+    suspend fun getVotes(sessionId: String): List<Boolean>
 }

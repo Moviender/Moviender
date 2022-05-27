@@ -8,6 +8,7 @@ import com.uniwa.moviender.model.User
 import com.uniwa.moviender.network.helper.SessionInitResponse
 import com.uniwa.moviender.network.helper.SessionMoviesPage
 import com.uniwa.moviender.network.helper.SessionRequestBody
+import com.uniwa.moviender.network.helper.UsersVotesBody
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -107,6 +108,12 @@ interface MovienderApiService {
 
     @GET("/user_state/{session_id}")
     suspend fun getUserState(@Path("session_id") sessionId: String, @Query("uid") uid: String): Int
+
+    @POST("/vote_in_session/{session_id}")
+    suspend fun sendVotes(
+        @Path("session_id") sessionId: String,
+        @Body votesBody: UsersVotesBody
+    ): Int
 }
 
 object MovienderApi {
