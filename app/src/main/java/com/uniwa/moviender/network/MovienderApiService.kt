@@ -114,6 +114,9 @@ interface MovienderApiService {
         @Path("session_id") sessionId: String,
         @Body votesBody: UsersVotesBody
     ): Int
+
+    @GET("/session_results/{session_id}")
+    suspend fun getSessionResult(@Path("session_id") sessionId: String): List<String>
 }
 
 object MovienderApi {

@@ -1,10 +1,7 @@
 package com.uniwa.moviender.ui.fragment
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.uniwa.moviender.HubNavigationDirections
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
@@ -91,10 +86,10 @@ class FriendsFragment : Fragment() {
 
     fun navigate() {
         viewModel.sessionId.observe(this) {
-            viewModel.sessionState.observe(this) { status ->
-                if (status == 0) {
-                    viewModel.userState.observe(this) {
-                        if (it == 0) {
+            viewModel.sessionState.observe(this) { sessionStatus ->
+                if (sessionStatus == 0) {
+                    viewModel.userState.observe(this) { userStatus ->
+                        if (userStatus == 0) {
                             val action = HubNavigationDirections.actionHubActivityToSessionActivity(
                                 0,
                                 viewModel.getFriendUid(),
@@ -105,6 +100,14 @@ class FriendsFragment : Fragment() {
                         }
                     }
                     viewModel.getUserState()
+                } else if (sessionStatus == 1) {
+                    val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                        2,
+                        null,
+                        viewModel.sessionId.value
+                    )
+
+                    findNavController().navigate(action)
                 }
             }
             viewModel.getSessionState()

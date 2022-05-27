@@ -1,8 +1,8 @@
 package com.uniwa.moviender.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navArgs
@@ -37,6 +37,11 @@ class SessionActivity : AppCompatActivity() {
             1 -> {
                 sharedViewModel.setFriendUid(args.friendUid!!)
                 graph?.setStartDestination(R.id.sessionGenresFragment)
+            }
+            2 -> {
+                sharedViewModel.setSessionId(args.sessionId!!)
+                sharedViewModel.setSessionStatus(type)
+                graph?.setStartDestination(R.id.moviesSessionFragment)
             }
         }
 

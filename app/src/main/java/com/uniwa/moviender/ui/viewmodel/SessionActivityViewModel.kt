@@ -1,16 +1,12 @@
 package com.uniwa.moviender.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.uniwa.moviender.network.MovienderApi
-import kotlinx.coroutines.launch
 
 class SessionActivityViewModel : ViewModel() {
     private lateinit var friendUid: String
     private lateinit var sessionId: String
+    private var sessionStatus: Int = 0
 
     private val uid = FirebaseAuth.getInstance().uid!!
 
@@ -27,4 +23,10 @@ class SessionActivityViewModel : ViewModel() {
     }
 
     fun getSessionId(): String = sessionId
+
+    fun setSessionStatus(sessionStatus: Int) {
+        this.sessionStatus = sessionStatus
+    }
+
+    fun getSessionStatus(): Int = sessionStatus
 }

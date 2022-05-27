@@ -2,8 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/session_navigation"
-    >
+    android:id="@+id/session_navigation">
 
     <fragment
         android:id="@+id/sessionGenresFragment"
@@ -31,5 +30,19 @@
         android:id="@+id/votingFragment"
         android:name="com.uniwa.moviender.ui.fragment.VotingFragment"
         android:label="fragment_voting"
-        tools:layout="@layout/fragment_voting" />
+        tools:layout="@layout/fragment_voting" >
+    </fragment>
+    <fragment
+        android:id="@+id/moviesSessionFragment"
+        android:name="com.uniwa.moviender.ui.fragment.SessionMoviesFragment"
+        android:label="SessionMoviesFragment"
+        tools:layout="@layout/fragment_session_movies">
+        <argument
+            android:name="status"
+            app:argType="integer"
+            android:defaultValue="-4" />
+    </fragment>
+    <action
+        android:id="@+id/action_votingFragment_to_moviesSessionFragment"
+        app:destination="@id/moviesSessionFragment" />
 </navigation>
