@@ -48,4 +48,7 @@ interface SessionDao {
 
     @Query("SELECT liked FROM movies_votes WHERE session_id = :sessionId")
     suspend fun getVotes(sessionId: String): List<Boolean>
+
+    @Query("SELECT * FROM Movies WHERE movielens_id IN (:results)")
+    suspend fun getResultMoviesDetails(results: List<String>): List<Movie>
 }
