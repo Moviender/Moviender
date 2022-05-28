@@ -16,7 +16,7 @@ import com.uniwa.moviender.database.session.crossref.SessionMovieCrossRef
         SessionMovieCrossRef::class,
         SessionRemoteKeys::class
     ),
-    version = 2
+    version = 3
 )
 @TypeConverters(Converters::class)
 abstract class SessionDatabase : RoomDatabase() {

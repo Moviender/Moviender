@@ -3,7 +3,6 @@ package com.uniwa.moviender.database.session.crossref
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import com.squareup.moshi.Json
 import com.uniwa.moviender.database.session.Movie
 import com.uniwa.moviender.database.session.Session
 
@@ -33,6 +32,6 @@ data class SessionMovieCrossRef(
     val sessionId: String,
     @ColumnInfo(name = "movielens_id")
     val movielensId: String,
-    @ColumnInfo(name = "order_id")
+    @ColumnInfo(name = "order_index")
     val orderIndex: Int
 )
