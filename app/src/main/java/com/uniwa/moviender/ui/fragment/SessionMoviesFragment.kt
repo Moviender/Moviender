@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -25,6 +26,7 @@ class SessionMoviesFragment : Fragment() {
     private val viewModel: SessionMoviesViewModel by viewModels {
         SessionMoviesViewModelFactory(
             sharedViewModel.getSessionId(),
+            sharedViewModel.getUid(),
             SessionDatabase.getInstance(requireContext())
         )
     }
@@ -49,7 +51,7 @@ class SessionMoviesFragment : Fragment() {
     }
 
     private fun showMatchedMovies() {
-        val adapter = ResultMovieAdapter()
+        val adapter = ResultMovieAdapter(this@SessionMoviesFragment)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             matchedMovies.adapter = adapter
@@ -60,6 +62,10 @@ class SessionMoviesFragment : Fragment() {
         }
 
         viewModel.getMovies()
+    }
+
+    fun updateRating(rating: Float, ratingBar: RatingBar) {
+        viewModel.sendRating(ratingBar.tag as String, rating)
     }
 
 }

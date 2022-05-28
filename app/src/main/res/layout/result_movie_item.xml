@@ -7,7 +7,10 @@
 
         <variable
             name="movie"
-            type="com.uniwa.moviender.database.session.Movie" />
+            type="com.uniwa.moviender.network.Movie" />
+        <variable
+            name="sessionMoviesFragment"
+            type="com.uniwa.moviender.ui.fragment.SessionMoviesFragment" />
     </data>
 
     <LinearLayout
@@ -48,7 +51,7 @@
 
                         <ImageView
                             android:id="@+id/movie_details_poster"
-                            imageUrl="@{movie.posterPath}"
+                            imageUrl="@{movie.movieDetails.posterPath}"
                             android:layout_width="@dimen/poster_image_width"
                             android:layout_height="@dimen/poster_image_height"
                             android:scaleType="fitXY"
@@ -56,21 +59,20 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:src="@drawable/sample_poster" />
 
-                        <!--                        <me.zhanghai.android.materialratingbar.MaterialRatingBar-->
-                        <!--                            android:id="@+id/movie_details_rating"-->
-                        <!--                            style="@style/Widget.MaterialRatingBar.RatingBar"-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:isIndicator="false"-->
-                        <!--                            android:minHeight="27dp"-->
-                        <!--                            android:numStars="5"-->
-                        <!--                            android:onRatingChanged="@{(ratingBar, rating, fromUser) -> MoviesFragment.updateRating(rating, ratingBar)}"-->
-                        <!--                            android:rating="@{viewModel.selectedMovieDetails.userRating}"-->
-                        <!--                            android:stepSize="1"-->
-                        <!--                            app:layout_constraintEnd_toEndOf="@id/movie_details_poster"-->
-                        <!--                            app:layout_constraintStart_toStartOf="@id/movie_details_poster"-->
-                        <!--                            app:layout_constraintTop_toBottomOf="@id/movie_details_poster"-->
-                        <!--                            tools:rating="4" />-->
+                        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                            android:id="@+id/movie_details_rating"
+                            style="@style/Widget.MaterialRatingBar.RatingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:isIndicator="false"
+                            android:minHeight="27dp"
+                            android:numStars="5"
+                            android:onRatingChanged="@{(ratingBar, rating, fromUser) -> sessionMoviesFragment.updateRating(rating, ratingBar)}"
+                            android:stepSize="1"
+                            app:layout_constraintEnd_toEndOf="@id/movie_details_poster"
+                            app:layout_constraintStart_toStartOf="@id/movie_details_poster"
+                            app:layout_constraintTop_toBottomOf="@id/movie_details_poster"
+                            tools:rating="4"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -83,7 +85,7 @@
                     android:layout_marginStart="@dimen/movie_details_frame_margin"
                     android:layout_marginTop="@dimen/movie_details_frame_margin"
                     android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
-                    android:text="@{movie.title}"
+                    android:text="@{movie.movieDetails.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@id/movie_details_poster_card"
@@ -96,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
                     android:layout_marginBottom="@dimen/movie_details_frame_margin"
-                    app:genres="@{movie.genreIds}"
+                    app:genres="@{movie.movieDetails.genreIds}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/movie_details_title"
                     app:layout_constraintTop_toBottomOf="@id/movie_details_title"
@@ -106,7 +108,7 @@
                     android:id="@+id/movie_details_vote_average"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/movie_vote_average(movie.voteAverage)}"
+                    android:text="@{@string/movie_vote_average(movie.movieDetails.voteAverage)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/movie_details_title"
                     app:layout_constraintTop_toBottomOf="@id/movie_details_genres"
@@ -116,7 +118,7 @@
                     android:id="@+id/movie_details_release_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/movie_release_date(movie.releaseDate)}"
+                    android:text="@{@string/movie_release_date(movie.movieDetails.releaseDate)}"
                     app:layout_constraintStart_toStartOf="@id/movie_details_title"
                     app:layout_constraintTop_toBottomOf="@id/movie_details_vote_average"
                     tools:text="Release date: 1995-10-30" />
@@ -126,7 +128,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine|textNoSuggestions"
-                    android:text="@{movie.overview}"
+                    android:text="@{movie.movieDetails.overview}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="@id/movie_details_release_date"
                     app:layout_constraintRight_toRightOf="parent"

@@ -6,10 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.uniwa.moviender.database.session.Movie
-import com.uniwa.moviender.databinding.ResultMovieItemBinding
 
-class ResultMovieAdapter :
+import com.uniwa.moviender.databinding.ResultMovieItemBinding
+import com.uniwa.moviender.network.Movie
+import com.uniwa.moviender.ui.fragment.SessionMoviesFragment
+
+class ResultMovieAdapter(
+    private val fragment: SessionMoviesFragment
+) :
     ListAdapter<Movie, ResultMovieAdapter.ResultMovieViewHolder>(Diffcallback) {
 
     inner class ResultMovieViewHolder(
@@ -17,6 +21,9 @@ class ResultMovieAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             binding.movie = movie
+            binding.sessionMoviesFragment = fragment
+            binding.movieDetailsRating.tag = movie.movielensId
+            binding.movieDetailsRating.rating = movie.movieDetails!!.userRating
             binding.executePendingBindings()
         }
     }
@@ -28,7 +35,7 @@ class ResultMovieAdapter :
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             // TODO compare user rating
-            return oldItem.voteAverage == newItem.voteAverage
+            return oldItem.movieDetails?.userRating == newItem.movieDetails?.userRating
         }
     }
 
