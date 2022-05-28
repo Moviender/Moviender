@@ -20,7 +20,7 @@ class SessionMoviesViewModel(
         viewModelScope.launch {
             val results =MovienderApi.movienderApiService.getSessionResult(sessionId)
 
-                _matchedMovies.value = database.sessionDao().getResultMoviesDetails(results)
+                _matchedMovies.value = database.sessionDao().getResultMoviesDetails(sessionId, results)
 
 
         }

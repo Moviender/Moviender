@@ -25,7 +25,7 @@ interface SessionDao {
         "SELECT * FROM Movies " +
                 "JOIN SessionMovieCrossRef ON Movies.movielens_id = SessionMovieCrossRef.movielens_id " +
                 "JOIN Sessions ON SessionMovieCrossRef.session_id = Sessions.session_id " +
-                "WHERE Sessions.session_id = :sessionId ORDER BY order_id ASC " +
+                "WHERE Sessions.session_id = :sessionId ORDER BY order_index ASC " +
                 "LIMIT (SELECT COUNT(movielens_id) FROM movies_votes WHERE session_id = :sessionId), ${Int.MAX_VALUE}"
     )
     fun getSessionMovies(sessionId: String): PagingSource<Int, Movie>
@@ -42,7 +42,7 @@ interface SessionDao {
     suspend fun getLastOrder(sessionId: String): Int
 
     @Query("INSERT INTO movies_votes(session_id, movielens_id, liked) VALUES (:sessionId, " +
-            "(SELECT movielens_id FROM SessionMovieCrossRef WHERE order_id = (SELECT COUNT(movielens_id) FROM movies_votes WHERE session_id = :sessionId)), " +
+            "(SELECT movielens_id FROM SessionMovieCrossRef WHERE order_index = (SELECT COUNT(movielens_id) FROM movies_votes WHERE session_id = :sessionId)), " +
             ":liked)")
     suspend fun insertVote(sessionId: String, liked: Boolean)
 
@@ -51,6 +51,10 @@ interface SessionDao {
             "WHERE movies_votes.session_id = :sessionId ORDER BY order_index ASC")
     suspend fun getVotes(sessionId: String): List<Boolean>
 
-    @Query("SELECT * FROM Movies WHERE movielens_id IN (:results)")
-    suspend fun getResultMoviesDetails(results: List<String>): List<Movie>
+    @Query("SELECT * FROM Movies " +
+            "JOIN SessionMovieCrossRef ON Movies.movielens_id = SessionMovieCrossRef.movielens_id " +
+            "WHERE SessionMovieCrossRef.session_id = :sessionId " +
+            "AND SessionMovieCrossRef.movielens_id IN (:results) " +
+            "ORDER BY order_index ASC")
+    suspend fun getResultMoviesDetails(sessionId: String, results: List<String>): List<Movie>
 }
