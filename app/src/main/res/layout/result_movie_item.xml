@@ -84,9 +84,9 @@
                     android:layout_marginTop="@dimen/movie_details_frame_margin"
                     android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
                     android:text="@{movie.title}"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@id/movie_details_poster_card"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/movie_details_poster_card"
                     tools:text="Title" />
 
@@ -121,24 +121,18 @@
                     app:layout_constraintTop_toBottomOf="@id/movie_details_vote_average"
                     tools:text="Release date: 1995-10-30" />
 
-                <ScrollView
+
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="@dimen/movie_details_frame_margin_end"
-                    android:scrollbars="none"
-                    app:layout_constraintBottom_toBottomOf="@id/movie_details_poster_card"
-                    app:layout_constraintLeft_toLeftOf="@id/movie_details_genres"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:text="@{movie.overview}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="@id/movie_details_release_date"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/movie_details_release_date"
-                    app:layout_constraintVertical_bias="0.2">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine|textNoSuggestions"
-                        android:text="@{movie.overview}"
-                        tools:text="Overview " />
-                </ScrollView>
+                    app:layout_constraintVertical_bias="0.2"
+                    tools:text="Overview " />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
