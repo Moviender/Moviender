@@ -1,18 +1,18 @@
 package com.uniwa.moviender.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentInitializationBinding
-
-import com.uniwa.moviender.ui.viewmodel.LoginViewModel
 import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
+import com.uniwa.moviender.ui.viewmodel.LoginViewModel
 
 class InitializationFragment : Fragment() {
 
@@ -58,6 +58,7 @@ class InitializationFragment : Fragment() {
 
     private fun navigateToHub() {
         findNavController().navigate(R.id.action_initializationFragment_to_hubActivity)
+        ActivityNavigator(requireContext()).popBackStack()
     }
 
 }

@@ -13,13 +13,12 @@
         <action
             android:id="@+id/action_firebaseLoginFragment_to_initializationFragment"
             app:destination="@id/initializationFragment"
-            app:popUpTo="@id/initializationFragment"
+            app:popUpTo="@id/firebaseLoginFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_firebaseLoginFragment_to_hubActivity"
             app:destination="@id/hubActivity"
-            app:popUpTo="@id/hubActivity"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
@@ -30,8 +29,7 @@
         <action
             android:id="@+id/action_initializationFragment_to_hubActivity"
             app:destination="@id/hubActivity"
-            app:popUpTo="@id/hubActivity"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
 
     <activity

@@ -2,12 +2,12 @@ package com.uniwa.moviender.ui.fragment
 
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -45,6 +45,7 @@ class FirebaseLoginFragment : Fragment() {
         sharedViewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
             if (initialized) {
                 findNavController().navigate(R.id.action_firebaseLoginFragment_to_hubActivity)
+                ActivityNavigator(requireContext()).popBackStack()
             } else {
                 sharedViewModel.setUser(firebaseUser!!)
                 findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
