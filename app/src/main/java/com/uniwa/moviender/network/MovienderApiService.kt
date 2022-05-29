@@ -94,6 +94,7 @@ interface MovienderApiService {
     @GET("/session_movies/{session_id}")
     suspend fun getSessionMovies(
         @Path("session_id") sessionId: String,
+        @Query("uid") uid: String,
         @Query("next_page_key") nextPageKey: Int?
     ): SessionMoviesPage
 

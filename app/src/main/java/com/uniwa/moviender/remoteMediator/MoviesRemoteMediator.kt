@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalPagingApi::class)
 class MoviesRemoteMediator(
+    private val uid: String,
     private val movienderApi: MovienderApiService,
     private val database: SessionDatabase,
     private val sessionId: String
@@ -66,12 +67,13 @@ class MoviesRemoteMediator(
                 }
             }
 
-            val response = movienderApi.getSessionMovies(sessionId, loadKey)
+            val response = movienderApi.getSessionMovies(sessionId, uid, loadKey)
 
             val movies = response.movies
 
             if (movies.isNotEmpty()) {
                 database.withTransaction {
+                    // TODO change to delete only movies when invalidate
                     if (loadType == LoadType.REFRESH) {
                         sessionDao.deleteSession(sessionId)
                         // See deleteSession(sessionId) comments on SessionDao.kt

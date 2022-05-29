@@ -15,11 +15,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class VotingViewModel(
+    private val uid: String,
     private val sessionId: String,
     private val database: SessionDatabase,
     movienderApi: MovienderApiService
 ) : ViewModel() {
-    val movies = SessionRepository(database, movienderApi).getSessionMovies(sessionId)
+    val movies = SessionRepository(uid, database, movienderApi).getSessionMovies(sessionId)
 
     private val _response = MutableLiveData<Int>()
     val response: LiveData<Int> = _response

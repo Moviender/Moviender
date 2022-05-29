@@ -30,6 +30,7 @@ class VotingFragment : Fragment() {
     private val sharedViewModel: SessionActivityViewModel by activityViewModels()
     private val viewModel: VotingViewModel by viewModels {
         VotingViewModelFactory(
+            sharedViewModel.getUid(),
             sharedViewModel.getSessionId(),
             SessionDatabase.getInstance(requireContext()),
             MovienderApi.movienderApiService
