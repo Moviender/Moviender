@@ -41,6 +41,14 @@
             android:name="status"
             app:argType="integer"
             android:defaultValue="99" />
+        <action
+            android:id="@+id/action_moviesSessionFragment_to_votingFragment"
+            app:destination="@id/votingFragment" />
+        <action
+            android:id="@+id/action_moviesSessionFragment_to_hubActivity"
+            app:destination="@id/hubActivity"
+            app:popUpTo="@id/hubActivity"
+            app:popUpToInclusive="true" />
     </fragment>
     <action
         android:id="@+id/action_votingFragment_to_moviesSessionFragment"

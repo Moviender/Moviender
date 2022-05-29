@@ -58,5 +58,8 @@
     <string name="session_results">Results</string>
     <string name="results_waiting_msg">You must wait for the others to vote\nCome back later!</string>
     <string name="failed_tv">You didn\'t match in any of the movies</string>
+    <string name="vote_again_msg">You didn\'t match any of the movies. Would you like to vote some more?</string>
+    <string name="vote_again_positive">Yes</string>
+    <string name="vote_again_negative">No</string>
 
 </resources>

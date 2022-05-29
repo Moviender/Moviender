@@ -53,7 +53,7 @@ class SessionMoviesFragment : Fragment() {
             SessionStatus.FAILED_FINISH.code -> showFailedMessage()
             SessionUserStatus.WAITING.code -> showWaitingMessage()
             SessionStatus.SUCCESSFUL_FINISH.code -> showMatchedMovies()
-            //SessionUserStatus.VOTING_AGAIN.code -> showVotingAgainDialog()
+            SessionUserStatus.VOTING_AGAIN.code -> showVotingAgainDialog()
         }
     }
 
