@@ -100,7 +100,6 @@ class FriendsFragment : Fragment() {
                                 viewModel.getFriendUid(),
                                 viewModel.sessionId.value
                             )
-
                             findNavController().navigate(action)
                         } else if (userStatus == SessionUserStatus.WAITING.code) {
                             val action = HubNavigationDirections.actionHubActivityToSessionActivity(
@@ -108,12 +107,14 @@ class FriendsFragment : Fragment() {
                                 viewModel.getFriendUid(),
                                 viewModel.sessionId.value
                             )
+                            findNavController().navigate(action)
                         } else if (userStatus == SessionUserStatus.VOTING_AGAIN.code) {
                             val action = HubNavigationDirections.actionHubActivityToSessionActivity(
                                 SessionUserStatus.VOTING_AGAIN.code,
                                 viewModel.getFriendUid(),
                                 viewModel.sessionId.value
                             )
+                            findNavController().navigate(action)
                         }
                     }
                     viewModel.getUserState()
