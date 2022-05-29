@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.HubNavigationDirections
 import com.uniwa.moviender.R
-import com.uniwa.moviender.adapters.bindPosterImage
+import com.uniwa.moviender.data.RecommendationType
 import com.uniwa.moviender.databinding.SessionDialogBinding
 import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
 
@@ -32,7 +32,7 @@ class StartSessionDialogFragment : DialogFragment() {
         binding.apply {
             svdBtn.setOnClickListener {
                 val action = HubNavigationDirections.actionHubActivityToSessionActivity(
-                    1,
+                    RecommendationType.SVD.code,
                     viewModel.getFriendUid(),
                     null
                 )

@@ -7,6 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navArgs
 import com.uniwa.moviender.R
+import com.uniwa.moviender.data.RecommendationType
+import com.uniwa.moviender.data.SessionStatus
+import com.uniwa.moviender.data.SessionUserStatus
 import com.uniwa.moviender.databinding.ActivitySessionBinding
 import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 
@@ -30,15 +33,18 @@ class SessionActivity : AppCompatActivity() {
         val inflater = navHostFragment?.findNavController()?.navInflater
         val graph = inflater?.inflate(R.navigation.session_navigation)
         when (type) {
-            0 -> {
+            SessionUserStatus.VOTING.code -> {
                 sharedViewModel.setSessionId(args.sessionId!!)
                 graph?.setStartDestination(R.id.votingFragment)
             }
-            1 -> {
+            RecommendationType.SVD.code -> {
                 sharedViewModel.setFriendUid(args.friendUid!!)
                 graph?.setStartDestination(R.id.sessionGenresFragment)
             }
-            2 -> {
+            SessionUserStatus.WAITING.code,
+            SessionUserStatus.VOTING_AGAIN.code,
+            SessionStatus.SUCCESSFUL_FINISH.code,
+            SessionStatus.FAILED_FINISH.code -> {
                 sharedViewModel.setSessionId(args.sessionId!!)
                 sharedViewModel.setSessionStatus(type)
                 graph?.setStartDestination(R.id.moviesSessionFragment)

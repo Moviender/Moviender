@@ -11,6 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.HubNavigationDirections
 import com.uniwa.moviender.R
+import com.uniwa.moviender.data.FriendRequestStatus
+import com.uniwa.moviender.data.SessionStatus
+import com.uniwa.moviender.data.SessionUserStatus
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
 import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
@@ -65,11 +68,13 @@ class FriendsFragment : Fragment() {
 
     private fun checkResponse() {
         when (viewModel.requestResponse.value) {
-            1 -> {
+            FriendRequestStatus.SUCCESSFUL_FRIEND_REQUEST.code -> {
                 dialog.dismiss()
                 viewModel.getFriends()
             }
-            -1, -2, -3 -> {
+            FriendRequestStatus.USERNAME_NOT_FOUND.code,
+            FriendRequestStatus.ALREADY_EXISTS.code,
+            FriendRequestStatus.SAME_UID.code -> {
                 viewModel.setError(true)
             }
         }
@@ -87,22 +92,34 @@ class FriendsFragment : Fragment() {
     fun navigate() {
         viewModel.sessionId.observe(this) {
             viewModel.sessionState.observe(this) { sessionStatus ->
-                if (sessionStatus == 0) {
+                if (sessionStatus == SessionStatus.WAITING_FOR_VOTES.code) {
                     viewModel.userState.observe(this) { userStatus ->
-                        if (userStatus == 0) {
+                        if (userStatus == SessionUserStatus.VOTING.code) {
                             val action = HubNavigationDirections.actionHubActivityToSessionActivity(
-                                0,
+                                SessionUserStatus.VOTING.code,
                                 viewModel.getFriendUid(),
                                 viewModel.sessionId.value
                             )
 
                             findNavController().navigate(action)
+                        } else if (userStatus == SessionUserStatus.WAITING.code) {
+                            val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                                SessionUserStatus.WAITING.code,
+                                viewModel.getFriendUid(),
+                                viewModel.sessionId.value
+                            )
+                        } else if (userStatus == SessionUserStatus.VOTING_AGAIN.code) {
+                            val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                                SessionUserStatus.VOTING_AGAIN.code,
+                                viewModel.getFriendUid(),
+                                viewModel.sessionId.value
+                            )
                         }
                     }
                     viewModel.getUserState()
-                } else if (sessionStatus == 1) {
+                } else if (sessionStatus == SessionStatus.SUCCESSFUL_FINISH.code) {
                     val action = HubNavigationDirections.actionHubActivityToSessionActivity(
-                        2,
+                        SessionStatus.SUCCESSFUL_FINISH.code,
                         null,
                         viewModel.sessionId.value
                     )

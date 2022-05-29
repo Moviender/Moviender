@@ -39,8 +39,7 @@
         tools:layout="@layout/fragment_session_movies">
         <argument
             android:name="status"
-            app:argType="integer"
-            android:defaultValue="-4" />
+            app:argType="integer" />
     </fragment>
     <action
         android:id="@+id/action_votingFragment_to_moviesSessionFragment"

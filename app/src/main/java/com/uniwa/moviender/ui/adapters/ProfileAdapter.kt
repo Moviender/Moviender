@@ -1,10 +1,13 @@
 package com.uniwa.moviender.ui.adapters
 
-import android.view.*
-import androidx.appcompat.view.menu.MenuView
-import androidx.recyclerview.widget.ListAdapter
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.uniwa.moviender.data.FriendRequestStatus
+import com.uniwa.moviender.data.FriendState
 import com.uniwa.moviender.databinding.ProfileItemBinding
 import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.ui.fragment.FriendsFragment
@@ -20,25 +23,31 @@ class ProfileAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(friend: Friend) {
             binding.friend = friend
-            if (friend.state == 1) {
+            if (friend.state == FriendState.PENDING.code) {
                 binding.requestPendingTv.visibility = View.VISIBLE
                 binding.requestAcceptBtn.visibility = View.GONE
                 binding.requestRejectBtn.visibility = View.GONE
                 binding.startSessionBtn.visibility = View.GONE
                 binding.showSessionBtn.visibility = View.GONE
-            } else if (friend.state == 2) {
+            } else if (friend.state == FriendState.REQUEST.code) {
                 binding.requestPendingTv.visibility = View.GONE
                 binding.startSessionBtn.visibility = View.GONE
                 binding.showSessionBtn.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.VISIBLE
                 binding.requestRejectBtn.visibility = View.VISIBLE
                 binding.requestAcceptBtn.setOnClickListener {
-                    viewModel.respondToFriendRequest(friend.uid, 1)
+                    viewModel.respondToFriendRequest(
+                        friend.uid,
+                        FriendRequestStatus.ACCEPT_REQUEST.code
+                    )
                 }
                 binding.requestRejectBtn.setOnClickListener {
-                    viewModel.respondToFriendRequest(friend.uid, 0)
+                    viewModel.respondToFriendRequest(
+                        friend.uid,
+                        FriendRequestStatus.DECLINE_REQUEST.code
+                    )
                 }
-            } else if (friend.state == 3) {
+            } else if (friend.state == FriendState.FRIEND.code) {
                 binding.requestPendingTv.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.GONE
                 binding.requestRejectBtn.visibility = View.GONE
@@ -48,7 +57,7 @@ class ProfileAdapter(
                     viewModel.setFriendUid(friend.uid)
                     friendsFragment.showSessionDialog()
                 }
-            } else if (friend.state == 4) {
+            } else if (friend.state == FriendState.SESSION.code) {
                 binding.requestPendingTv.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.GONE
                 binding.requestRejectBtn.visibility = View.GONE
@@ -82,7 +91,7 @@ class ProfileAdapter(
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         val friend = getItem(position)
 
-        if (friend.state >= 3) {
+        if (friend.state == FriendState.FRIEND.code || friend.state == FriendState.SESSION.code) {
             addDeleteOption(holder.itemView, friend)
         }
 

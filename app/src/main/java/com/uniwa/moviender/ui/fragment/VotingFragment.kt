@@ -89,7 +89,7 @@ class VotingFragment : Fragment() {
     }
 
     private fun sendVotes() {
-        viewModel.response.observe(requireActivity()) { status ->
+        viewModel.sessionStatus.observe(requireActivity()) { status ->
             val action =
                 SessionNavigationDirections.actionVotingFragmentToMoviesSessionFragment(status)
             findNavController().navigate(action)

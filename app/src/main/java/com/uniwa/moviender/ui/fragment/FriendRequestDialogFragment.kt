@@ -5,12 +5,12 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.uniwa.moviender.R
+import com.uniwa.moviender.data.FriendRequestStatus
 import com.uniwa.moviender.databinding.FriendRequestDialogBinding
 import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
 
@@ -33,13 +33,13 @@ class FriendRequestDialogFragment : DialogFragment() {
         viewModel.isErrorEnabled.observe(this) {
             if (viewModel.isErrorEnabled.value == true) {
                 when (viewModel.requestResponse.value) {
-                    -1 -> {
+                    FriendRequestStatus.USERNAME_NOT_FOUND.code -> {
                         binding.usernameTi.error = getString(R.string.dialog_username_error_message)
                     }
-                    -2 -> {
+                    FriendRequestStatus.ALREADY_EXISTS.code -> {
                         binding.usernameTi.error = getString(R.string.dialog_exists_error_message)
                     }
-                    -3 -> {
+                    FriendRequestStatus.SAME_UID.code -> {
                         binding.usernameTi.error = getString(R.string.same_uid_error_message)
                     }
                 }

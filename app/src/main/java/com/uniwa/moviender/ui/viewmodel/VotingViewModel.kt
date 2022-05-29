@@ -22,8 +22,8 @@ class VotingViewModel(
 ) : ViewModel() {
     val movies = SessionRepository(uid, database, movienderApi).getSessionMovies(sessionId)
 
-    private val _response = MutableLiveData<Int>()
-    val response: LiveData<Int> = _response
+    private val _sessionStatus = MutableLiveData<Int>()
+    val sessionStatus: LiveData<Int> = _sessionStatus
 
     fun submitData(adapter: VoteCardStackViewAdapter) {
         viewModelScope.launch {
@@ -44,7 +44,7 @@ class VotingViewModel(
     fun sendVotes(uid: String){
         viewModelScope.launch {
             val votes = database.sessionDao().getVotes(sessionId)
-            _response.value = MovienderApi.movienderApiService.sendVotes(sessionId, UsersVotesBody(uid, votes))
+            _sessionStatus.value = MovienderApi.movienderApiService.sendVotes(sessionId, UsersVotesBody(uid, votes))
         }
     }
 }
