@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.SessionStatus
@@ -47,11 +49,12 @@ class SessionMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val status = if (args.status == DEFAULT_VALUE) sharedViewModel.getSessionStatus() else args.status
+        val status =
+            if (args.status == DEFAULT_VALUE) sharedViewModel.getSessionStatus() else args.status
 
         when (status) {
             SessionStatus.FAILED_FINISH.code -> showFailedMessage()
-            SessionUserStatus.WAITING.code -> showWaitingMessage()
+            SessionUserStatus.WAITING.code, SessionStatus.WAITING_FOR_VOTES.code -> showWaitingMessage()
             SessionStatus.SUCCESSFUL_FINISH.code -> showMatchedMovies()
             SessionUserStatus.VOTING_AGAIN.code -> showVotingAgainDialog()
         }
@@ -74,6 +77,30 @@ class SessionMoviesFragment : Fragment() {
 
     fun updateRating(rating: Float, ratingBar: RatingBar) {
         viewModel.sendRating(ratingBar.tag as String, rating)
+    }
+
+    private fun showWaitingMessage() {
+        binding.waitingTv.visibility = View.VISIBLE
+    }
+
+    private fun showVotingAgainDialog() {
+        val alertDialog = activity?.let {
+            val builder = AlertDialog.Builder(it)
+            builder.apply {
+                setMessage(getString(R.string.vote_again_msg))
+                setPositiveButton(getString(R.string.vote_again_positive)) { dialog, id ->
+                    findNavController().navigate(R.id.action_moviesSessionFragment_to_votingFragment)
+                }
+                setNegativeButton(getString(R.string.vote_again_negative)) { dialog, id ->
+                    findNavController().navigate(R.id.action_moviesSessionFragment_to_hubActivity)
+                }
+            }
+                .create()
+        }?.show()
+    }
+
+    private fun showFailedMessage() {
+        binding.failedTv.visibility = View.VISIBLE
     }
 
 }
