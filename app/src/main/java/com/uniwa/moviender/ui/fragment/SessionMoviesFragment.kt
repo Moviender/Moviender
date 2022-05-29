@@ -18,6 +18,8 @@ import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.SessionMoviesViewModel
 import com.uniwa.moviender.ui.viewmodel.SessionMoviesViewModelFactory
 
+private const val DEFAULT_VALUE = 99
+
 class SessionMoviesFragment : Fragment() {
 
     private val args: SessionMoviesFragmentArgs by navArgs()
@@ -43,7 +45,7 @@ class SessionMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val status = if (args.status == -4) sharedViewModel.getSessionStatus() else args.status
+        val status = if (args.status == DEFAULT_VALUE) sharedViewModel.getSessionStatus() else args.status
 
         when (status) {
             1,2 -> showMatchedMovies()
