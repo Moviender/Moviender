@@ -127,6 +127,14 @@ class FriendsFragment : Fragment() {
 
                     findNavController().navigate(action)
                 }
+                else if (sessionStatus == SessionStatus.FAILED_FINISH.code) {
+                    val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                        SessionStatus.FAILED_FINISH.code,
+                        null,
+                        viewModel.sessionId.value
+                    )
+                    findNavController().navigate(action)
+                }
             }
             viewModel.getSessionState()
         }

@@ -56,5 +56,7 @@
     <string name="movie_genres">Genres: %1$s</string>
     <string name="send_votes">Send</string>
     <string name="session_results">Results</string>
+    <string name="results_waiting_msg">You must wait for the others to vote\nCome back later!</string>
+    <string name="failed_tv">You didn\'t match in any of the movies</string>
 
 </resources>

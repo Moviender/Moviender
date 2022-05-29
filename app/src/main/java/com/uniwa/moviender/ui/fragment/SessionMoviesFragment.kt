@@ -11,6 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.uniwa.moviender.R
+import com.uniwa.moviender.data.SessionStatus
+import com.uniwa.moviender.data.SessionUserStatus
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentSessionMoviesBinding
 import com.uniwa.moviender.ui.adapters.ResultMovieAdapter
@@ -48,7 +50,10 @@ class SessionMoviesFragment : Fragment() {
         val status = if (args.status == DEFAULT_VALUE) sharedViewModel.getSessionStatus() else args.status
 
         when (status) {
-            1,2 -> showMatchedMovies()
+            SessionStatus.FAILED_FINISH.code -> showFailedMessage()
+            SessionUserStatus.WAITING.code -> showWaitingMessage()
+            SessionStatus.SUCCESSFUL_FINISH.code -> showMatchedMovies()
+            //SessionUserStatus.VOTING_AGAIN.code -> showVotingAgainDialog()
         }
     }
 
@@ -57,6 +62,7 @@ class SessionMoviesFragment : Fragment() {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             matchedMovies.adapter = adapter
+            resultGroup.visibility = View.VISIBLE
         }
 
         viewModel.matchedMovies.observe(viewLifecycleOwner) { list ->
