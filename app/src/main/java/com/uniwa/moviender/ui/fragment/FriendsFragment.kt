@@ -64,6 +64,8 @@ class FriendsFragment : Fragment() {
         viewModel.requestResponse.observe(viewLifecycleOwner) {
             checkResponse()
         }
+
+        setupObservers()
     }
 
     private fun checkResponse() {
@@ -90,55 +92,43 @@ class FriendsFragment : Fragment() {
     }
 
     fun navigate() {
-        viewModel.sessionId.observe(this) {
-            viewModel.sessionState.observe(this) { sessionStatus ->
-                if (sessionStatus == SessionStatus.WAITING_FOR_VOTES.code) {
-                    viewModel.userState.observe(this) { userStatus ->
-                        if (userStatus == SessionUserStatus.VOTING.code) {
-                            val action = HubNavigationDirections.actionHubActivityToSessionActivity(
-                                SessionUserStatus.VOTING.code,
-                                viewModel.getFriendUid(),
-                                viewModel.sessionId.value
-                            )
-                            findNavController().navigate(action)
-                        } else if (userStatus == SessionUserStatus.WAITING.code) {
-                            val action = HubNavigationDirections.actionHubActivityToSessionActivity(
-                                SessionUserStatus.WAITING.code,
-                                viewModel.getFriendUid(),
-                                viewModel.sessionId.value
-                            )
-                            findNavController().navigate(action)
-                        } else if (userStatus == SessionUserStatus.VOTING_AGAIN.code) {
-                            val action = HubNavigationDirections.actionHubActivityToSessionActivity(
-                                SessionUserStatus.VOTING_AGAIN.code,
-                                viewModel.getFriendUid(),
-                                viewModel.sessionId.value
-                            )
-                            findNavController().navigate(action)
-                        }
-                    }
-                    viewModel.getUserState()
-                } else if (sessionStatus == SessionStatus.SUCCESSFUL_FINISH.code) {
-                    val action = HubNavigationDirections.actionHubActivityToSessionActivity(
-                        SessionStatus.SUCCESSFUL_FINISH.code,
-                        null,
-                        viewModel.sessionId.value
-                    )
-
-                    findNavController().navigate(action)
-                }
-                else if (sessionStatus == SessionStatus.FAILED_FINISH.code) {
-                    val action = HubNavigationDirections.actionHubActivityToSessionActivity(
-                        SessionStatus.FAILED_FINISH.code,
-                        null,
-                        viewModel.sessionId.value
-                    )
-                    findNavController().navigate(action)
-                }
-            }
-            viewModel.getSessionState()
-        }
-        viewModel.getSessionId()
+        viewModel.getSessionState()
     }
 
+    private fun setupObservers() {
+        setupSessionStateObserver()
+        setupUserStateObserver()
+    }
+
+    private fun setupSessionStateObserver() {
+        viewModel.sessionState.observe(viewLifecycleOwner) { sessionStatus ->
+            when (sessionStatus) {
+                SessionStatus.WAITING_FOR_VOTES.code -> {
+                    viewModel.getUserState()
+                }
+                SessionStatus.SUCCESSFUL_FINISH.code,
+                SessionStatus.FAILED_FINISH.code -> {
+                    val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                        sessionStatus,
+                        null,
+                        viewModel.sessionId.value
+                    )
+                    findNavController().navigate(action)
+                    ActivityNavigator(requireContext()).popBackStack()
+                }
+            }
+        }
+    }
+
+    private fun setupUserStateObserver() {
+        viewModel.userState.observe(viewLifecycleOwner) { userStatus ->
+            val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                userStatus,
+                viewModel.getFriendUid(),
+                viewModel.sessionId.value
+            )
+            findNavController().navigate(action)
+            ActivityNavigator(requireContext()).popBackStack()
+        }
+    }
 }
