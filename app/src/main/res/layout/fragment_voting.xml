@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.uniwa.moviender.ui.viewmodel.VotingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,13 +32,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/skip_red_24dp"
-            app:tint="@color/skip_red"
             app:backgroundTint="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@id/save_movies_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/save_movies_btn"
             app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/save_movies_btn" />
+            app:layout_constraintTop_toTopOf="@id/voting_stack_view"
+            app:layout_constraintVertical_bias="0.98"
+            app:tint="@color/skip_red" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/save_movies_btn"
@@ -46,13 +50,16 @@
             android:gravity="center"
             android:text="@string/send_votes"
             android:textColor="@color/blue_dark"
+            android:visibility="gone"
             app:backgroundTint="@android:color/white"
+            app:btnVisibility="@{viewModel.sendBtnVisibility}"
             app:icon="@drawable/ic_cloud_upload_24"
             app:iconTint="@color/blue"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/prev_movie_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/voting_stack_view" />
+            app:layout_constraintTop_toTopOf="@id/prev_movie_btn"
+            tools:visibility="visible" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/next_movie_btn"
@@ -60,14 +67,12 @@
             android:layout_height="wrap_content"
             android:contentDescription="TODO"
             android:src="@drawable/like_green_24dp"
-            app:tint="@color/like_green"
             app:backgroundTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@id/save_movies_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toEndOf="@id/save_movies_btn"
-            app:layout_constraintTop_toTopOf="@id/save_movies_btn" />
-
-
+            app:layout_constraintTop_toTopOf="@id/save_movies_btn"
+            app:tint="@color/like_green" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
