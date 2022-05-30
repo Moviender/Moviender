@@ -50,8 +50,8 @@ class VotingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        votingListener = VotingCardListener(viewModel)
         val adapter = VoteCardStackViewAdapter()
+        votingListener = VotingCardListener(viewModel, adapter)
 
         val manager = CardStackLayoutManager(requireContext(), votingListener).apply {
             setDirections(Direction.HORIZONTAL)
@@ -64,6 +64,7 @@ class VotingFragment : Fragment() {
             votingStackView.adapter = adapter
             votingStackView.layoutManager = manager
             lifecycleOwner = viewLifecycleOwner
+            viewModel = this@VotingFragment.viewModel
 
             // Todo move them to xml
             prevMovieBtn.setOnClickListener(
@@ -86,15 +87,18 @@ class VotingFragment : Fragment() {
         }
 
         viewModel.submitData(adapter)
-    }
 
-    private fun sendVotes() {
+        viewModel.getVotes()
+
         viewModel.sessionStatus.observe(requireActivity()) { status ->
             val action =
                 SessionNavigationDirections.actionVotingFragmentToMoviesSessionFragment(status)
             findNavController().navigate(action)
         }
-        viewModel.sendVotes(sharedViewModel.getUid())
+    }
+
+    private fun sendVotes() {
+        viewModel.sendVotes()
     }
 
 }

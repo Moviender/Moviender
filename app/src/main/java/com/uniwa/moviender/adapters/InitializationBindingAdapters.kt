@@ -1,25 +1,22 @@
 package com.uniwa.moviender.adapters
 
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 import com.uniwa.moviender.R
-import com.uniwa.moviender.network.Movie
-import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
 import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.model.Friend
-import com.uniwa.moviender.model.User
+import com.uniwa.moviender.network.Movie
+import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
 import com.uniwa.moviender.ui.adapters.SessionGenresAdapter
-import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
-import com.yuyakaido.android.cardstackview.CardStackView
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
@@ -72,5 +69,14 @@ fun bindPosterImage(imageView: ImageView, filePath: String?) {
             // TODO Images for error and loading
             placeholder(R.drawable.movies_poster_placeholder)
         }
+    }
+}
+
+@BindingAdapter("btnVisibility")
+fun bindBtnVisibility(extendedFloatingActionButton: ExtendedFloatingActionButton, visibility: Int?) {
+    val animation = AnimationUtils.loadAnimation(extendedFloatingActionButton.context, R.anim.btn_scale)
+    if (visibility == View.VISIBLE) {
+        extendedFloatingActionButton.show()
+        extendedFloatingActionButton.startAnimation(animation)
     }
 }

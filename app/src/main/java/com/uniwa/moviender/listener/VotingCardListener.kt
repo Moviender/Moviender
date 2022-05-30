@@ -5,12 +5,14 @@ import android.view.ViewGroup
 import android.widget.ScrollView
 import com.google.android.material.card.MaterialCardView
 import com.uniwa.moviender.R
+import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
 
 class VotingCardListener(
-    private val viewModel: VotingViewModel
+    private val viewModel: VotingViewModel,
+    private val adapter: VoteCardStackViewAdapter
 ) : CardStackListener {
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {
@@ -20,10 +22,10 @@ class VotingCardListener(
     override fun onCardSwiped(direction: Direction?) {
         when (direction) {
             Direction.Left -> {
-                viewModel.newVote( false)
+                viewModel.newVote( false, adapter.itemCount)
             }
             Direction.Right -> {
-                viewModel.newVote(true)
+                viewModel.newVote(true, adapter.itemCount)
             }
         }
     }

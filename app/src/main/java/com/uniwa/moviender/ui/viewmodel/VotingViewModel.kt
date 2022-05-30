@@ -1,5 +1,6 @@
 package com.uniwa.moviender.ui.viewmodel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,13 @@ class VotingViewModel(
     private val database: SessionDatabase,
     movienderApi: MovienderApiService
 ) : ViewModel() {
+    val MINIMUM_VOTES = 10
+
+    private val _sendBtnVisibility = MutableLiveData<Int>(View.GONE)
+    val sendBtnVisibility: LiveData<Int> = _sendBtnVisibility
+
+    private var votesCount = 0
+
     val movies = SessionRepository(uid, database, movienderApi).getSessionMovies(sessionId)
 
     private val _sessionStatus = MutableLiveData<Int>()
@@ -33,18 +41,45 @@ class VotingViewModel(
         }
     }
 
-    fun newVote(liked: Boolean) {
+    fun newVote(liked: Boolean, itemCount: Int) {
         viewModelScope.launch {
             database.withTransaction {
                 database.sessionDao().insertVote(sessionId, liked)
             }
         }
+        votesCount++
+        changeVisibility()
+
+        if (itemCount == 1) {
+            sendVotes()
+        }
     }
 
-    fun sendVotes(uid: String){
+    fun sendVotes() {
         viewModelScope.launch {
-            val votes = database.sessionDao().getVotes(sessionId)
-            _sessionStatus.value = MovienderApi.movienderApiService.sendVotes(sessionId, UsersVotesBody(uid, votes))
+            val votes = database.withTransaction {
+                database.sessionDao().getVotes(sessionId)
+            }
+            _sessionStatus.value =
+                MovienderApi.movienderApiService.sendVotes(sessionId, UsersVotesBody(uid, votes))
+        }
+    }
+
+    fun getVotes() {
+        viewModelScope.launch {
+            val remoteDbVotesCount =
+                MovienderApi.movienderApiService.getUserNumVotes(sessionId, uid)
+            val localDbVotesCount = database.sessionDao().getVotes(sessionId).size
+
+            votesCount = remoteDbVotesCount.coerceAtLeast(localDbVotesCount)
+
+            changeVisibility()
+        }
+    }
+
+    private fun changeVisibility() {
+        if (votesCount >= MINIMUM_VOTES && _sendBtnVisibility.value != View.VISIBLE) {
+            _sendBtnVisibility.value = View.VISIBLE
         }
     }
 }
