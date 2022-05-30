@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.uniwa.moviender.R
@@ -93,6 +94,7 @@ class SessionMoviesFragment : Fragment() {
                 }
                 setNegativeButton(getString(R.string.vote_again_negative)) { dialog, id ->
                     findNavController().navigate(R.id.action_moviesSessionFragment_to_hubActivity)
+                    ActivityNavigator(requireContext()).popBackStack()
                 }
             }
                 .create()

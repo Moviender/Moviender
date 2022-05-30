@@ -21,7 +21,7 @@
         android:label="activity_startup"
         tools:layout="@layout/activity_startup" />
     <activity
-        android:id="@+id/hubActivity2"
+        android:id="@+id/hubActivity"
         android:name="com.uniwa.moviender.ui.HubActivity"
         tools:layout="@layout/activity_startup"
         android:label="HubActivity" />
@@ -44,7 +44,9 @@
     </activity>
     <action
         android:id="@+id/action_hubActivity_to_sessionActivity"
-        app:destination="@id/sessionActivity"/>
+        app:destination="@id/sessionActivity"
+        app:popUpTo="@id/navigation_friends"
+        app:popUpToInclusive="true" />
     <action
         android:id="@+id/action_hubActivity_to_startupActivity"
         app:destination="@id/startup"

@@ -18,7 +18,7 @@
         <action
             android:id="@+id/action_sessionGenresFragment_to_votingFragment"
             app:destination="@id/votingFragment"
-            app:popUpTo="@id/votingFragment"
+            app:popUpTo="@id/sessionGenresFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <activity
@@ -43,14 +43,28 @@
             android:defaultValue="99" />
         <action
             android:id="@+id/action_moviesSessionFragment_to_votingFragment"
-            app:destination="@id/votingFragment" />
+            app:destination="@id/votingFragment"
+            app:popUpTo="@id/moviesSessionFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_moviesSessionFragment_to_hubActivity"
             app:destination="@id/hubActivity"
             app:popUpTo="@id/hubActivity"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <action
         android:id="@+id/action_votingFragment_to_moviesSessionFragment"
-        app:destination="@id/moviesSessionFragment" />
+        app:destination="@id/moviesSessionFragment"
+        app:popUpTo="@id/votingFragment"
+        app:popUpToInclusive="true" />
+    <activity
+        android:id="@+id/sessionActivity"
+        android:name="com.uniwa.moviender.ui.SessionActivity"
+        tools:layout="@layout/activity_session"
+        android:label="SessionActivity" />
+    <action
+        android:id="@+id/action_sessionActivity_to_HubActivity"
+        app:destination="@id/hubActivity"
+        app:popUpTo="@id/sessionActivity"
+        app:popUpToInclusive="true" />
 </navigation>

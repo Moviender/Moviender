@@ -1,13 +1,14 @@
 package com.uniwa.moviender.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentSessionGenresBinding
@@ -51,6 +52,7 @@ class SessionGenresFragment : Fragment() {
             } else {
                 // TODO Notify user
                 findNavController().navigate(R.id.action_sessionGenresFragment_to_hubActivity)
+                ActivityNavigator(requireContext()).popBackStack()
             }
         }
         viewModel.startSession(sharedViewModel.getUid(), sharedViewModel.getFriendUid())

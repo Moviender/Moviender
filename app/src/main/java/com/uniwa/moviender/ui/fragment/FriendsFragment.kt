@@ -8,12 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.HubNavigationDirections
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.FriendRequestStatus
 import com.uniwa.moviender.data.SessionStatus
-import com.uniwa.moviender.data.SessionUserStatus
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
 import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
