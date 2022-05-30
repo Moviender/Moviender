@@ -1,12 +1,16 @@
 package com.uniwa.moviender.adapters
 
 import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import coil.load
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
@@ -73,10 +77,31 @@ fun bindPosterImage(imageView: ImageView, filePath: String?) {
 }
 
 @BindingAdapter("btnVisibility")
-fun bindBtnVisibility(extendedFloatingActionButton: ExtendedFloatingActionButton, visibility: Int?) {
-    val animation = AnimationUtils.loadAnimation(extendedFloatingActionButton.context, R.anim.btn_scale)
+fun bindBtnVisibility(
+    extendedFloatingActionButton: ExtendedFloatingActionButton,
+    visibility: Int?
+) {
+    val animation =
+        AnimationUtils.loadAnimation(extendedFloatingActionButton.context, R.anim.btn_scale)
+    animation.setAnimationListener(object : Animation.AnimationListener {
+        override fun onAnimationStart(p0: Animation?) {
+            extendedFloatingActionButton.isClickable = false
+        }
+
+        override fun onAnimationEnd(p0: Animation?) {
+            extendedFloatingActionButton.isClickable = true
+        }
+
+        override fun onAnimationRepeat(p0: Animation?) {
+            TODO("Not yet implemented")
+        }
+    })
     if (visibility == View.VISIBLE) {
         extendedFloatingActionButton.show()
         extendedFloatingActionButton.startAnimation(animation)
+        TransitionManager.beginDelayedTransition(
+            extendedFloatingActionButton.parent as ViewGroup,
+            AutoTransition()
+        )
     }
 }
