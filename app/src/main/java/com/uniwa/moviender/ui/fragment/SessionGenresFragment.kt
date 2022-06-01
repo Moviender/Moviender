@@ -53,7 +53,7 @@ class SessionGenresFragment : Fragment() {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "You have another session opened with that user",
+                    getString(R.string.session_already_exists),
                     Toast.LENGTH_LONG
                 ).show()
                 findNavController().navigate(R.id.action_sessionGenresFragment_to_hubActivity)

@@ -62,5 +62,6 @@
     <string name="vote_again_positive">Yes</string>
     <string name="vote_again_negative">No</string>
     <string name="close_session">Close Session</string>
+    <string name="session_already_exists">You have another session opened with that user</string>
 
 </resources>
