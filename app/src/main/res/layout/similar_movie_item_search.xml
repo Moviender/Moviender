@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="similarMoviesFragment"
+            type="com.uniwa.moviender.ui.fragment.SimilarMoviesFragment" />
+
+        <variable
+            name="movie"
+            type="com.uniwa.moviender.network.Movie" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:padding="6dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp">
+
+            <ImageView
+                android:id="@+id/result_movie_poster_iv"
+                android:layout_width="@dimen/poster_image_search_width"
+                android:layout_height="@dimen/poster_image_search_height"
+                android:scaleType="fitXY"
+                app:imageUrl="@{movie.posterPath}"
+                android:onClick="@{(view) -> similarMoviesFragment.startSession(view)}"
+                tools:src="@drawable/sample_poster" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</layout>

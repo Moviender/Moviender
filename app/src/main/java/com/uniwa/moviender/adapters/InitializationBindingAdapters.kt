@@ -21,6 +21,7 @@ import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
 import com.uniwa.moviender.ui.adapters.SessionGenresAdapter
+import com.uniwa.moviender.ui.adapters.SimilarMoviesAdapter
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
@@ -104,4 +105,11 @@ fun bindBtnVisibility(
             AutoTransition()
         )
     }
+}
+
+@BindingAdapter("searchedResults")
+fun bindSearchedResults(recyclerView: RecyclerView, searchedResults: List<Movie>?) {
+    val adapter = recyclerView.adapter as SimilarMoviesAdapter
+
+    adapter.submitList(searchedResults)
 }
