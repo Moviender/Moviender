@@ -83,6 +83,14 @@ class FriendsFragmentViewModel : ViewModel() {
 
     }
 
+    fun closeSession() {
+        viewModelScope.launch {
+            _sessionId.value = MovienderApi.movienderApiService.getSessionId(uid, friendUid)
+            MovienderApi.movienderApiService.closeSession(_sessionId.value!!)
+            getFriends()
+        }
+    }
+
     fun getSessionState() {
         viewModelScope.launch {
             _sessionId.value = MovienderApi.movienderApiService.getSessionId(uid, friendUid)

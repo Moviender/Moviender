@@ -29,10 +29,12 @@ class ProfileAdapter(
                 binding.requestRejectBtn.visibility = View.GONE
                 binding.startSessionBtn.visibility = View.GONE
                 binding.showSessionBtn.visibility = View.GONE
+                binding.closeSessionBtn.visibility = View.GONE
             } else if (friend.state == FriendState.REQUEST.code) {
                 binding.requestPendingTv.visibility = View.GONE
                 binding.startSessionBtn.visibility = View.GONE
                 binding.showSessionBtn.visibility = View.GONE
+                binding.closeSessionBtn.visibility = View.GONE
                 binding.requestAcceptBtn.visibility = View.VISIBLE
                 binding.requestRejectBtn.visibility = View.VISIBLE
                 binding.requestAcceptBtn.setOnClickListener {
@@ -52,6 +54,7 @@ class ProfileAdapter(
                 binding.requestAcceptBtn.visibility = View.GONE
                 binding.requestRejectBtn.visibility = View.GONE
                 binding.showSessionBtn.visibility = View.GONE
+                binding.closeSessionBtn.visibility = View.GONE
                 binding.startSessionBtn.visibility = View.VISIBLE
                 binding.startSessionBtn.setOnClickListener {
                     viewModel.setFriendUid(friend.uid)
@@ -66,6 +69,11 @@ class ProfileAdapter(
                 binding.showSessionBtn.setOnClickListener {
                     viewModel.setFriendUid(friend.uid)
                     friendsFragment.navigate()
+                }
+                binding.closeSessionBtn.visibility = View.VISIBLE
+                binding.closeSessionBtn.setOnClickListener {
+                    viewModel.setFriendUid(friend.uid)
+                    viewModel.closeSession()
                 }
             }
             binding.executePendingBindings()

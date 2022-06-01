@@ -104,6 +104,9 @@ interface MovienderApiService {
         @Query("friend_uid") friendUid: String
     ): String
 
+    @POST("/close_session/{session_id}")
+    suspend fun closeSession(@Path("session_id") sessionId: String): Boolean
+
     @GET("/session_state/{session_id}")
     suspend fun getSessionState(@Path("session_id") sessionId: String): Int
 

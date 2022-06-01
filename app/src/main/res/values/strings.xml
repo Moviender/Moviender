@@ -61,5 +61,6 @@
     <string name="vote_again_msg">You didn\'t match any of the movies. Would you like to vote some more?</string>
     <string name="vote_again_positive">Yes</string>
     <string name="vote_again_negative">No</string>
+    <string name="close_session">Close Session</string>
 
 </resources>
