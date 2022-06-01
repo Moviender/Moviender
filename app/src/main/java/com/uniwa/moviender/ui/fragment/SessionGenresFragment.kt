@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -26,7 +27,7 @@ class SessionGenresFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_session_genres, container, false)
         // Inflate the layout for this fragment
@@ -46,11 +47,15 @@ class SessionGenresFragment : Fragment() {
 
     fun startSession() {
         viewModel.response.observe(this) { response ->
-            if (response != null) {
-                sharedViewModel.setSessionId(response.sessionId!!)
+            if (response.sessionId != null) {
+                sharedViewModel.setSessionId(response.sessionId)
                 findNavController().navigate(R.id.action_sessionGenresFragment_to_votingFragment)
             } else {
-                // TODO Notify user
+                Toast.makeText(
+                    requireContext(),
+                    "You have another session opened with that user",
+                    Toast.LENGTH_LONG
+                ).show()
                 findNavController().navigate(R.id.action_sessionGenresFragment_to_hubActivity)
                 ActivityNavigator(requireContext()).popBackStack()
             }
