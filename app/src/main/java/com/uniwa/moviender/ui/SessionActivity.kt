@@ -41,6 +41,10 @@ class SessionActivity : AppCompatActivity() {
                 sharedViewModel.setFriendUid(args.friendUid!!)
                 graph?.setStartDestination(R.id.sessionGenresFragment)
             }
+            RecommendationType.KNN.code -> {
+                sharedViewModel.setFriendUid(args.friendUid!!)
+                graph?.setStartDestination(R.id.similarMoviesFragment)
+            }
             SessionUserStatus.WAITING.code,
             SessionUserStatus.VOTING_AGAIN.code,
             SessionStatus.SUCCESSFUL_FINISH.code,

@@ -2,14 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/session_navigation">
+    android:id="@+id/session_navigation" >
 
     <fragment
         android:id="@+id/sessionGenresFragment"
         android:name="com.uniwa.moviender.ui.fragment.SessionGenresFragment"
         android:label="SessionGenresFragment"
-        tools:layout="@layout/fragment_session_genres"
-        >
+        tools:layout="@layout/fragment_session_genres">
         <action
             android:id="@+id/action_sessionGenresFragment_to_hubActivity"
             app:destination="@id/hubActivity"
@@ -67,4 +66,20 @@
         app:destination="@id/hubActivity"
         app:popUpTo="@id/sessionActivity"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/similarMoviesFragment"
+        android:name="com.uniwa.moviender.ui.fragment.SimilarMoviesFragment"
+        android:label="SimilarMoviesFragment"
+        tools:layout="@layout/fragment_similar_movies">
+        <action
+            android:id="@+id/action_similarMoviesFragment_to_votingFragment"
+            app:destination="@id/votingFragment"
+            app:popUpTo="@id/similarMoviesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_similarMoviesFragment_to_hubActivity"
+            app:destination="@id/hubActivity"
+            app:popUpTo="@id/similarMoviesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

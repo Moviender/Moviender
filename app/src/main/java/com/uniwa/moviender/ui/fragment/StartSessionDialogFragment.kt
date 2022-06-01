@@ -39,6 +39,15 @@ class StartSessionDialogFragment : DialogFragment() {
                 findNavController().navigate(action)
                 this@StartSessionDialogFragment.dismiss()
             }
+            knnBtn.setOnClickListener {
+                val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                    RecommendationType.KNN.code,
+                    viewModel.getFriendUid(),
+                    null
+                )
+                findNavController().navigate(action)
+                this@StartSessionDialogFragment.dismiss()
+            }
         }
 
         return activity?.let {
