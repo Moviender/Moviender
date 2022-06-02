@@ -39,6 +39,12 @@ interface MovienderApiService {
     @GET("/movies/{page}")
     suspend fun getMovies(@Path("page") page: Int, @Query("genres") genres: List<Int>): List<Movie>
 
+    @GET("/user_recommendations/{page}")
+    suspend fun getUserRecommendations(
+        @Path("page") page: Int,
+        @Query("uid") uid: String
+    ): List<Movie>
+
     @GET("movie_details/{movielens_id}")
     suspend fun getMovieDetails(
         @Path("movielens_id") movielens_id: String,

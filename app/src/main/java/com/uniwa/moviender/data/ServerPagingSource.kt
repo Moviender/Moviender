@@ -1,6 +1,5 @@
 package com.uniwa.moviender.data
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.uniwa.moviender.network.Movie
@@ -13,7 +12,8 @@ private const val PAGE_INCREMENT = 1
 
 class ServerPagingSource(
     private val service: MovienderApiService,
-    private val genres: List<Int>
+    private val genres: List<Int>,
+    private val uid: String
 ) : PagingSource<Int, Movie>() {
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -25,7 +25,11 @@ class ServerPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         val position = params.key ?: API_STARTING_PAGE_INDEX
         return try {
-            val movies = service.getMovies(position, genres)
+            val movies = if (genres[0] != -1) {
+                service.getMovies(position, genres)
+            } else {
+                service.getUserRecommendations(position, uid)
+            }
             val nextKey = if (movies.size < 15 || movies.isEmpty()) {
                 null
             }

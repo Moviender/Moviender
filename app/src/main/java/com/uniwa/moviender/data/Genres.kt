@@ -21,7 +21,8 @@ val genres: HashMap<Int, Int> = hashMapOf(
     10770 to R.string.genre_tv_movie,
     53 to R.string.genre_thriller,
     10752 to R.string.genre_war,
-    37 to R.string.genre_western
+    37 to R.string.genre_western,
+    -1 to R.string.genre_recommendations
 )
 
 val nameToId: HashMap<Int, Int> = hashMapOf(
@@ -43,5 +44,5 @@ val nameToId: HashMap<Int, Int> = hashMapOf(
     R.string.genre_tv_movie to 10770,
     R.string.genre_thriller to 53,
     R.string.genre_war to 10752,
-    R.string.genre_western to 37
+    R.string.genre_western to 37,
 )

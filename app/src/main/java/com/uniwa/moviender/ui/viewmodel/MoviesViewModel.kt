@@ -26,7 +26,7 @@ class MoviesViewModel(
     private val _movies = _genres.map { genre ->
         Pager(
             config = PagingConfig(pageSize = PAGE_SIZE),
-            pagingSourceFactory = { ServerPagingSource(service, listOf(genre)) }
+            pagingSourceFactory = { ServerPagingSource(service, listOf(genre), uid) }
         ).flow.cachedIn(viewModelScope)
     }
 
