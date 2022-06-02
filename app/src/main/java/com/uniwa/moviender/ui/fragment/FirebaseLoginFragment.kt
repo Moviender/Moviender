@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
@@ -16,11 +17,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.uniwa.moviender.R
 import com.uniwa.moviender.ui.viewmodel.LoginViewModel
+import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 
 class FirebaseLoginFragment : Fragment() {
 
-    private val sharedViewModel: LoginViewModel by activityViewModels()
-
+    private val viewModel: LoginViewModel by viewModels()
+    private val sharedViewModel: StartupActivityViewModel by activityViewModels()
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
     // See: https://developer.android.com/training/basics/intents/result
@@ -42,18 +44,20 @@ class FirebaseLoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // set observer
-        sharedViewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
+        viewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
             if (initialized) {
                 findNavController().navigate(R.id.action_firebaseLoginFragment_to_hubActivity)
                 ActivityNavigator(requireContext()).popBackStack()
             } else {
-                sharedViewModel.setUser(firebaseUser!!)
+                viewModel.setUser(firebaseUser!!)
+                sharedViewModel.setUid(firebaseUser!!.uid)
                 findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
             }
         }
 
         if (isUserSignedIn()) {
-            sharedViewModel.setUser(firebaseUser!!)
+            viewModel.setUser(firebaseUser!!)
+            sharedViewModel.setUid(firebaseUser!!.uid)
             checkInitialization()
         } else {
             createSignInIntent()
@@ -84,13 +88,14 @@ class FirebaseLoginFragment : Fragment() {
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         if (result.resultCode == RESULT_OK) {
-            sharedViewModel.setUser(firebaseUser!!)
+            viewModel.setUser(firebaseUser!!)
+            sharedViewModel.setUid(firebaseUser!!.uid)
             if (response?.isNewUser == true) {
-                sharedViewModel.insertUser()
+                viewModel.insertUser()
                 findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
             } else {
                 checkInitialization()
-                sharedViewModel.storeToken()
+                viewModel.storeToken()
             }
         } else {
             // Sign in failed. If response is null the user canceled the
@@ -103,6 +108,6 @@ class FirebaseLoginFragment : Fragment() {
     private fun isUserSignedIn(): Boolean = firebaseUser != null
 
     private fun checkInitialization() {
-        sharedViewModel.isUserInitialized()
+        viewModel.isUserInitialized()
     }
 }
