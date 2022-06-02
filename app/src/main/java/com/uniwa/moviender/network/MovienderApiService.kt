@@ -131,6 +131,9 @@ interface MovienderApiService {
         @Path("session_id") sessionId: String,
         @Query("uid") uid: String
     ): Int
+
+    @POST("/userGenrePreference/")
+    suspend fun sendGenrePreferences(@Body genrePreferences: UserGenrePreferences)
 }
 
 object MovienderApi {
