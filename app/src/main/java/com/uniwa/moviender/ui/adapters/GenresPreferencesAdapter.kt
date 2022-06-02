@@ -41,4 +41,10 @@ class GenresPreferencesAdapter(
         holder.bind(getItem(position))
     }
 
+    // Because of glitch that checkboxes moved to other
+    // position during item reloading (ex from scrolling)
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
 }
