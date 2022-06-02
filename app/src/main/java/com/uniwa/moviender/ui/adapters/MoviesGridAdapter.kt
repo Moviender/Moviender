@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.uniwa.moviender.R
 import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.databinding.MovieCategoryRowBinding
-import com.uniwa.moviender.ui.viewmodel.MoviesViewModel
 import com.uniwa.moviender.ui.fragment.MoviesFragment
+import com.uniwa.moviender.ui.viewmodel.MoviesViewModel
 
 class MoviesGridAdapter(
     private val context: Context,
@@ -22,7 +23,11 @@ class MoviesGridAdapter(
         private val binding: MovieCategoryRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dataPosition: Int) {
-            binding.genreResourceId = genres[viewModel.genres[dataPosition]]!!
+            if (dataPosition != 0) {
+                binding.genreResourceId = genres[viewModel.genres[dataPosition]]!!
+            } else {
+                binding.genreResourceId = R.string.genre_recommendations
+            }
             val adapter = MoviesHorizontalAdapter(moviesFragment)
             viewModel.submitData(adapter, dataPosition)
             binding.movieRowRv.layoutManager =
@@ -52,7 +57,6 @@ class MoviesGridAdapter(
     override fun onBindViewHolder(holder: MoviesGridViewHolder, position: Int) {
         holder.bind(position)
     }
-
 
 
 }
