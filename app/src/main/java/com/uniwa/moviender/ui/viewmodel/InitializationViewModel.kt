@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.Rating
-import com.uniwa.moviender.network.UserRatings
 import kotlinx.coroutines.launch
 
 class InitializationViewModel : ViewModel() {
@@ -52,15 +51,9 @@ class InitializationViewModel : ViewModel() {
         movieRatingBar.getOrPut(ratingBar) { movieId }
     }
 
-    fun sendRatings(uid: String) {
-        val ratings = oldRatings.filterValues { rating -> rating > 0 }
+    fun getRatings(): List<Rating> =
+        oldRatings.filterValues { rating -> rating > 0 }
             .map { entry ->
                 Rating(movieRatingBar[entry.key]!!, entry.value)
             }
-
-
-        viewModelScope.launch {
-            MovienderApi.movienderApiService.sendStarterRating(UserRatings(uid, ratings))
-        }
-    }
 }

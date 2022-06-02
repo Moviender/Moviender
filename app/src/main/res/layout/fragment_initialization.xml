@@ -55,7 +55,7 @@
             android:text="@{@string/ready_button(viewModel.ratedMovies, viewModel.REQUIRED_RATES)}"
             android:layout_margin="10dp"
             android:clickable="@{viewModel.ratedMovies >= viewModel.REQUIRED_RATES ? true : false}"
-            android:onClick="@{() -> initializationFragment.finishInitialization()}"
+            android:onClick="@{() -> initializationFragment.finishMoviesRating()}"
             tools:text="READY! 10/10"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

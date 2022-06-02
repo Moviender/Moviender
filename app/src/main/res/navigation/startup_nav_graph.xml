@@ -27,9 +27,8 @@
         android:label="fragment_initialization"
         tools:layout="@layout/fragment_initialization" >
         <action
-            android:id="@+id/action_initializationFragment_to_hubActivity"
-            app:destination="@id/hubActivity"
-            app:popUpToInclusive="false" />
+            android:id="@+id/action_initializationFragment_to_genresPreferencesFragment"
+            app:destination="@id/genresPreferencesFragment" />
     </fragment>
 
     <activity
@@ -37,4 +36,15 @@
         android:name="com.uniwa.moviender.ui.HubActivity"
         android:label="activity_hub"
         tools:layout="@layout/activity_hub" />
+    <fragment
+        android:id="@+id/genresPreferencesFragment"
+        android:name="com.uniwa.moviender.ui.fragment.GenresPreferencesFragment"
+        android:label="GenresPreferencesFragment"
+        tools:layout="@layout/genre_preferences_item">
+        <action
+            android:id="@+id/action_genresPreferencesFragment_to_hubActivity"
+            app:destination="@id/hubActivity"
+            app:popUpTo="@id/genresPreferencesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

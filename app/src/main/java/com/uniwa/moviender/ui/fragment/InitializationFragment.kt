@@ -8,19 +8,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentInitializationBinding
+import com.uniwa.moviender.network.UserRatings
 import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
 import com.uniwa.moviender.ui.viewmodel.InitializationViewModel
-import com.uniwa.moviender.ui.viewmodel.LoginViewModel
+import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 
 class InitializationFragment : Fragment() {
 
     private lateinit var binding: FragmentInitializationBinding
-
-    private val sharedViewModel: LoginViewModel by activityViewModels()
+    private val sharedViewModel: StartupActivityViewModel by activityViewModels()
     private val viewModel: InitializationViewModel by viewModels()
 
     override fun onCreateView(
@@ -29,7 +28,7 @@ class InitializationFragment : Fragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_initialization, container, false)
-        // Inflate the layout for this fragment
+
         return binding.root
     }
 
@@ -46,18 +45,19 @@ class InitializationFragment : Fragment() {
         viewModel.getStarterMovies()
     }
 
-    fun finishInitialization() {
-        sendRatingsToDB()
-        navigateToHub()
+    fun finishMoviesRating() {
+        sharedViewModel.setUserRatings(
+            UserRatings(
+                sharedViewModel.getUid(),
+                viewModel.getRatings()
+            )
+        )
+
+        navigateToGenrePreferences()
     }
 
-    private fun sendRatingsToDB() {
-        viewModel.sendRatings(sharedViewModel.getUid())
-    }
-
-    private fun navigateToHub() {
-        findNavController().navigate(R.id.action_initializationFragment_to_hubActivity)
-        ActivityNavigator(requireContext()).popBackStack()
+    private fun navigateToGenrePreferences() {
+        findNavController().navigate(R.id.action_initializationFragment_to_genresPreferencesFragment)
     }
 
 }
