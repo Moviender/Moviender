@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.uniwa.moviender.ui.viewmodel.LoginViewModel" />
+            type="com.uniwa.moviender.ui.viewmodel.InitializationViewModel" />
     </data>
 
     <LinearLayout

@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentInitializationBinding
 import com.uniwa.moviender.ui.adapters.MoviesRowAdapter
+import com.uniwa.moviender.ui.viewmodel.InitializationViewModel
 import com.uniwa.moviender.ui.viewmodel.LoginViewModel
 
 class InitializationFragment : Fragment() {
@@ -19,12 +21,14 @@ class InitializationFragment : Fragment() {
     private lateinit var binding: FragmentInitializationBinding
 
     private val sharedViewModel: LoginViewModel by activityViewModels()
+    private val viewModel: InitializationViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_initialization, container, false)
+    ): View {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_initialization, container, false)
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -32,28 +36,23 @@ class InitializationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.apply {
+        binding.apply {
             initializationFragment = this@InitializationFragment
             lifecycleOwner = viewLifecycleOwner
-            viewModel = sharedViewModel
-            moviesGrid.adapter = MoviesRowAdapter(sharedViewModel)
+            viewModel = this@InitializationFragment.viewModel
+            moviesGrid.adapter = MoviesRowAdapter(this@InitializationFragment.viewModel)
         }
 
-        sharedViewModel.getStarterMovies()
+        viewModel.getStarterMovies()
     }
 
     fun finishInitialization() {
         sendRatingsToDB()
-        saveUidToDataStore()
         navigateToHub()
     }
 
     private fun sendRatingsToDB() {
-        sharedViewModel.sendRatings()
-    }
-
-    private fun saveUidToDataStore() {
-        sharedViewModel.saveUID(requireContext())
+        viewModel.sendRatings(sharedViewModel.getUid())
     }
 
     private fun navigateToHub() {

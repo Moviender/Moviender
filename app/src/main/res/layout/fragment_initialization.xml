@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.uniwa.moviender.ui.viewmodel.LoginViewModel" />
+            type="com.uniwa.moviender.ui.viewmodel.InitializationViewModel" />
         <variable
             name="initializationFragment"
             type="com.uniwa.moviender.ui.fragment.InitializationFragment" />

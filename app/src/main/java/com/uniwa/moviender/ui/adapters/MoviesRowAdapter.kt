@@ -6,15 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.GridViewItemBinding
-import com.uniwa.moviender.ui.viewmodel.LoginViewModel
 import com.uniwa.moviender.network.Movie
+import com.uniwa.moviender.ui.viewmodel.InitializationViewModel
 
-class MoviesRowAdapter(private var viewModel: LoginViewModel) :
+class MoviesRowAdapter(private val viewModel: InitializationViewModel) :
     ListAdapter<Movie, MoviesRowAdapter.MoviesViewHolder>(Diffcallback) {
 
-    class MoviesViewHolder(
+    inner class MoviesViewHolder(
         private var binding: GridViewItemBinding,
-        private var viewModel: LoginViewModel
         ) : RecyclerView.ViewHolder(binding.root) {
             fun bind(movie: Movie) {
                 binding.movie = movie
@@ -38,8 +37,7 @@ class MoviesRowAdapter(private var viewModel: LoginViewModel) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         return MoviesViewHolder(
-            GridViewItemBinding.inflate(LayoutInflater.from(parent.context)),
-            viewModel
+            GridViewItemBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
 
