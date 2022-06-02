@@ -56,14 +56,6 @@ fun bindResourceId(materialTextView: MaterialTextView, resourceId: Int) {
 }
 
 @BindingAdapter("genres")
-fun bindGenres(textView: TextView, genresIds: Array<Int>?) {
-    textView.text = genresIds?.map { genreId ->
-        textView.resources.getString(genres[genreId]!!)
-    }
-        ?.joinToString(separator = " | ")
-}
-
-@BindingAdapter("genres")
 fun bindGenres(textView: TextView, genresIds: List<Int>?) {
     textView.text = genresIds?.map { genreId ->
         textView.resources.getString(genres[genreId]!!)
