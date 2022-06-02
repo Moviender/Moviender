@@ -1,7 +1,10 @@
 package com.uniwa.moviender.ui.viewmodel
 
 import android.view.View
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
@@ -14,7 +17,8 @@ import kotlinx.coroutines.launch
 
 class MoviesViewModel(
     private val service: MovienderApiService,
-    private val _genres: List<Int>
+    _genres: List<Int>,
+    private val uid: String
 ) : ViewModel() {
 
     private val PAGE_SIZE = 15
@@ -27,8 +31,6 @@ class MoviesViewModel(
     }
 
     var movies = _movies
-    
-    private lateinit var _uid: String
 
     private val _searchedResults = MutableLiveData<List<Movie>>()
     val searchedResults: LiveData<List<Movie>> = _searchedResults
@@ -46,7 +48,7 @@ class MoviesViewModel(
 
     private fun getMovieDetails(movie: Movie) {
         viewModelScope.launch {
-            _selectedMovieDetails.value = service.getMovieDetails(movie.movielensId, _uid)
+            _selectedMovieDetails.value = service.getMovieDetails(movie.movielensId, uid)
         }
     }
 
@@ -75,7 +77,7 @@ class MoviesViewModel(
         viewModelScope.launch {
             service.updateRating(
                 UserRatings(
-                    _uid,
+                    uid,
                     listOf(Rating(_selectedMovie.value!!.movielensId, rating))
                 )
             )
@@ -95,10 +97,6 @@ class MoviesViewModel(
 
     fun changeLayoutManager(layoutManager: RecyclerView.LayoutManager) {
         _layoutManager.value = layoutManager
-    }
-    
-    fun setUid(uid: String) {
-        this@MoviesViewModel._uid = uid
     }
 
 }

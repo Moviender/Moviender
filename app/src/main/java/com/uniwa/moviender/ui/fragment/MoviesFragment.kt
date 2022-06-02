@@ -30,6 +30,7 @@ import com.uniwa.moviender.ui.adapters.MoviesSearchAdapter
 import com.uniwa.moviender.ui.viewmodel.HubViewModel
 import com.uniwa.moviender.ui.viewmodel.HubViewModelFactory
 import com.uniwa.moviender.ui.viewmodel.MoviesViewModel
+import com.uniwa.moviender.ui.viewmodel.MoviesViewModelFactory
 
 class MoviesFragment : Fragment() {
 
@@ -47,13 +48,13 @@ class MoviesFragment : Fragment() {
     }
 
     private val viewModel: MoviesViewModel by viewModels {
-        MoviesViewModelFactory(MovienderApi.movienderApiService, listOf(16, 878, 37, 28, 53))
+        MoviesViewModelFactory(MovienderApi.movienderApiService, listOf(-1, 16, 878, 37, 28, 53), sharedViewModel.uid)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
 
         binding.searchTv.addTextChangedListener(object : TextWatcher {
@@ -92,8 +93,6 @@ class MoviesFragment : Fragment() {
             prepareForMovies()
         }
         callback.isEnabled = false
-
-        viewModel.setUid(sharedViewModel.uid)
 
         return binding.root
     }
