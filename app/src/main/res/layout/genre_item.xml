@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="com.uniwa.moviender.ui.viewmodel.SessionGenresViewModel" />
+            name="sessionGenresFragment"
+            type="com.uniwa.moviender.ui.fragment.SessionGenresFragment" />
 
         <variable
             name="genre"
@@ -32,7 +32,7 @@
         <com.google.android.material.checkbox.MaterialCheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onCheckedChanged="@{(compound, checked) -> viewModel.onCheckedChanged(genre, checked)}"
+            android:onCheckedChanged="@{(compound, checked) -> sessionGenresFragment.onCheckedChanged(genre, checked)}"
             app:layout_constraintBottom_toBottomOf="@id/genre_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/genre_title" />

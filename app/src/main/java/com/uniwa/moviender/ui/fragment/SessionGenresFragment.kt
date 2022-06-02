@@ -41,7 +41,15 @@ class SessionGenresFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@SessionGenresFragment.viewModel
             sessionGenresFragment = this@SessionGenresFragment
-            genresRv.adapter = SessionGenresAdapter(this@SessionGenresFragment.viewModel)
+            genresRv.adapter = SessionGenresAdapter(this@SessionGenresFragment)
+        }
+    }
+
+    fun onCheckedChanged(genre: Int, checked: Boolean) {
+        if (checked) {
+            viewModel.addGenre(genre)
+        } else {
+            viewModel.removeGenre(genre)
         }
     }
 

@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.GenreItemBinding
-import com.uniwa.moviender.model.Friend
-import com.uniwa.moviender.ui.viewmodel.SessionGenresViewModel
+import com.uniwa.moviender.ui.fragment.SessionGenresFragment
 
 class SessionGenresAdapter(
-    private val viewModel: SessionGenresViewModel
+    private val sessionGenresFragment: SessionGenresFragment
 ) : ListAdapter<Int, SessionGenresAdapter.GenreViewHolder>(Diffcallback) {
 
     inner class GenreViewHolder(
@@ -18,13 +17,13 @@ class SessionGenresAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(genre: Int) {
             binding.genre = genre
-            binding.viewModel = viewModel
+            binding.sessionGenresFragment = sessionGenresFragment
         }
     }
 
     companion object Diffcallback : DiffUtil.ItemCallback<Int>() {
         override fun areItemsTheSame(oldItem: Int, newItem: Int): Boolean {
-            return oldItem === newItem
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Int, newItem: Int): Boolean {

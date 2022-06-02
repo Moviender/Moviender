@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.data.nameToId
-import com.uniwa.moviender.network.helper.SessionRequestBody
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.helper.SessionInitResponse
+import com.uniwa.moviender.network.helper.SessionRequestBody
 import kotlinx.coroutines.launch
 
 class SessionGenresViewModel : ViewModel() {
@@ -18,12 +18,12 @@ class SessionGenresViewModel : ViewModel() {
     private val _response = MutableLiveData<SessionInitResponse>()
     val response: LiveData<SessionInitResponse> = _response
 
-    fun onCheckedChanged(genre: Int, checked: Boolean) {
-        if (checked) {
-            selectedGenres.add(nameToId[genre]!!)
-        } else {
-            selectedGenres.remove(nameToId[genre]!!)
-        }
+    fun addGenre(genre: Int) {
+        selectedGenres.add(nameToId[genre]!!)
+    }
+
+    fun removeGenre(genre: Int) {
+        selectedGenres.remove(nameToId[genre]!!)
     }
 
     fun startSession(uid: String, friendUid: String) {
