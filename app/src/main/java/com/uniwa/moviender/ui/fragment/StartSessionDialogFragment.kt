@@ -54,9 +54,6 @@ class StartSessionDialogFragment : DialogFragment() {
             val builder = AlertDialog.Builder(it)
 
             builder.setView(binding.root)
-                .setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.cancel()
-                }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
