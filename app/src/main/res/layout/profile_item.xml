@@ -28,14 +28,27 @@
                 android:orientation="vertical"
                 android:padding="6dp">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/item_friend_username"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="9dp"
-                    android:text="@{friend.username}"
-                    tools:text="Username" />
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        app:profilePic="@{friend.profilePicUrl}"
+                        tools:src="@drawable/sample_poster"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/item_friend_username"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="9dp"
+                        android:layout_gravity="center"
+                        android:text="@{friend.username}"
+                        tools:text="Username" />
+                </LinearLayout>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/request_pending_tv"
@@ -83,31 +96,31 @@
                     android:visibility="gone"
                     tools:visibility="visible" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/show_session_btn"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/show_session"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/close_session_btn"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/close_session"
-                    android:textColor="@color/red"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/show_session_btn"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_session"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
-            </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/close_session_btn"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/close_session"
+                        android:textColor="@color/red"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

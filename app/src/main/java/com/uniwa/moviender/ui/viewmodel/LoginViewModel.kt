@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.messaging.FirebaseMessaging
+import com.uniwa.moviender.data.placeholdersIndexes
 import com.uniwa.moviender.model.User
 import com.uniwa.moviender.network.MovienderApi
 import kotlinx.coroutines.launch
@@ -22,8 +23,16 @@ class LoginViewModel : ViewModel() {
 
     fun insertUser() {
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            val profilePic =
+                if (user.photoUrl != null) user.photoUrl.toString() else placeholdersIndexes.shuffled()[0]
             viewModelScope.launch {
-                MovienderApi.movienderApiService.insertUser(User(user.uid, user.displayName!!))
+                MovienderApi.movienderApiService.insertUser(
+                    User(
+                        user.uid,
+                        user.displayName!!,
+                        profilePic
+                    )
+                )
                 MovienderApi.movienderApiService.storeToken(user.uid, token)
             }
         }

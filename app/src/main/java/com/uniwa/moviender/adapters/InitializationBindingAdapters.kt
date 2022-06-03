@@ -16,9 +16,12 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.textview.MaterialTextView
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.genres
+import com.uniwa.moviender.data.placeholdersIndexes
+import com.uniwa.moviender.data.placeholdersMap
 import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.adapters.*
+import de.hdodenhof.circleimageview.CircleImageView
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
@@ -110,4 +113,13 @@ fun bindSearchedResults(recyclerView: RecyclerView, searchedResults: List<Movie>
     val adapter = recyclerView.adapter as SimilarMoviesAdapter
 
     adapter.submitList(searchedResults)
+}
+
+@BindingAdapter("profilePic")
+fun bindProfilePic(circleImageView: CircleImageView, profilePicUrl: String?) {
+    val img =
+        if (placeholdersIndexes.contains(profilePicUrl)) placeholdersMap[profilePicUrl] else profilePicUrl
+    circleImageView.load(img) {
+
+    }
 }
