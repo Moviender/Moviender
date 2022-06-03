@@ -48,7 +48,7 @@
     <string name="navigation_friends">Friends</string>
     <string name="start_session">Start session</string>
     <string name="genre_selection_start">Start</string>
-    <string name="genre_selection_info">Select genres that you would like to receive from. By not choosing any it will count as all.</string>
+    <string name="genre_selection_info">What kind of movie do you want to see?</string>
     <string name="show_session">Show session</string>
 
     <string name="movie_release_date">Release date: %1$s</string>
@@ -64,5 +64,10 @@
     <string name="vote_again_negative">No</string>
     <string name="close_session">Close Session</string>
     <string name="session_already_exists">You have another session opened with that user</string>
+
+    <string name="svd_message">Get recommendation based on your previous ratings</string>
+    <string name="svd_headline">Previous ratings</string>
+    <string name="knn_similar">Similar movies</string>
+    <string name="knn_message">Get recommendation based on a movie of your choice</string>
 
 </resources>
