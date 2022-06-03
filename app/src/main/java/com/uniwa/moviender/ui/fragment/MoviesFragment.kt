@@ -1,5 +1,6 @@
 package com.uniwa.moviender.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.RatingBar
 import android.widget.Toolbar
 import androidx.activity.OnBackPressedCallback
@@ -151,6 +153,10 @@ class MoviesFragment : Fragment() {
         viewModel.changeLayoutManager(moviesLayout)
         viewModel.clearSearchResult()
         callback.isEnabled = false
+
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
 }
