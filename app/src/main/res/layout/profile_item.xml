@@ -10,18 +10,13 @@
             type="com.uniwa.moviender.model.Friend" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:padding="4dp"
-        >
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="8dp"
-            app:cardUseCompatPadding="true">
+            app:cardElevation="4dp"
+            app:cardCornerRadius="16dp"
+            app:cardUseCompatPadding="true"
+            android:backgroundTint="@color/blue_light_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,10 +30,10 @@
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
                         app:profilePic="@{friend.profilePicUrl}"
-                        tools:src="@drawable/sample_poster"/>
+                        tools:src="@drawable/placeholder_cat"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/item_friend_username"
@@ -60,12 +55,13 @@
                     android:padding="9dp"
                     android:text="@string/friend_request_pending"
                     android:visibility="gone"
-                    tools:visibility="visible" />
+                    tools:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    tools:visibility="gone">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/request_accept_btn"
@@ -100,14 +96,16 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    tools:visibility="gone">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/show_session_btn"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/show_session"
+                        android:textColor="@color/green"
+                        android:text="@string/join_session"
                         android:visibility="gone"
                         tools:visibility="visible" />
 
@@ -126,7 +124,4 @@
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
 </layout>

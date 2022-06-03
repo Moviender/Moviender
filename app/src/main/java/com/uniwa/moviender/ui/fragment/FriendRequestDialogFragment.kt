@@ -46,9 +46,8 @@ class FriendRequestDialogFragment : DialogFragment() {
             }
         }
 
-        return activity?.let { fragmentActivity ->
+        val dialog =  activity?.let { fragmentActivity ->
             val builder = AlertDialog.Builder(fragmentActivity)
-
 
             builder.setView(binding.root)
                 .setPositiveButton(R.string.dialog_add_friend, null)
@@ -57,6 +56,9 @@ class FriendRequestDialogFragment : DialogFragment() {
                 }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+
+        dialog.window?.setDimAmount(0.2f)
+        return dialog
     }
 
     override fun onStart() {

@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="movie_init_hit">Rate the movies below to initialize profile</string>
+    <string name="movie_init_hit">Rate some of the movies below</string>
     <string name="ready_button">Ready! %d/%d</string>
 
     <!-- Genres -->
@@ -33,7 +33,7 @@
     <string name="title">Title…</string>
     <string name="movies_fragment_appbar_title">Movies</string>
     <string name="add_new_friend_description">Add new friend</string>
-    <string name="profile_title">Profile</string>
+    <string name="profile_title">Friend list</string>
     <string name="hint_username">Username</string>
 
     <string name="dialog_add_friend">Add friend</string>
@@ -49,7 +49,7 @@
     <string name="start_session">Start session</string>
     <string name="genre_selection_start">Start</string>
     <string name="genre_selection_info">What kind of movie do you want to see?</string>
-    <string name="show_session">Show session</string>
+    <string name="join_session">Join session</string>
 
     <string name="movie_release_date">Release date: %1$s</string>
     <string name="movie_vote_average">TMDB: %1$.1f/10</string>
@@ -69,5 +69,8 @@
     <string name="svd_headline">Previous ratings</string>
     <string name="knn_similar">Similar movies</string>
     <string name="knn_message">Get recommendation based on a movie of your choice</string>
+    <string name="profile_initialization">Profile initialization</string>
+    <string name="filter">Choose filters</string>
+    <string name="genre_preference_hint">What kind of movies do you like?</string>
 
 </resources>

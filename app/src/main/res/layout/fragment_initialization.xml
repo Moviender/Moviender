@@ -19,17 +19,28 @@
         tools:context="com.uniwa.moviender.ui.fragment.InitializationFragment" >
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/rate_header_hint_tv"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_initialization"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/rate_hint_tv"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/rate_hint_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/movie_init_hit"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rate_header_hint_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/movies_grid"
-            android:textSize="20sp"
-            android:padding="8dp"
-            style="?attr/textAppearanceBody1"/>
+            android:paddingBottom="8dp"
+            style="@style/TextAppearance.MaterialComponents.Body1"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_grid"

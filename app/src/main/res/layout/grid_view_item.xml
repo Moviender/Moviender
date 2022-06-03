@@ -14,17 +14,13 @@
             type="com.uniwa.moviender.ui.viewmodel.InitializationViewModel" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:padding="9dp">
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/poster_cv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="9dp">
+            app:cardCornerRadius="9dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="6dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -33,12 +29,12 @@
                 <ImageView
                     android:id="@+id/poster_iv"
                     android:layout_width="175dp"
-                    android:layout_height="245dp"
+                    android:layout_height="235dp"
                     android:scaleType="fitXY"
                     app:imageUrl="@{movie.posterPath}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@tools:sample/backgrounds/scenic" />
+                    tools:src="@drawable/sample_poster" />
 
                 <me.zhanghai.android.materialratingbar.MaterialRatingBar
                     android:id="@+id/rating_rb"
@@ -58,5 +54,4 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
 </layout>

@@ -50,11 +50,14 @@ class StartSessionDialogFragment : DialogFragment() {
             }
         }
 
-        return activity?.let {
+        val dialog = activity?.let {
             val builder = AlertDialog.Builder(it)
 
             builder.setView(binding.root)
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setDimAmount(0.2f)
+        return dialog
     }
 }

@@ -15,4 +15,7 @@
     <color name="light_grey">#D4D4D4</color>
     <color name="skip_red">#ED7563</color>
     <color name="like_green">#6FE2B3</color>
+    <color name="green">#00cc00</color>
+    <color name="holo_red">@android:color/holo_red_dark</color>
+    <color name="blue_light_card">#D3E0F0</color>
 </resources>

@@ -14,6 +14,15 @@
             type="int" />
     </data>
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/blue_light"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="3dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -38,4 +47,7 @@
             app:layout_constraintTop_toTopOf="@id/genre_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
 </layout>

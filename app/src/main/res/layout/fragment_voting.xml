@@ -13,7 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.VotingFragment">
+        tools:context=".ui.fragment.VotingFragment"
+        android:background="@drawable/gradient_background">
 
         <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/voting_stack_view"

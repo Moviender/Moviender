@@ -7,32 +7,21 @@
     </data>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:paddingBottom="8dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.MaterialComponents.Headline5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Choose" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:gravity="center">
-
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
                 android:padding="8dp"
-                app:cardElevation="2dp">
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/blue_light">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,6 +46,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="6dp"
+                        android:gravity="center"
                         android:lines="3"
                         android:maxLines="3"
                         android:text="@string/knn_message" />
@@ -66,16 +56,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/blue_light"
+                        android:layout_marginVertical="4dp"
                         android:text="@string/genre_selection_start"
                         app:cornerRadius="16dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                app:cardElevation="2dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/blue_light">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,6 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="6dp"
+                        android:gravity="center"
                         android:lines="3"
                         android:maxLines="3"
                         android:text="@string/svd_message" />
@@ -110,10 +105,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/blue_light"
+                        android:layout_marginVertical="4dp"
                         android:text="@string/genre_selection_start"
                         app:cornerRadius="16dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-    </LinearLayout>
 </layout>
