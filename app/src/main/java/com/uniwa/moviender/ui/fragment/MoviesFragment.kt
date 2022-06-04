@@ -47,7 +47,11 @@ class MoviesFragment : Fragment() {
     }
 
     private val viewModel: MoviesViewModel by viewModels {
-        MoviesViewModelFactory(MovienderApi.movienderApiService, listOf(-1, 16, 878, 37, 28, 53), sharedViewModel.uid)
+        MoviesViewModelFactory(
+            MovienderApi.movienderApiService,
+            listOf(-1, 28, 16, 80, 18, 27, 9648, 878, 37),
+            sharedViewModel.uid
+        )
     }
 
     override fun onCreateView(
