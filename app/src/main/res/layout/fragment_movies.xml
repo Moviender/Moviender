@@ -105,7 +105,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="9dp">
+                    android:layout_marginBottom="9dp"
+                    android:background="@color/blue_light_card">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/movie_details_poster_card"
@@ -119,7 +120,8 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="@color/blue_light_card">
 
                             <ImageView
                                 android:id="@+id/movie_details_poster"
