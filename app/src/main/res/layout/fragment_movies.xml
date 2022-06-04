@@ -152,16 +152,20 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-                    <ImageView
+
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/movie_details_close"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
-                        android:onClick="@{() -> MoviesFragment.closeMovieDetailsFrame()}"
                         android:src="@drawable/ic_close_24"
+                        android:onClick="@{() -> MoviesFragment.closeMovieDetailsFrame()}"
+                        android:soundEffectsEnabled="true"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:civ_border_width="1dp"
+                        app:civ_border_color="@color/light_grey"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/movie_details_title"
