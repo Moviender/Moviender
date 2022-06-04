@@ -18,4 +18,5 @@
     <color name="green">#00cc00</color>
     <color name="holo_red">@android:color/holo_red_dark</color>
     <color name="blue_light_card">#D3E0F0</color>
+    <color name="transparent_white">#CCFFFFFF</color>
 </resources>

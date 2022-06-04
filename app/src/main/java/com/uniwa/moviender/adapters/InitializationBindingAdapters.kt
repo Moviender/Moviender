@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import coil.load
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 import com.uniwa.moviender.R
@@ -56,6 +57,11 @@ fun bindGenres(recyclerView: RecyclerView, genres: List<Int>?) {
 @BindingAdapter("idToString")
 fun bindResourceId(materialTextView: MaterialTextView, resourceId: Int) {
     materialTextView.text = materialTextView.resources.getString(resourceId)
+}
+
+@BindingAdapter("idToString")
+fun bindResourceId(materialCheckBox: MaterialCheckBox, resourceId: Int) {
+    materialCheckBox.text = materialCheckBox.resources.getString(resourceId)
 }
 
 @BindingAdapter("genres")

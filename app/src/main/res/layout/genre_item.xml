@@ -18,33 +18,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/blue_light"
         app:cardUseCompatPadding="true"
         app:cardElevation="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/genre_title"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            app:idToString="@{genre}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Action" />
+        android:layout_height="match_parent"
+        android:background="@color/blue_light_card">
 
         <com.google.android.material.checkbox.MaterialCheckBox
-            android:layout_width="wrap_content"
+            android:id="@+id/genre_cb"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:lines="1"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeMaxTextSize="15sp"
+            app:autoSizeStepGranularity="1sp"
+            app:buttonTint="@color/blue_dark"
+            app:idToString="@{genre}"
             android:onCheckedChanged="@{(compound, checked) -> sessionGenresFragment.onCheckedChanged(genre, checked)}"
-            app:layout_constraintBottom_toBottomOf="@id/genre_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/genre_title" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginHorizontal="6dp"
+            tools:text="Action"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
