@@ -35,12 +35,15 @@ class FriendRequestDialogFragment : DialogFragment() {
                 when (viewModel.requestResponse.value) {
                     FriendRequestStatus.USERNAME_NOT_FOUND.code -> {
                         binding.usernameTi.error = getString(R.string.dialog_username_error_message)
+                        binding.dialogFriendUsername.selectAll()
                     }
                     FriendRequestStatus.ALREADY_EXISTS.code -> {
                         binding.usernameTi.error = getString(R.string.dialog_exists_error_message)
+                        binding.dialogFriendUsername.selectAll()
                     }
                     FriendRequestStatus.SAME_UID.code -> {
                         binding.usernameTi.error = getString(R.string.same_uid_error_message)
+                        binding.dialogFriendUsername.selectAll()
                     }
                 }
             }

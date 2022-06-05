@@ -63,7 +63,7 @@
     <string name="vote_again_positive">Yes</string>
     <string name="vote_again_negative">No</string>
     <string name="close_session">Close Session</string>
-    <string name="session_already_exists">You have another session opened with that user</string>
+    <string name="session_already_exists">You have another session opened with that user or you are no longer friends</string>
 
     <string name="svd_message">Get recommendation based on your previous ratings</string>
     <string name="svd_headline">Previous ratings</string>
