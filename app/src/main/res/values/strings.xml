@@ -72,5 +72,6 @@
     <string name="profile_initialization">Profile initialization</string>
     <string name="filter">Choose filters</string>
     <string name="genre_preference_hint">What kind of movies do you like?</string>
+    <string name="profile_init_finish">Finish</string>
 
 </resources>
