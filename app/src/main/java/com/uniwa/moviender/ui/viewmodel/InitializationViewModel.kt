@@ -18,8 +18,7 @@ class InitializationViewModel : ViewModel() {
 
     val REQUIRED_RATES: Int = 10
 
-    private val oldRatings: HashMap<RatingBar, Float> = HashMap()
-    private val movieRatingBar: HashMap<RatingBar, String> = HashMap()
+    private val ratings: HashMap<String, Float> = HashMap()
 
     private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> = _movies
@@ -31,29 +30,25 @@ class InitializationViewModel : ViewModel() {
     }
 
     fun changeCounter(rating: Float, ratingBar: RatingBar) {
-        // FIXME
-        if (oldRatings[ratingBar] == 0f && rating > 0f) {
+        val movilensId = ratingBar.tag as String
+        if (ratings[movilensId] == 0f && rating > 0f) {
             _ratedMovies.value = _ratedMovies.value?.inc()
-        } else if (oldRatings[ratingBar]!! > 0f && rating == 0f) {
+        } else if (ratings[movilensId]!! > 0f && rating == 0f) {
             _ratedMovies.value = _ratedMovies.value?.dec()
         }
 
-        oldRatings[ratingBar] = rating
+        ratings[movilensId] = rating
     }
 
-    fun addRatingBar(ratingBar: RatingBar) {
+    fun addRating(movilensId: String) {
         // If simple assigned then when re-called from
         // the adapter the value would be back to 0
-        oldRatings.getOrPut(ratingBar) { 0f }
-    }
-
-    fun addMovieRatingBar(ratingBar: RatingBar, movieId: String) {
-        movieRatingBar.getOrPut(ratingBar) { movieId }
+        ratings.getOrPut(movilensId) { 0f }
     }
 
     fun getRatings(): List<Rating> =
-        oldRatings.filterValues { rating -> rating > 0 }
+        ratings.filterValues { rating -> rating > 0 }
             .map { entry ->
-                Rating(movieRatingBar[entry.key]!!, entry.value)
+                Rating(entry.key, entry.value)
             }
 }

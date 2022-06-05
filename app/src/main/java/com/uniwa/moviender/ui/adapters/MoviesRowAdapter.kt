@@ -18,8 +18,8 @@ class MoviesRowAdapter(private val viewModel: InitializationViewModel) :
             fun bind(movie: Movie) {
                 binding.movie = movie
                 binding.viewModel = viewModel
-                viewModel.addRatingBar(binding.ratingRb)
-                viewModel.addMovieRatingBar(binding.ratingRb, movie.movielensId)
+                binding.ratingRb.tag = movie.movielensId
+                viewModel.addRating(movie.movielensId)
                 binding.executePendingBindings()
             }
         }
