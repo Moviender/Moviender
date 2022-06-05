@@ -92,6 +92,7 @@ class FirebaseLoginFragment : Fragment() {
             sharedViewModel.setUid(firebaseUser!!.uid)
             if (response?.isNewUser == true) {
                 viewModel.insertUser()
+                sharedViewModel.storeToken(firebaseUser!!.uid)
                 findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
             } else {
                 checkInitialization()

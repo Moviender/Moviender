@@ -22,19 +22,16 @@ class LoginViewModel : ViewModel() {
     }
 
     fun insertUser() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
-            val profilePic =
-                if (user.photoUrl != null) user.photoUrl.toString() else placeholdersIndexes.shuffled()[0]
-            viewModelScope.launch {
-                MovienderApi.movienderApiService.insertUser(
-                    User(
-                        user.uid,
-                        user.displayName!!,
-                        profilePic
-                    )
+        val profilePic =
+            if (user.photoUrl != null) user.photoUrl.toString() else placeholdersIndexes.shuffled()[0]
+        viewModelScope.launch {
+            MovienderApi.movienderApiService.insertUser(
+                User(
+                    user.uid,
+                    user.displayName!!,
+                    profilePic
                 )
-                MovienderApi.movienderApiService.storeToken(user.uid, token)
-            }
+            )
         }
     }
 

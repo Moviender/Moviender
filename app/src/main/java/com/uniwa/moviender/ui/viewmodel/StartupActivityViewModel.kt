@@ -1,7 +1,11 @@
 package com.uniwa.moviender.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.messaging.FirebaseMessaging
+import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.UserRatings
+import kotlinx.coroutines.launch
 
 class StartupActivityViewModel : ViewModel() {
     private lateinit var uid: String
@@ -18,4 +22,12 @@ class StartupActivityViewModel : ViewModel() {
     }
 
     fun getUserRatings(): UserRatings = ratings
+
+    fun storeToken(uid: String) {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            viewModelScope.launch {
+                MovienderApi.movienderApiService.storeToken(uid, token)
+            }
+        }
+    }
 }
