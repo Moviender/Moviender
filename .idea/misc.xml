@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2105" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/drawable/gradient_background.xml" value="0.2485" />
+        <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/drawable/ic_baseline_arrow_circle_right_24.xml" value="0.205" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/drawable/ic_close_24.xml" value="0.226" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/drawable/ic_cloud_upload_24.xml" value="0.226" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2105" />
@@ -30,13 +31,13 @@
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/fragment_voting.xml" value="0.33" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/friend_request_dialog.xml" value="0.3342391304347826" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/genre_item.xml" value="0.553125" />
-        <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/genre_preferences_item.xml" value="0.5541666666666667" />
+        <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/genre_preferences_item.xml" value="0.553125" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/grid_view_item.xml" value="0.25" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/movie_category_row.xml" value="0.29850746268656714" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/movie_item_search_thumbnail.xml" value="0.2689969604863222" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/movie_item_thumbnail.xml" value="0.2672239108409321" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/movie_voting_item.xml" value="0.43466172381835033" />
-        <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/profile_item.xml" value="0.7716849451645065" />
+        <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/profile_item.xml" value="0.4354005167958656" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/result_movie_item.xml" value="0.3375" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/session_dialog.xml" value="0.553125" />
         <entry key="..\:/AndroidProjects/Moviender/app/src/main/res/layout/similar_movie_item_search.xml" value="0.33" />

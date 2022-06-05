@@ -16,8 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.uniwa.moviender.ui.fragment.InitializationFragment"
-        android:background="@drawable/gradient_background">
+        tools:context="com.uniwa.moviender.ui.fragment.InitializationFragment">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/rate_header_hint_tv"
