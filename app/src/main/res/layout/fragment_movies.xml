@@ -141,7 +141,7 @@
                                 android:isIndicator="false"
                                 android:minHeight="27dp"
                                 android:numStars="5"
-                                android:onRatingChanged="@{(ratingBar, rating, fromUser) -> MoviesFragment.updateRating(rating, ratingBar)}"
+                                android:onRatingChanged="@{(ratingBar, rating, fromUser) -> MoviesFragment.updateRating(rating)}"
                                 android:rating="@{viewModel.selectedMovieDetails.userRating}"
                                 android:stepSize="1"
                                 app:layout_constraintEnd_toEndOf="@id/movie_details_poster"

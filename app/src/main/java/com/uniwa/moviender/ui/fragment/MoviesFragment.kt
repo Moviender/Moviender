@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.RatingBar
 import android.widget.Toolbar
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
@@ -133,7 +132,7 @@ class MoviesFragment : Fragment() {
         viewModel.changeFrameVisibility(View.GONE)
     }
 
-    fun updateRating(rating: Float, ratingBar: RatingBar) {
+    fun updateRating(rating: Float) {
         viewModel.sendRating(rating)
     }
 
