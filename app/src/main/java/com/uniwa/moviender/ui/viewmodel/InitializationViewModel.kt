@@ -25,7 +25,7 @@ class InitializationViewModel : ViewModel() {
 
     fun getStarterMovies() {
         viewModelScope.launch {
-            _movies.value = MovienderApi.movienderApiService.getStarterMovies()
+            _movies.value = MovienderApi.movieClient.getStarterMovies().body
         }
     }
 

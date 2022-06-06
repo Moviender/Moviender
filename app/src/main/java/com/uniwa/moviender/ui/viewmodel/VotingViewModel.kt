@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.room.withTransaction
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.network.MovienderApi
-import com.uniwa.moviender.network.MovienderApiService
 import com.uniwa.moviender.network.helper.UsersVotesBody
 import com.uniwa.moviender.repository.SessionRepository
 import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
@@ -18,8 +17,7 @@ import kotlinx.coroutines.launch
 class VotingViewModel(
     private val uid: String,
     private val sessionId: String,
-    private val database: SessionDatabase,
-    movienderApi: MovienderApiService
+    private val database: SessionDatabase
 ) : ViewModel() {
     val MINIMUM_VOTES = 10
 
@@ -28,7 +26,7 @@ class VotingViewModel(
 
     private var votesCount = 0
 
-    val movies = SessionRepository(uid, database, movienderApi).getSessionMovies(sessionId)
+    val movies = SessionRepository(uid, database, MovienderApi.movieClient).getSessionMovies(sessionId)
 
     private val _sessionStatus = MutableLiveData<Int>()
     val sessionStatus: LiveData<Int> = _sessionStatus
@@ -61,14 +59,14 @@ class VotingViewModel(
                 database.sessionDao().getVotes(sessionId)
             }
             _sessionStatus.value =
-                MovienderApi.movienderApiService.sendVotes(sessionId, UsersVotesBody(uid, votes))
+                MovienderApi.sessionClient.sendVotes(sessionId, UsersVotesBody(uid, votes)).body
         }
     }
 
     fun getVotes() {
         viewModelScope.launch {
             val remoteDbVotesCount =
-                MovienderApi.movienderApiService.getUserNumVotes(sessionId, uid)
+                MovienderApi.sessionClient.getUserNumVotes(sessionId, uid).body
             val localDbVotesCount = database.sessionDao().getVotes(sessionId).size
 
             votesCount = remoteDbVotesCount.coerceAtLeast(localDbVotesCount)

@@ -2,10 +2,10 @@ package com.uniwa.moviender.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.uniwa.moviender.network.MovienderApiService
+import com.uniwa.moviender.network.client.MovieClient
 
 class MoviesViewModelFactory(
-    private val service: MovienderApiService,
+    private val service: MovieClient,
     private val genres: List<Int>,
     private val uid: String
 ) : ViewModelProvider.NewInstanceFactory() {

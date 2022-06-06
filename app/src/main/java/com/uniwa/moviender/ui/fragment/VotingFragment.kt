@@ -15,7 +15,6 @@ import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentVotingBinding
 import com.uniwa.moviender.listener.VotingButtonListener
 import com.uniwa.moviender.listener.VotingCardListener
-import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
 import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
@@ -32,8 +31,7 @@ class VotingFragment : Fragment() {
         VotingViewModelFactory(
             sharedViewModel.getUid(),
             sharedViewModel.getSessionId(),
-            SessionDatabase.getInstance(requireContext()),
-            MovienderApi.movienderApiService
+            SessionDatabase.getInstance(requireContext())
         )
     }
 

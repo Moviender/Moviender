@@ -4,13 +4,13 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.uniwa.moviender.database.SessionDatabase
-import com.uniwa.moviender.network.MovienderApiService
+import com.uniwa.moviender.network.client.MovieClient
 import com.uniwa.moviender.remoteMediator.MoviesRemoteMediator
 
 class SessionRepository(
     private val uid: String,
     private val database: SessionDatabase,
-    private val movienderApi: MovienderApiService
+    private val movienderApi: MovieClient
 ) {
     @OptIn(ExperimentalPagingApi::class)
     fun getSessionMovies(sessionId: String) = Pager(

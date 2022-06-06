@@ -11,7 +11,7 @@ import com.uniwa.moviender.database.session.Movie
 import com.uniwa.moviender.database.session.Session
 import com.uniwa.moviender.database.session.SessionRemoteKeys
 import com.uniwa.moviender.database.session.crossref.SessionMovieCrossRef
-import com.uniwa.moviender.network.MovienderApiService
+import com.uniwa.moviender.network.client.MovieClient
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 @OptIn(ExperimentalPagingApi::class)
 class MoviesRemoteMediator(
     private val uid: String,
-    private val movienderApi: MovienderApiService,
+    private val movienderApi: MovieClient,
     private val database: SessionDatabase,
     private val sessionId: String
 ) : RemoteMediator<Int, Movie>() {
@@ -67,7 +67,7 @@ class MoviesRemoteMediator(
                 }
             }
 
-            val response = movienderApi.getSessionMovies(sessionId, uid, loadKey)
+            val response = movienderApi.getSessionMovies(sessionId, uid, loadKey).body
 
             val movies = response.movies
 

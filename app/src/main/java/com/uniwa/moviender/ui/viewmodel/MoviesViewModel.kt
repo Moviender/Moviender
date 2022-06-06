@@ -10,13 +10,17 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.data.ServerPagingSource
-import com.uniwa.moviender.network.*
+import com.uniwa.moviender.network.Movie
+import com.uniwa.moviender.network.MovieDetails
+import com.uniwa.moviender.network.Rating
+import com.uniwa.moviender.network.UserRatings
+import com.uniwa.moviender.network.client.MovieClient
 import com.uniwa.moviender.ui.adapters.MoviesHorizontalAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(
-    private val service: MovienderApiService,
+    private val service: MovieClient,
     _genres: List<Int>,
     private val uid: String
 ) : ViewModel() {
@@ -48,7 +52,7 @@ class MoviesViewModel(
 
     private fun getMovieDetails(movie: Movie) {
         viewModelScope.launch {
-            _selectedMovieDetails.value = service.getMovieDetails(movie.movielensId, uid)
+            _selectedMovieDetails.value = service.getMovieDetails(movie.movielensId, uid).body
         }
     }
 
@@ -86,7 +90,7 @@ class MoviesViewModel(
 
     fun searchByTitle(title: String) {
         viewModelScope.launch {
-            _searchedResults.value = service.searchByTitle(title)
+            _searchedResults.value = service.searchByTitle(title).body
         }
     }
 

@@ -19,7 +19,7 @@ class SimilarMoviesViewModel : ViewModel() {
 
     fun searchByTitle(title: String) {
         viewModelScope.launch {
-            _searchedResults.value = MovienderApi.movienderApiService.searchByTitle(title)
+            _searchedResults.value = MovienderApi.movieClient.searchByTitle(title).body
         }
     }
 
@@ -30,10 +30,10 @@ class SimilarMoviesViewModel : ViewModel() {
     fun startSession(uid: String, friendUid: String, movielensId: String) {
         viewModelScope.launch {
             _response.value =
-                MovienderApi.movienderApiService.initFriendsSessionSim(
+                MovienderApi.sessionClient.initFriendsSessionSim(
                     uid,
                     SessionRequestBodySim(friendUid, movielensId)
-                )
+                ).body
         }
     }
 }

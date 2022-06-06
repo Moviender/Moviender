@@ -29,10 +29,10 @@ class SessionGenresViewModel : ViewModel() {
     fun startSession(uid: String, friendUid: String) {
         viewModelScope.launch {
             _response.value =
-                MovienderApi.movienderApiService.initFriendsSession(
+                MovienderApi.sessionClient.initFriendsSession(
                     uid,
                     SessionRequestBody(friendUid, selectedGenres)
-                )
+                ).body
         }
     }
 }

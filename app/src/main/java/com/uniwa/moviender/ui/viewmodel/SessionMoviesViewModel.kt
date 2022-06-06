@@ -21,10 +21,10 @@ class SessionMoviesViewModel(
 
     fun getMovies() {
         viewModelScope.launch {
-            val results = MovienderApi.movienderApiService.getSessionResult(sessionId)
+            val results = MovienderApi.sessionClient.getSessionResult(sessionId).body
 
             _matchedMovies.value = results.map { movielensId ->
-                val movieDetails = MovienderApi.movienderApiService.getMovieDetails(movielensId, uid)
+                val movieDetails = MovienderApi.movieClient.getMovieDetails(movielensId, uid).body
 
                 Movie(
                     movielensId,
@@ -37,7 +37,7 @@ class SessionMoviesViewModel(
 
     fun sendRating(movielensId: String, rating: Float) {
         viewModelScope.launch {
-            MovienderApi.movienderApiService.updateRating(
+            MovienderApi.movieClient.updateRating(
                 UserRatings(
                     uid,
                     listOf(Rating(movielensId, rating))

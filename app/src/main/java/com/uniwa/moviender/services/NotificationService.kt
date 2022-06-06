@@ -2,8 +2,6 @@ package com.uniwa.moviender.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
@@ -13,7 +11,9 @@ import com.google.firebase.messaging.RemoteMessage
 import com.uniwa.moviender.R
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.ui.HubActivity
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val CHANNEL_ID = "1"
 
@@ -25,7 +25,7 @@ class NotificationService : FirebaseMessagingService() {
 
         user?.let {
             CoroutineScope(Dispatchers.IO).launch {
-                MovienderApi.movienderApiService.storeToken(user.uid, token)
+                MovienderApi.userClient.storeToken(user.uid, token)
             }
         }
     }

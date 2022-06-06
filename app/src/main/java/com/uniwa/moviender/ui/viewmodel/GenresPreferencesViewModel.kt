@@ -23,13 +23,13 @@ class GenresPreferencesViewModel : ViewModel() {
 
     fun sendRatings(ratings: UserRatings) {
         viewModelScope.launch {
-            MovienderApi.movienderApiService.sendStarterRating(ratings)
+            MovienderApi.userClient.sendStarterRating(ratings)
         }
     }
 
     fun sendGenrePreferences(uid: String) {
         viewModelScope.launch {
-            MovienderApi.movienderApiService.sendGenrePreferences(
+            MovienderApi.userClient.sendGenrePreferences(
                 UserGenrePreferences(
                     uid,
                     selectedGenres

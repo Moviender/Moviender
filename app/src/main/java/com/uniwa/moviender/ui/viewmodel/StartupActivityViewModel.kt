@@ -26,7 +26,7 @@ class StartupActivityViewModel : ViewModel() {
     fun storeToken(uid: String) {
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
             viewModelScope.launch {
-                MovienderApi.movienderApiService.storeToken(uid, token)
+                MovienderApi.userClient.storeToken(uid, token)
             }
         }
     }

@@ -3,7 +3,7 @@ package com.uniwa.moviender.data
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.uniwa.moviender.network.Movie
-import com.uniwa.moviender.network.MovienderApiService
+import com.uniwa.moviender.network.client.MovieClient
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -11,7 +11,7 @@ private const val API_STARTING_PAGE_INDEX = 1
 private const val PAGE_INCREMENT = 1
 
 class ServerPagingSource(
-    private val service: MovienderApiService,
+    private val service: MovieClient,
     private val genres: List<Int>,
     private val uid: String
 ) : PagingSource<Int, Movie>() {
@@ -26,9 +26,9 @@ class ServerPagingSource(
         val position = params.key ?: API_STARTING_PAGE_INDEX
         return try {
             val movies = if (genres[0] != -1) {
-                service.getMovies(position, genres)
+                service.getMovies(position, genres).body
             } else {
-                service.getUserRecommendations(position, uid)
+                service.getUserRecommendations(position, uid).body
             }
             val nextKey = if (movies.size < 15 || movies.isEmpty()) {
                 null

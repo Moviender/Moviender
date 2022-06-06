@@ -42,20 +42,20 @@ class FriendsFragmentViewModel : ViewModel() {
     fun getFriends() {
         viewModelScope.launch {
             _friendList.value =
-                MovienderApi.movienderApiService.getFriendList(uid)
+                MovienderApi.userClient.getFriendList(uid).body
         }
     }
 
     fun addFriend() {
         viewModelScope.launch {
             _requestResponse.value =
-                MovienderApi.movienderApiService.friendRequest(uid, friendUsername.value!!)
+                MovienderApi.friendClient.friendRequest(uid, friendUsername.value!!).body
         }
     }
 
     fun respondToFriendRequest(friendUid: String, response: Int) {
         viewModelScope.launch {
-            MovienderApi.movienderApiService.respondFriendRequest(uid, friendUid, response)
+            MovienderApi.friendClient.respondFriendRequest(uid, friendUid, response)
             getFriends()
         }
 
@@ -77,7 +77,7 @@ class FriendsFragmentViewModel : ViewModel() {
 
     fun deleteFriend(friend: Friend) {
         viewModelScope.launch {
-            MovienderApi.movienderApiService.deleteFriend(uid, friend.uid)
+            MovienderApi.friendClient.deleteFriend(uid, friend.uid)
             getFriends()
         }
 
@@ -85,22 +85,22 @@ class FriendsFragmentViewModel : ViewModel() {
 
     fun closeSession() {
         viewModelScope.launch {
-            _sessionId.value = MovienderApi.movienderApiService.getSessionId(uid, friendUid)
-            MovienderApi.movienderApiService.closeSession(_sessionId.value!!)
+            _sessionId.value = MovienderApi.sessionClient.getSessionId(uid, friendUid).body
+            MovienderApi.sessionClient.closeSession(_sessionId.value!!)
             getFriends()
         }
     }
 
     fun getSessionState() {
         viewModelScope.launch {
-            _sessionId.value = MovienderApi.movienderApiService.getSessionId(uid, friendUid)
-            _sessionState.value = MovienderApi.movienderApiService.getSessionState(_sessionId.value!!)
+            _sessionId.value = MovienderApi.sessionClient.getSessionId(uid, friendUid).body
+            _sessionState.value = MovienderApi.sessionClient.getSessionState(_sessionId.value!!).body
         }
     }
 
     fun getUserState() {
         viewModelScope.launch {
-            _userState.value = MovienderApi.movienderApiService.getUserState(_sessionId.value!!, uid)
+            _userState.value = MovienderApi.userClient.getUserState(_sessionId.value!!, uid).body
         }
     }
 }
