@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.uniwa.moviender.R
+import com.uniwa.moviender.data.errorMessages
 import com.uniwa.moviender.ui.viewmodel.LoginViewModel
 import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 
@@ -46,6 +48,7 @@ class FirebaseLoginFragment : Fragment() {
         // set observer
         viewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
             if (initialized) {
+                sharedViewModel.storeToken(firebaseUser!!.uid)
                 findNavController().navigate(R.id.action_firebaseLoginFragment_to_hubActivity)
                 ActivityNavigator(requireContext()).popBackStack()
             } else {
@@ -99,12 +102,13 @@ class FirebaseLoginFragment : Fragment() {
             viewModel.setUser(firebaseUser!!)
             sharedViewModel.setUid(firebaseUser!!.uid)
             if (response?.isNewUser == true) {
+                viewModel.userInserted.observe(viewLifecycleOwner) { inserted ->
+                    sharedViewModel.storeToken(firebaseUser!!.uid)
+                    findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
+                }
                 viewModel.insertUser()
-                sharedViewModel.storeToken(firebaseUser!!.uid)
-                findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
             } else {
                 checkInitialization()
-                viewModel.storeToken()
             }
         } else {
             // Sign in failed. If response is null the user canceled the
