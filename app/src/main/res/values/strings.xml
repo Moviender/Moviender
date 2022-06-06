@@ -74,4 +74,9 @@
     <string name="genre_preference_hint">What kind of movies do you like?</string>
     <string name="profile_init_finish">Finish</string>
 
+    <string name="error_no_internet">There is no internet connection</string>
+    <string name="error_network">A network error occurred</string>
+    <string name="error_general">An error occurred!</string>
+    <string name="error_user_insert">Could not insert user</string>
+
 </resources>

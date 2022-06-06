@@ -35,3 +35,10 @@ enum class RecommendationType(val code: Int) {
     KNN(40),
     SVD(41)
 }
+
+enum class Error(val code: Int) {
+    CANNOT_CONNECT(1000),
+    NETWORK_ERROR(1001),
+    GENERAL(1002),
+    USER_NOT_CREATED(1003)
+}

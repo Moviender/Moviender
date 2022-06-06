@@ -55,6 +55,14 @@ class FirebaseLoginFragment : Fragment() {
             }
         }
 
+        viewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(
+                requireContext(),
+                getString(errorMessages[it]!!),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
         if (isUserSignedIn()) {
             viewModel.setUser(firebaseUser!!)
             sharedViewModel.setUid(firebaseUser!!.uid)
