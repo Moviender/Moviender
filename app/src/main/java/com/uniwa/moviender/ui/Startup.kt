@@ -22,6 +22,7 @@ class Startup : AppCompatActivity() {
     }
 
     private fun setupBottomNavigation() {
+        // TODO execute when reached friends fragment
         val navView: BottomNavigationView = binding.navView
 
         // Workaround for the FragmentContainerView bug
