@@ -17,8 +17,7 @@ import com.uniwa.moviender.data.SessionStatus
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
 import com.uniwa.moviender.ui.adapters.ProfileAdapter
 import com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel
-import com.uniwa.moviender.ui.viewmodel.HubViewModel
-import com.uniwa.moviender.ui.viewmodel.HubViewModelFactory
+import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 
 
 class FriendsFragment : Fragment() {
@@ -26,9 +25,7 @@ class FriendsFragment : Fragment() {
     private lateinit var binding: FragmentFriendsBinding
     private lateinit var dialog: FriendRequestDialogFragment
 
-    private val sharedViewModel: HubViewModel by activityViewModels {
-        HubViewModelFactory(findNavController())
-    }
+    private val sharedViewModel: StartupActivityViewModel by activityViewModels()
     private val viewModel: FriendsFragmentViewModel by viewModels()
 
     override fun onCreateView(
@@ -38,7 +35,7 @@ class FriendsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_friends, container, false)
 
         registerForContextMenu(binding.fragmentFriendsRv)
-        viewModel.setUid(sharedViewModel.uid)
+        viewModel.setUid(sharedViewModel.getUid())
 
         return binding.root
     }

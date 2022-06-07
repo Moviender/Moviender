@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentGenresPreferencesBinding
@@ -58,7 +57,7 @@ class GenresPreferencesFragment : Fragment() {
     fun finishInitialization() {
         sendRatingsToRemoteServer()
         sendGenrePreferencesToRemoteServer()
-        navigateToHun()
+        navigateToHub()
     }
 
     private fun sendRatingsToRemoteServer() {
@@ -70,9 +69,8 @@ class GenresPreferencesFragment : Fragment() {
         viewModel.sendGenrePreferences(sharedViewModel.getUid())
     }
 
-    private fun navigateToHun() {
-        findNavController().navigate(R.id.action_genresPreferencesFragment_to_hubActivity)
-        ActivityNavigator(requireContext()).popBackStack()
+    private fun navigateToHub() {
+        findNavController().navigate(R.id.action_genresPreferencesFragment_to_hubNavigation)
     }
 
 }

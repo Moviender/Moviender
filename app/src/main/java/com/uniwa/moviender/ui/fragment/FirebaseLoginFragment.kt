@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -49,8 +48,7 @@ class FirebaseLoginFragment : Fragment() {
         viewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
             if (initialized) {
                 sharedViewModel.storeToken(firebaseUser!!.uid)
-                findNavController().navigate(R.id.action_firebaseLoginFragment_to_hubActivity)
-                ActivityNavigator(requireContext()).popBackStack()
+                findNavController().navigate(R.id.action_firebaseLoginFragment_to_hub_navigation)
             } else {
                 viewModel.setUser(firebaseUser!!)
                 sharedViewModel.setUid(firebaseUser!!.uid)

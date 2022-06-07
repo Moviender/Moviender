@@ -16,9 +16,10 @@
             app:popUpTo="@id/firebaseLoginFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_firebaseLoginFragment_to_hubActivity"
-            app:destination="@id/hubActivity"
-            app:popUpToInclusive="false" />
+            android:id="@+id/action_firebaseLoginFragment_to_hub_navigation"
+            app:destination="@id/hub_navigation"
+            app:popUpTo="@id/firebaseLoginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -30,21 +31,19 @@
             android:id="@+id/action_initializationFragment_to_genresPreferencesFragment"
             app:destination="@id/genresPreferencesFragment" />
     </fragment>
+    <include app:graph="@navigation/hub_navigation" />
 
-    <activity
-        android:id="@+id/hubActivity"
-        android:name="com.uniwa.moviender.ui.HubActivity"
-        android:label="activity_hub"
-        tools:layout="@layout/activity_hub" />
     <fragment
         android:id="@+id/genresPreferencesFragment"
         android:name="com.uniwa.moviender.ui.fragment.GenresPreferencesFragment"
         android:label="GenresPreferencesFragment"
         tools:layout="@layout/genre_preferences_item">
         <action
-            android:id="@+id/action_genresPreferencesFragment_to_hubActivity"
-            app:destination="@id/hubActivity"
+            android:id="@+id/action_genresPreferencesFragment_to_hubNavigation"
+            app:destination="@id/hub_navigation"
             app:popUpTo="@id/genresPreferencesFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
     </fragment>
+
+
 </navigation>
