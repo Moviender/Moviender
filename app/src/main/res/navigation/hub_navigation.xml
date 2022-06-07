@@ -14,7 +14,23 @@
         android:id="@id/navigation_friends"
         android:name="com.uniwa.moviender.ui.fragment.FriendsFragment"
         tools:layout="@layout/fragment_friends"
-        android:label="FriendsFragment" />
+        android:label="FriendsFragment" >
+        <action
+            android:id="@+id/action_navigation_friends_to_session_navigation"
+            app:destination="@id/session_navigation" >
+            <argument
+                android:name="type"
+                app:argType="integer" />
+            <argument
+                android:name="friend_uid"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="sessionId"
+                app:argType="string"
+                app:nullable="true" />
+        </action>
+    </fragment>
     <activity
         android:id="@+id/startup"
         android:name="com.uniwa.moviender.ui.Startup"
@@ -25,28 +41,9 @@
         android:name="com.uniwa.moviender.ui.HubActivity"
         tools:layout="@layout/activity_startup"
         android:label="HubActivity" />
-    <activity
-        android:id="@+id/sessionActivity"
-        android:name="com.uniwa.moviender.ui.SessionActivity"
-        tools:layout="@layout/activity_session"
-        android:label="SessionActivity" >
-        <argument
-            android:name="type"
-            app:argType="integer" />
-        <argument
-            android:name="friend_uid"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="sessionId"
-            app:argType="string"
-            app:nullable="true" />
-    </activity>
-    <action
-        android:id="@+id/action_hubActivity_to_sessionActivity"
-        app:destination="@id/sessionActivity"
-        app:popUpTo="@id/navigation_friends"
-        app:popUpToInclusive="true" />
+
+    <include app:graph="@navigation/session_navigation" />
+
     <action
         android:id="@+id/action_hubActivity_to_startupActivity"
         app:destination="@id/startup"

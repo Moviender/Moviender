@@ -8,9 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
-import com.uniwa.moviender.HubNavigationDirections
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.FriendRequestStatus
 import com.uniwa.moviender.data.SessionStatus
@@ -105,13 +103,12 @@ class FriendsFragment : Fragment() {
                 }
                 SessionStatus.SUCCESSFUL_FINISH.code,
                 SessionStatus.FAILED_FINISH.code -> {
-                    val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+                    val action = FriendsFragmentDirections.actionNavigationFriendsToSessionNavigation(
                         sessionStatus,
                         null,
                         viewModel.sessionId.value
                     )
                     findNavController().navigate(action)
-                    ActivityNavigator(requireContext()).popBackStack()
                 }
             }
         }
@@ -119,13 +116,12 @@ class FriendsFragment : Fragment() {
 
     private fun setupUserStateObserver() {
         viewModel.userState.observe(viewLifecycleOwner) { userStatus ->
-            val action = HubNavigationDirections.actionHubActivityToSessionActivity(
+            val action = FriendsFragmentDirections.actionNavigationFriendsToSessionNavigation(
                 userStatus,
                 viewModel.getFriendUid(),
                 viewModel.sessionId.value
             )
             findNavController().navigate(action)
-            ActivityNavigator(requireContext()).popBackStack()
         }
     }
 }
