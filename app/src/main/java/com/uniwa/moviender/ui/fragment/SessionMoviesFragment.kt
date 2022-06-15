@@ -10,32 +10,35 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.uniwa.moviender.R
+import com.uniwa.moviender.data.RecommendationType
 import com.uniwa.moviender.data.SessionStatus
 import com.uniwa.moviender.data.SessionUserStatus
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentSessionMoviesBinding
 import com.uniwa.moviender.ui.adapters.ResultMovieAdapter
-import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.SessionMoviesViewModel
 import com.uniwa.moviender.ui.viewmodel.SessionMoviesViewModelFactory
-
-private const val DEFAULT_VALUE = 99
+import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 
 class SessionMoviesFragment : Fragment() {
 
     private val args: SessionMoviesFragmentArgs by navArgs()
     private lateinit var binding: FragmentSessionMoviesBinding
-    private val sharedViewModel: SessionActivityViewModel by activityViewModels()
+    private val sharedViewModel: StartupActivityViewModel by activityViewModels()
     private val viewModel: SessionMoviesViewModel by viewModels {
         SessionMoviesViewModelFactory(
-            sharedViewModel.getSessionId(),
+            sharedViewModel.sessionId,
             sharedViewModel.getUid(),
             SessionDatabase.getInstance(requireContext())
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        determineNavigation(args.status)
     }
 
     override fun onCreateView(
@@ -50,10 +53,7 @@ class SessionMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val status =
-            if (args.status == DEFAULT_VALUE) sharedViewModel.getSessionStatus() else args.status
-
-        when (status) {
+        when (args.status) {
             SessionStatus.FAILED_FINISH.code -> showFailedMessage()
             SessionUserStatus.WAITING.code, SessionStatus.WAITING_FOR_VOTES.code -> showWaitingMessage()
             SessionStatus.SUCCESSFUL_FINISH.code -> showMatchedMovies()
@@ -85,7 +85,7 @@ class SessionMoviesFragment : Fragment() {
     }
 
     private fun showVotingAgainDialog() {
-        val alertDialog = activity?.let {
+        activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage(getString(R.string.vote_again_msg))
@@ -93,8 +93,7 @@ class SessionMoviesFragment : Fragment() {
                     findNavController().navigate(R.id.action_moviesSessionFragment_to_votingFragment)
                 }
                 setNegativeButton(getString(R.string.vote_again_negative)) { dialog, id ->
-                    findNavController().navigate(R.id.action_moviesSessionFragment_to_hubActivity)
-                    ActivityNavigator(requireContext()).popBackStack()
+                    findNavController().navigate(R.id.action_moviesSessionFragment_to_hub_navigation)
                 }
             }
                 .create()
@@ -103,6 +102,27 @@ class SessionMoviesFragment : Fragment() {
 
     private fun showFailedMessage() {
         binding.failedTv.visibility = View.VISIBLE
+    }
+
+    private fun determineNavigation(status: Int) {
+        val destination: Int? = when (status) {
+            SessionUserStatus.VOTING.code -> {
+                R.id.action_moviesSessionFragment_to_votingFragment
+            }
+            RecommendationType.SVD.code -> {
+                R.id.action_moviesSessionFragment_to_sessionGenresFragment
+            }
+            RecommendationType.KNN.code -> {
+                R.id.action_moviesSessionFragment_to_similarMoviesFragment
+            }
+            else -> {
+                null
+            }
+        }
+
+        destination?.let {
+            findNavController().navigate(it)
+        }
     }
 
 }
