@@ -59,8 +59,6 @@ class FriendsFragment : Fragment() {
         viewModel.requestResponse.observe(viewLifecycleOwner) {
             checkResponse()
         }
-
-        setupObservers()
     }
 
     private fun checkResponse() {
@@ -83,10 +81,11 @@ class FriendsFragment : Fragment() {
     }
 
     fun showSessionDialog() {
-        StartSessionDialogFragment().show(childFragmentManager, "session")
+        findNavController().navigate(R.id.action_navigation_friends_to_StartSessionDialogFragment)
     }
 
     fun navigate() {
+        setupObservers()
         viewModel.getSessionState()
     }
 
@@ -104,11 +103,10 @@ class FriendsFragment : Fragment() {
                 }
                 SessionStatus.SUCCESSFUL_FINISH.code,
                 SessionStatus.FAILED_FINISH.code -> {
-                    val action = FriendsFragmentDirections.actionNavigationFriendsToSessionNavigation(
-                        sessionStatus,
-                        null,
-                        viewModel.sessionId.value
-                    )
+                    val action =
+                        FriendsFragmentDirections.actionNavigationFriendsToSessionNavigation(
+                            sessionStatus
+                        )
                     findNavController().navigate(action)
                 }
             }
@@ -118,9 +116,7 @@ class FriendsFragment : Fragment() {
     private fun setupUserStateObserver() {
         viewModel.userState.observe(viewLifecycleOwner) { userStatus ->
             val action = FriendsFragmentDirections.actionNavigationFriendsToSessionNavigation(
-                userStatus,
-                viewModel.getFriendUid(),
-                viewModel.sessionId.value
+                userStatus
             )
             findNavController().navigate(action)
         }

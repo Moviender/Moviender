@@ -19,34 +19,28 @@
             android:id="@+id/action_navigation_friends_to_session_navigation"
             app:destination="@id/session_navigation" >
             <argument
-                android:name="type"
+                android:name="status"
                 app:argType="integer" />
-            <argument
-                android:name="friend_uid"
-                app:argType="string"
-                app:nullable="true" />
-            <argument
-                android:name="sessionId"
-                app:argType="string"
-                app:nullable="true" />
         </action>
+        <action
+            android:id="@+id/action_navigation_friends_to_StartSessionDialogFragment"
+            app:destination="@id/startSessionDialogFragment" />
     </fragment>
-    <activity
-        android:id="@+id/startup"
-        android:name="com.uniwa.moviender.ui.Startup"
-        android:label="activity_startup"
-        tools:layout="@layout/activity_startup" />
-    <activity
-        android:id="@+id/hubActivity"
-        android:name="com.uniwa.moviender.ui.HubActivity"
-        tools:layout="@layout/activity_startup"
-        android:label="HubActivity" />
 
     <include app:graph="@navigation/session_navigation" />
 
-    <action
-        android:id="@+id/action_hubActivity_to_startupActivity"
-        app:destination="@id/startup"
-        app:popUpTo="@id/startup"
-        app:popUpToInclusive="true" />
+    <dialog
+        android:id="@+id/startSessionDialogFragment"
+        android:name="com.uniwa.moviender.ui.fragment.StartSessionDialogFragment"
+        android:label="StartSessionDialogFragment"
+        tools:layout="@layout/session_dialog">
+        <action
+            android:id="@+id/action_startSessionDialogFragment_to_session_navigation"
+            app:destination="@id/session_navigation"
+            app:popUpTo="@id/navigation_friends">
+            <argument
+                android:name="status"
+                app:argType="integer" />
+        </action>
+    </dialog>
 </navigation>
