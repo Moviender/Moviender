@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        
-        <variable
-            name="sharedViewModel"
-            type="com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +23,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_nav_menu"
-            android:visibility="@{sharedViewModel.bottomNavViewVisibility}"/>
+            android:visibility="gone"/>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/startup_nav_host"

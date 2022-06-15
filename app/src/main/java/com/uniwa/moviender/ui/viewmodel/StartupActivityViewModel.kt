@@ -1,8 +1,5 @@
 package com.uniwa.moviender.ui.viewmodel
 
-import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
@@ -32,11 +29,6 @@ class StartupActivityViewModel : ViewModel() {
             _friendUid = value
         }
 
-    private val _bottomNavViewVisibility: MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>(View.GONE)
-    }
-    val bottomNavViewVisibility: LiveData<Int> = _bottomNavViewVisibility
-
     fun setUid(uid: String) {
         this.uid = uid
     }
@@ -55,9 +47,5 @@ class StartupActivityViewModel : ViewModel() {
                 MovienderApi.userClient.storeToken(uid, token)
             }
         }
-    }
-
-    fun makeBottomNavViewVisible() {
-        _bottomNavViewVisibility.value = View.VISIBLE
     }
 }
