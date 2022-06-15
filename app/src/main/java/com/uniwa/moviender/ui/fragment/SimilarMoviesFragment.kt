@@ -24,7 +24,7 @@ class SimilarMoviesFragment : Fragment() {
 
     private lateinit var binding: FragmentSimilarMoviesBinding
     private val viewModel: SimilarMoviesViewModel by viewModels()
-    private val sharedViewModel: SessionActivityViewModel by activityViewModels()
+    private val sharedViewModel: StartupActivityViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +74,7 @@ class SimilarMoviesFragment : Fragment() {
     fun startSession(view: View) {
         viewModel.response.observe(this) { response ->
             if (response.sessionId != null) {
-                sharedViewModel.setSessionId(response.sessionId)
+                sharedViewModel.sessionId = response.sessionId
                 findNavController().navigate(R.id.action_similarMoviesFragment_to_votingFragment)
             } else {
                 Toast.makeText(
@@ -89,7 +89,7 @@ class SimilarMoviesFragment : Fragment() {
         val movie = view.tag as Movie
         viewModel.startSession(
             sharedViewModel.getUid(),
-            sharedViewModel.getFriendUid(),
+            sharedViewModel.friendUid,
             movie.movielensId
         )
     }

@@ -16,12 +16,13 @@ import com.uniwa.moviender.databinding.FragmentSessionGenresBinding
 import com.uniwa.moviender.ui.adapters.SessionGenresAdapter
 import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.SessionGenresViewModel
+import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 
 class SessionGenresFragment : Fragment() {
 
     private lateinit var binding: FragmentSessionGenresBinding
     private val viewModel: SessionGenresViewModel by viewModels()
-    private val sharedViewModel: SessionActivityViewModel by activityViewModels()
+    private val sharedViewModel: StartupActivityViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -56,7 +57,7 @@ class SessionGenresFragment : Fragment() {
     fun startSession() {
         viewModel.response.observe(this) { response ->
             if (response.sessionId != null) {
-                sharedViewModel.setSessionId(response.sessionId)
+                sharedViewModel.sessionId = response.sessionId
                 findNavController().navigate(R.id.action_sessionGenresFragment_to_votingFragment)
             } else {
                 Toast.makeText(
@@ -68,6 +69,6 @@ class SessionGenresFragment : Fragment() {
                 ActivityNavigator(requireContext()).popBackStack()
             }
         }
-        viewModel.startSession(sharedViewModel.getUid(), sharedViewModel.getFriendUid())
+        viewModel.startSession(sharedViewModel.getUid(), sharedViewModel.friendUid)
     }
 }

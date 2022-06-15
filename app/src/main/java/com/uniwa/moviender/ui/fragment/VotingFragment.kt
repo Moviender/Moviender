@@ -16,7 +16,7 @@ import com.uniwa.moviender.databinding.FragmentVotingBinding
 import com.uniwa.moviender.listener.VotingButtonListener
 import com.uniwa.moviender.listener.VotingCardListener
 import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
-import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
+import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModel
 import com.uniwa.moviender.ui.viewmodel.VotingViewModelFactory
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
@@ -26,11 +26,11 @@ import com.yuyakaido.android.cardstackview.SwipeableMethod
 class VotingFragment : Fragment() {
 
     private lateinit var binding: FragmentVotingBinding
-    private val sharedViewModel: SessionActivityViewModel by activityViewModels()
+    private val sharedViewModel: StartupActivityViewModel by activityViewModels()
     private val viewModel: VotingViewModel by viewModels {
         VotingViewModelFactory(
             sharedViewModel.getUid(),
-            sharedViewModel.getSessionId(),
+            sharedViewModel.sessionId,
             SessionDatabase.getInstance(requireContext())
         )
     }

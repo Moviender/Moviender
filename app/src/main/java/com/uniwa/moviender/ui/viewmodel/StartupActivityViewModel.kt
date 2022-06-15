@@ -14,6 +14,24 @@ class StartupActivityViewModel : ViewModel() {
     private lateinit var uid: String
     private lateinit var ratings: UserRatings
 
+    private lateinit var _friendUid: String
+    var friendUid: String
+        get() {
+            return _friendUid
+        }
+        set(value) {
+            _friendUid = value
+        }
+
+    private lateinit var _sessioId: String
+    var sessionId: String
+        get() {
+            return _friendUid
+        }
+        set(value) {
+            _friendUid = value
+        }
+
     private val _bottomNavViewVisibility: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>(View.GONE)
     }

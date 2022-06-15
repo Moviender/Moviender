@@ -31,7 +31,7 @@ class FriendsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_friends, container, false)
-        sharedViewModel.makeBottomNavViewVisible()
+        sharedViewModel.showBottomNavView()
         registerForContextMenu(binding.fragmentFriendsRv)
         viewModel.setUid(sharedViewModel.getUid())
 
@@ -97,6 +97,7 @@ class FriendsFragment : Fragment() {
 
     private fun setupSessionStateObserver() {
         viewModel.sessionState.observe(viewLifecycleOwner) { sessionStatus ->
+            sharedViewModel.sessionId = viewModel.sessionId.value!!
             when (sessionStatus) {
                 SessionStatus.WAITING_FOR_VOTES.code -> {
                     viewModel.getUserState()
@@ -123,5 +124,10 @@ class FriendsFragment : Fragment() {
             )
             findNavController().navigate(action)
         }
+    }
+
+    fun setFriendUid(uid: String) {
+        sharedViewModel.friendUid = uid
+        viewModel.setFriendUid(uid)
     }
 }
