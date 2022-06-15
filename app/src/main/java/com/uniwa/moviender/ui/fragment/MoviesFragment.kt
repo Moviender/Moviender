@@ -16,7 +16,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.uniwa.moviender.R
@@ -25,10 +24,9 @@ import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.ui.adapters.MoviesGridAdapter
 import com.uniwa.moviender.ui.adapters.MoviesSearchAdapter
-import com.uniwa.moviender.ui.viewmodel.HubViewModel
-import com.uniwa.moviender.ui.viewmodel.HubViewModelFactory
 import com.uniwa.moviender.ui.viewmodel.MoviesViewModel
 import com.uniwa.moviender.ui.viewmodel.MoviesViewModelFactory
+import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 
 class MoviesFragment : Fragment() {
 
@@ -41,15 +39,13 @@ class MoviesFragment : Fragment() {
     private lateinit var searchLayout: GridLayoutManager
     private lateinit var callback: OnBackPressedCallback
 
-    private val sharedViewModel: HubViewModel by activityViewModels {
-        HubViewModelFactory(findNavController())
-    }
+    private val sharedViewModel: StartupActivityViewModel by activityViewModels()
 
     private val viewModel: MoviesViewModel by viewModels {
         MoviesViewModelFactory(
             MovienderApi.movieClient,
             listOf(-1, 28, 16, 80, 18, 27, 9648, 878, 37),
-            sharedViewModel.uid
+            sharedViewModel.getUid()
         )
     }
 
