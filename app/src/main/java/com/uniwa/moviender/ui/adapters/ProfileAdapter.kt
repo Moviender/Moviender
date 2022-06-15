@@ -57,7 +57,7 @@ class ProfileAdapter(
                 binding.closeSessionBtn.visibility = View.GONE
                 binding.startSessionBtn.visibility = View.VISIBLE
                 binding.startSessionBtn.setOnClickListener {
-                    viewModel.setFriendUid(friend.uid)
+                    friendsFragment.setFriendUid(friend.uid)
                     friendsFragment.showSessionDialog()
                 }
             } else if (friend.state == FriendState.SESSION.code) {
@@ -67,12 +67,12 @@ class ProfileAdapter(
                 binding.startSessionBtn.visibility = View.GONE
                 binding.showSessionBtn.visibility = View.VISIBLE
                 binding.showSessionBtn.setOnClickListener {
-                    viewModel.setFriendUid(friend.uid)
+                    friendsFragment.setFriendUid(friend.uid)
                     friendsFragment.navigate()
                 }
                 binding.closeSessionBtn.visibility = View.VISIBLE
                 binding.closeSessionBtn.setOnClickListener {
-                    viewModel.setFriendUid(friend.uid)
+                    friendsFragment.setFriendUid(friend.uid)
                     viewModel.closeSession()
                 }
             }
