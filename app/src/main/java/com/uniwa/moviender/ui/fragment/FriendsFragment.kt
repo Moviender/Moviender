@@ -31,7 +31,6 @@ class FriendsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_friends, container, false)
-        sharedViewModel.showBottomNavView()
         registerForContextMenu(binding.fragmentFriendsRv)
         viewModel.setUid(sharedViewModel.getUid())
 
