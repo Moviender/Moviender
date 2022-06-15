@@ -17,8 +17,8 @@ import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentSimilarMoviesBinding
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.adapters.SimilarMoviesAdapter
-import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.SimilarMoviesViewModel
+import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 
 class SimilarMoviesFragment : Fragment() {
 
@@ -82,7 +82,7 @@ class SimilarMoviesFragment : Fragment() {
                     getString(R.string.session_already_exists),
                     Toast.LENGTH_LONG
                 ).show()
-                findNavController().navigate(R.id.action_similarMoviesFragment_to_hubActivity)
+                findNavController().navigate(R.id.action_similarMoviesFragment_to_hub_navigation)
                 ActivityNavigator(requireContext()).popBackStack()
             }
         }

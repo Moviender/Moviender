@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
-import com.uniwa.moviender.SessionNavigationDirections
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentVotingBinding
 import com.uniwa.moviender.listener.VotingButtonListener
@@ -90,7 +89,7 @@ class VotingFragment : Fragment() {
 
         viewModel.sessionStatus.observe(requireActivity()) { status ->
             val action =
-                SessionNavigationDirections.actionVotingFragmentToMoviesSessionFragment(status)
+                VotingFragmentDirections.actionVotingFragmentToMoviesSessionFragment(status)
             findNavController().navigate(action)
         }
     }

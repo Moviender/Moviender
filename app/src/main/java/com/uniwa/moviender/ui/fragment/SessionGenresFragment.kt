@@ -9,12 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentSessionGenresBinding
 import com.uniwa.moviender.ui.adapters.SessionGenresAdapter
-import com.uniwa.moviender.ui.viewmodel.SessionActivityViewModel
 import com.uniwa.moviender.ui.viewmodel.SessionGenresViewModel
 import com.uniwa.moviender.ui.viewmodel.StartupActivityViewModel
 
@@ -65,8 +63,7 @@ class SessionGenresFragment : Fragment() {
                     getString(R.string.session_already_exists),
                     Toast.LENGTH_LONG
                 ).show()
-                findNavController().navigate(R.id.action_sessionGenresFragment_to_hubActivity)
-                ActivityNavigator(requireContext()).popBackStack()
+                findNavController().navigate(R.id.action_sessionGenresFragment_to_hub_navigation)
             }
         }
         viewModel.startSession(sharedViewModel.getUid(), sharedViewModel.friendUid)
