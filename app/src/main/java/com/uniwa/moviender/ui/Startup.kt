@@ -1,8 +1,10 @@
 package com.uniwa.moviender.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.uniwa.moviender.R
@@ -32,5 +34,21 @@ class Startup : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         navView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener {_, destination, _ ->
+            navView.visibility = when(destination.id) {
+                R.id.navigation_friends, R.id.navigation_movies -> View.VISIBLE
+                else -> View.GONE
+            }
+        }
+        navView.setOnItemSelectedListener {
+            if (it.itemId == R.id.navigation_friends) {
+                navController.popBackStack(R.id.navigation_friends, false)
+                true
+            }
+            else {
+                NavigationUI.onNavDestinationSelected(it, navController)
+            }
+        }
     }
 }
