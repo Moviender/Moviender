@@ -2,7 +2,6 @@ package com.uniwa.moviender.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.auth.FirebaseAuth
@@ -10,7 +9,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.uniwa.moviender.R
 import com.uniwa.moviender.network.MovienderApi
-import com.uniwa.moviender.ui.HubActivity
+import com.uniwa.moviender.ui.Startup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,12 +38,8 @@ class NotificationService : FirebaseMessagingService() {
     }
 
     private fun postNotification(message: RemoteMessage) {
-        val intent = Intent(this, HubActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-        }
-
         val pendingIntent = NavDeepLinkBuilder(this)
-            .setComponentName(HubActivity::class.java)
+            .setComponentName(Startup::class.java)
             .setGraph(R.navigation.hub_navigation)
             .setDestination(R.id.navigation_friends)
             .createPendingIntent()
