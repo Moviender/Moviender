@@ -35,7 +35,7 @@ class StartSessionDialogFragment : DialogFragment() {
             knnBtn.setOnClickListener {
                 val action =
                     StartSessionDialogFragmentDirections.actionStartSessionDialogFragmentToSessionNavigation(
-                        RecommendationType.SVD.code
+                        RecommendationType.KNN.code
                     )
                 findNavController().navigate(action)
             }
