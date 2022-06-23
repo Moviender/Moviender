@@ -20,13 +20,13 @@ class StartupActivityViewModel : ViewModel() {
             _friendUid = value
         }
 
-    private lateinit var _sessioId: String
+    private lateinit var _sessionId: String
     var sessionId: String
         get() {
-            return _friendUid
+            return _sessionId
         }
         set(value) {
-            _friendUid = value
+            _sessionId = value
         }
 
     fun setUid(uid: String) {
