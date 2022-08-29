@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.network.MovienderApi
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 class FriendsFragmentViewModel : ViewModel() {
@@ -25,11 +27,11 @@ class FriendsFragmentViewModel : ViewModel() {
     private val _sessionId = MutableLiveData<String>()
     val sessionId: LiveData<String> = _sessionId
 
-    private val _sessionState = MutableLiveData<Int>()
-    val sessionState: LiveData<Int> = _sessionState
+    private val _sessionState = MutableSharedFlow<Int>()
+    val sessionState: SharedFlow<Int> = _sessionState
 
-    private val _userState = MutableLiveData<Int>()
-    val userState: LiveData<Int> = _userState
+    private val _userState = MutableSharedFlow<Int>()
+    val userState: SharedFlow<Int> = _userState
 
     private lateinit var friendUid: String
 
@@ -94,13 +96,13 @@ class FriendsFragmentViewModel : ViewModel() {
     fun getSessionState() {
         viewModelScope.launch {
             _sessionId.value = MovienderApi.sessionClient.getSessionId(uid, friendUid).body
-            _sessionState.value = MovienderApi.sessionClient.getSessionState(_sessionId.value!!).body
+            _sessionState.emit(MovienderApi.sessionClient.getSessionState(_sessionId.value!!).body)
         }
     }
 
     fun getUserState() {
         viewModelScope.launch {
-            _userState.value = MovienderApi.userClient.getUserState(_sessionId.value!!, uid).body
+            _userState.emit(MovienderApi.userClient.getUserState(_sessionId.value!!, uid).body)
         }
     }
 }
