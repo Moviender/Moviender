@@ -87,7 +87,7 @@ class VotingFragment : Fragment() {
 
         viewModel.getVotes()
 
-        viewModel.sessionStatus.observe(requireActivity()) { status ->
+        viewModel.sessionStatus.observe(viewLifecycleOwner) { status ->
             val action =
                 VotingFragmentDirections.actionVotingFragmentToMoviesSessionFragment(status)
             findNavController().navigate(action)
