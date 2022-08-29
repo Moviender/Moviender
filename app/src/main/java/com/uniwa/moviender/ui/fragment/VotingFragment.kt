@@ -8,8 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
+import com.uniwa.moviender.data.SessionStatus
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentVotingBinding
 import com.uniwa.moviender.listener.VotingButtonListener
@@ -21,6 +23,7 @@ import com.uniwa.moviender.ui.viewmodel.VotingViewModelFactory
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.Direction
 import com.yuyakaido.android.cardstackview.SwipeableMethod
+import kotlinx.coroutines.flow.collectLatest
 
 class VotingFragment : Fragment() {
 
@@ -79,7 +82,7 @@ class VotingFragment : Fragment() {
                 )
             )
             saveMoviesBtn.setOnClickListener {
-                sendVotes()
+                this@VotingFragment.viewModel.sendVotes()
             }
         }
 
@@ -87,15 +90,39 @@ class VotingFragment : Fragment() {
 
         viewModel.getVotes()
 
-        viewModel.sessionStatus.observe(viewLifecycleOwner) { status ->
-            val action =
-                VotingFragmentDirections.actionVotingFragmentToMoviesSessionFragment(status)
-            findNavController().navigate(action)
+        setupObservers()
+    }
+
+    private fun setupObservers() {
+        setupSessionStateObserver()
+        setupUserStateObserver()
+    }
+
+    private fun setupSessionStateObserver() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.sessionStatus.collectLatest { sessionStatus ->
+                when (sessionStatus) {
+                    SessionStatus.WAITING_FOR_VOTES.code -> {
+                        viewModel.getUserState()
+                    }
+                    SessionStatus.SUCCESSFUL_FINISH.code,
+                    SessionStatus.FAILED_FINISH.code -> {
+                        val action =
+                            VotingFragmentDirections.actionVotingFragmentToMoviesSessionFragment(sessionStatus)
+                        findNavController().navigate(action)
+                    }
+                }
+            }
         }
     }
 
-    private fun sendVotes() {
-        viewModel.sendVotes()
+    private fun setupUserStateObserver() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.userState.collectLatest { userStatus ->
+                val action = VotingFragmentDirections.actionVotingFragmentToMoviesSessionFragment(userStatus)
+                findNavController().navigate(action)
+            }
+        }
     }
 
 }

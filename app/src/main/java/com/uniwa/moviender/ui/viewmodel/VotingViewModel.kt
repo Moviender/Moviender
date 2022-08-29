@@ -11,6 +11,8 @@ import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.helper.UsersVotesBody
 import com.uniwa.moviender.repository.SessionRepository
 import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -26,10 +28,14 @@ class VotingViewModel(
 
     private var votesCount = 0
 
-    val movies = SessionRepository(uid, database, MovienderApi.movieClient).getSessionMovies(sessionId)
+    val movies =
+        SessionRepository(uid, database, MovienderApi.movieClient).getSessionMovies(sessionId)
 
-    private val _sessionStatus = MutableLiveData<Int>()
-    val sessionStatus: LiveData<Int> = _sessionStatus
+    private val _sessionStatus = MutableSharedFlow<Int>()
+    val sessionStatus: SharedFlow<Int> = _sessionStatus
+
+    private val _userState = MutableSharedFlow<Int>()
+    val userState: SharedFlow<Int> = _userState
 
     fun submitData(adapter: VoteCardStackViewAdapter) {
         viewModelScope.launch {
@@ -58,8 +64,15 @@ class VotingViewModel(
             val votes = database.withTransaction {
                 database.sessionDao().getVotes(sessionId)
             }
-            _sessionStatus.value =
+            _sessionStatus.emit(
                 MovienderApi.sessionClient.sendVotes(sessionId, UsersVotesBody(uid, votes)).body
+            )
+        }
+    }
+
+    fun getUserState() {
+        viewModelScope.launch {
+            _userState.emit(MovienderApi.userClient.getUserState(sessionId, uid).body)
         }
     }
 
