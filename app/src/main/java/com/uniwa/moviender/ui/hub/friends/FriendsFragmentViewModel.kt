@@ -77,7 +77,7 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
     }
 
     fun deleteFriend(friend: Friend) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             MovienderApi.friendClient.deleteFriend(uid, friend.uid)
             fetchFriends()
         }
