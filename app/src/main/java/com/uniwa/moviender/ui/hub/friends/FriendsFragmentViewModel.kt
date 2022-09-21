@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.network.MovienderApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
-class FriendsFragmentViewModel : ViewModel() {
-
+class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
 
     private val _friendList = MutableLiveData<List<Friend>>()
     val friendList: LiveData<List<Friend>> = _friendList
@@ -35,16 +35,15 @@ class FriendsFragmentViewModel : ViewModel() {
 
     private lateinit var friendUid: String
 
-    private lateinit var uid: String
-
-    fun setUid(uid: String) {
-        this@FriendsFragmentViewModel.uid = uid
+    init {
+        fetchFriends()
     }
 
-    fun getFriends() {
-        viewModelScope.launch {
-            _friendList.value =
+    fun fetchFriends() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _friendList.postValue(
                 MovienderApi.userClient.getFriendList(uid).body
+            )
         }
     }
 
@@ -58,7 +57,7 @@ class FriendsFragmentViewModel : ViewModel() {
     fun respondToFriendRequest(friendUid: String, response: Int) {
         viewModelScope.launch {
             MovienderApi.friendClient.respondFriendRequest(uid, friendUid, response)
-            getFriends()
+            fetchFriends()
         }
 
     }
@@ -71,8 +70,6 @@ class FriendsFragmentViewModel : ViewModel() {
         friendUid = uid
     }
 
-    fun getFriendUid(): String = friendUid
-
     fun clearUserInput() {
         friendUsername.value = ""
     }
@@ -80,7 +77,7 @@ class FriendsFragmentViewModel : ViewModel() {
     fun deleteFriend(friend: Friend) {
         viewModelScope.launch {
             MovienderApi.friendClient.deleteFriend(uid, friend.uid)
-            getFriends()
+            fetchFriends()
         }
 
     }
@@ -89,7 +86,7 @@ class FriendsFragmentViewModel : ViewModel() {
         viewModelScope.launch {
             _sessionId.value = MovienderApi.sessionClient.getSessionId(uid, friendUid).body
             MovienderApi.sessionClient.closeSession(_sessionId.value!!)
-            getFriends()
+            fetchFriends()
         }
     }
 

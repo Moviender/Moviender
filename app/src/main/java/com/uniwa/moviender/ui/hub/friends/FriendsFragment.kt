@@ -24,7 +24,9 @@ class FriendsFragment : Fragment() {
     private lateinit var dialog: FriendRequestDialogFragment
 
     private val sharedViewModel: StartupActivityViewModel by activityViewModels()
-    private val viewModel: FriendsFragmentViewModel by viewModels()
+    private val viewModel: FriendsFragmentViewModel by viewModels {
+        FriendsViewModelFactory(sharedViewModel.getUid())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +34,6 @@ class FriendsFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_friends, container, false)
         registerForContextMenu(binding.fragmentFriendsRv)
-        viewModel.setUid(sharedViewModel.getUid())
 
         return binding.root
     }
@@ -47,13 +48,11 @@ class FriendsFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@FriendsFragment.viewModel
             friendsSwipeRefresh.setOnRefreshListener {
-                this@FriendsFragment.viewModel.getFriends()
+                this@FriendsFragment.viewModel.fetchFriends()
                 friendsSwipeRefresh.isRefreshing = false
             }
 
         }
-
-        viewModel.getFriends()
 
         viewModel.requestResponse.observe(viewLifecycleOwner) {
             checkResponse()
@@ -64,7 +63,7 @@ class FriendsFragment : Fragment() {
         when (viewModel.requestResponse.value) {
             FriendRequestStatus.SUCCESSFUL_FRIEND_REQUEST.code -> {
                 dialog.dismiss()
-                viewModel.getFriends()
+                viewModel.fetchFriends()
             }
             FriendRequestStatus.USERNAME_NOT_FOUND.code,
             FriendRequestStatus.ALREADY_EXISTS.code,
