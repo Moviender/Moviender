@@ -39,8 +39,6 @@ class InitializationFragment : Fragment() {
             viewModel = this@InitializationFragment.viewModel
             moviesGrid.adapter = MoviesRowAdapter(this@InitializationFragment.viewModel)
         }
-
-        viewModel.getStarterMovies()
     }
 
     fun finishMoviesRating() {

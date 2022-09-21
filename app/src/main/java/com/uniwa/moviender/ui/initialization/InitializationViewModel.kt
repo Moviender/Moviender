@@ -8,13 +8,13 @@ import androidx.lifecycle.viewModelScope
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.Rating
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class InitializationViewModel : ViewModel() {
 
     private val _ratedMovies = MutableLiveData<Int>(0)
     val ratedMovies: LiveData<Int> = _ratedMovies
-
 
     val REQUIRED_RATES: Int = 10
 
@@ -23,9 +23,9 @@ class InitializationViewModel : ViewModel() {
     private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> = _movies
 
-    fun getStarterMovies() {
-        viewModelScope.launch {
-            _movies.value = MovienderApi.movieClient.getStarterMovies().body
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            _movies.postValue(MovienderApi.movieClient.getStarterMovies().body)
         }
     }
 
