@@ -94,6 +94,7 @@ class FriendsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.sessionState.collectLatest { sessionStatus ->
                 sharedViewModel.sessionId = viewModel.sessionId
+
                 when (sessionStatus) {
                     SessionStatus.WAITING_FOR_VOTES.code -> {
                         viewModel.getUserState()
@@ -104,6 +105,7 @@ class FriendsFragment : Fragment() {
                             FriendsFragmentDirections.actionNavigationFriendsToSessionNavigation(
                                 sessionStatus
                             )
+
                         findNavController().navigate(action)
                     }
                 }
@@ -117,6 +119,7 @@ class FriendsFragment : Fragment() {
                 val action = FriendsFragmentDirections.actionNavigationFriendsToSessionNavigation(
                     userState
                 )
+
                 findNavController().navigate(action)
             }
         }
