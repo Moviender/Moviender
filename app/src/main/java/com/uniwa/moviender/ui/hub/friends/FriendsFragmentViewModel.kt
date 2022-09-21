@@ -85,10 +85,15 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
     }
 
     fun closeSession() {
-        viewModelScope.launch {
-            sessionId = MovienderApi.sessionClient.getSessionId(uid, friendUid).body
-            MovienderApi.sessionClient.closeSession(sessionId)
-            fetchFriends()
+        viewModelScope.launch(Dispatchers.IO) {
+            MovienderApi.sessionClient.getSessionId(uid, friendUid).let { response ->
+                if (response.isSuccessful) {
+                    sessionId = response.body
+
+                    MovienderApi.sessionClient.closeSession(sessionId)
+                    fetchFriends()
+                }
+            }
         }
     }
 
