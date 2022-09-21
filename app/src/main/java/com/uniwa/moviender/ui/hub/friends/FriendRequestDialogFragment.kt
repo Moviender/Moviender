@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.FriendRequestStatus
 import com.uniwa.moviender.databinding.FriendRequestDialogBinding
@@ -29,24 +30,7 @@ class FriendRequestDialogFragment : DialogFragment() {
         binding.viewModel = this@FriendRequestDialogFragment.viewModel
         binding.lifecycleOwner = this
 
-        viewModel.isErrorEnabled.observe(this) {
-            if (viewModel.isErrorEnabled.value == true) {
-                when (viewModel.requestResponse.value) {
-                    FriendRequestStatus.USERNAME_NOT_FOUND.code -> {
-                        binding.usernameTi.error = getString(R.string.dialog_username_error_message)
-                        binding.dialogFriendUsername.selectAll()
-                    }
-                    FriendRequestStatus.ALREADY_EXISTS.code -> {
-                        binding.usernameTi.error = getString(R.string.dialog_exists_error_message)
-                        binding.dialogFriendUsername.selectAll()
-                    }
-                    FriendRequestStatus.SAME_UID.code -> {
-                        binding.usernameTi.error = getString(R.string.same_uid_error_message)
-                        binding.dialogFriendUsername.selectAll()
-                    }
-                }
-            }
-        }
+        observeFriendRequest()
 
         val dialog =  activity?.let { fragmentActivity ->
             val builder = AlertDialog.Builder(fragmentActivity)
@@ -91,5 +75,30 @@ class FriendRequestDialogFragment : DialogFragment() {
         // if user dismiss reset text input and set error to false
         viewModel.clearUserInput()
         viewModel.setError(false)
+    }
+
+    private fun DialogFragment.observeFriendRequest() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.friendRequestStatus.collectLatest { status ->
+                when (status) {
+                    FriendRequestStatus.SUCCESSFUL_FRIEND_REQUEST.code -> {
+                        dismiss()
+                        viewModel.fetchFriends()
+                    }
+                    FriendRequestStatus.USERNAME_NOT_FOUND.code -> {
+                        binding.usernameTi.error = getString(R.string.dialog_username_error_message)
+                        binding.dialogFriendUsername.selectAll()
+                    }
+                    FriendRequestStatus.ALREADY_EXISTS.code -> {
+                        binding.usernameTi.error = getString(R.string.dialog_exists_error_message)
+                        binding.dialogFriendUsername.selectAll()
+                    }
+                    FriendRequestStatus.SAME_UID.code -> {
+                        binding.usernameTi.error = getString(R.string.same_uid_error_message)
+                        binding.dialogFriendUsername.selectAll()
+                    }
+                }
+            }
+        }
     }
 }

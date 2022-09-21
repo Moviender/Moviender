@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
-import com.uniwa.moviender.data.FriendRequestStatus
 import com.uniwa.moviender.data.SessionStatus
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
 import com.uniwa.moviender.ui.StartupActivityViewModel
@@ -53,8 +52,6 @@ class FriendsFragment : Fragment() {
             }
 
         }
-
-        observeFriendRequest()
     }
 
     fun showFriendRequestDialog() {
@@ -70,24 +67,6 @@ class FriendsFragment : Fragment() {
         observeSessionState()
         observeUserState()
         viewModel.getSessionState()
-    }
-
-    private fun observeFriendRequest() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.friendRequestStatus.collectLatest { status ->
-                when (status) {
-                    FriendRequestStatus.SUCCESSFUL_FRIEND_REQUEST.code -> {
-                        dialog.dismiss()
-                        viewModel.fetchFriends()
-                    }
-                    FriendRequestStatus.USERNAME_NOT_FOUND.code,
-                    FriendRequestStatus.ALREADY_EXISTS.code,
-                    FriendRequestStatus.SAME_UID.code -> {
-                        viewModel.setError(true)
-                    }
-                }
-            }
-        }
     }
 
     private fun observeSessionState() {
