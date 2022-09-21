@@ -54,23 +54,7 @@ class FriendsFragment : Fragment() {
 
         }
 
-        viewModel.requestResponse.observe(viewLifecycleOwner) {
-            checkResponse()
-        }
-    }
-
-    private fun checkResponse() {
-        when (viewModel.requestResponse.value) {
-            FriendRequestStatus.SUCCESSFUL_FRIEND_REQUEST.code -> {
-                dialog.dismiss()
-                viewModel.fetchFriends()
-            }
-            FriendRequestStatus.USERNAME_NOT_FOUND.code,
-            FriendRequestStatus.ALREADY_EXISTS.code,
-            FriendRequestStatus.SAME_UID.code -> {
-                viewModel.setError(true)
-            }
-        }
+        observeFriendRequest()
     }
 
     fun showFriendRequestDialog() {
@@ -85,6 +69,24 @@ class FriendsFragment : Fragment() {
     fun navigate() {
         setupObservers()
         viewModel.getSessionState()
+    }
+
+    private fun observeFriendRequest() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.friendRequestStatus.collectLatest { status ->
+                when (status) {
+                    FriendRequestStatus.SUCCESSFUL_FRIEND_REQUEST.code -> {
+                        dialog.dismiss()
+                        viewModel.fetchFriends()
+                    }
+                    FriendRequestStatus.USERNAME_NOT_FOUND.code,
+                    FriendRequestStatus.ALREADY_EXISTS.code,
+                    FriendRequestStatus.SAME_UID.code -> {
+                        viewModel.setError(true)
+                    }
+                }
+            }
+        }
     }
 
     private fun setupObservers() {
