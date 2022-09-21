@@ -57,7 +57,7 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
     }
 
     fun respondToFriendRequest(friendUid: String, response: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             MovienderApi.friendClient.respondFriendRequest(uid, friendUid, response)
             fetchFriends()
         }
