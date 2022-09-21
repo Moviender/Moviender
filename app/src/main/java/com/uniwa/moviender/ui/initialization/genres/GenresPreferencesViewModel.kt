@@ -7,9 +7,15 @@ import com.uniwa.moviender.data.nameToId
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.UserRatings
 import com.uniwa.moviender.network.helper.UserGenrePreferences
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 class GenresPreferencesViewModel : ViewModel() {
+    private val _progress = MutableSharedFlow<Int>()
+    val progress: SharedFlow<Int> = _progress
+
     val genresList = genres.values.toList()
     val selectedGenres = mutableListOf<Int>()
 
@@ -21,20 +27,27 @@ class GenresPreferencesViewModel : ViewModel() {
         selectedGenres.remove(nameToId[genre]!!)
     }
 
-    fun sendRatings(ratings: UserRatings) {
-        viewModelScope.launch {
-            MovienderApi.userClient.sendStarterRating(ratings)
+    fun sendInitializationData(ratings: UserRatings, uid: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            sendRatings(ratings)
+            sendGenrePreferences(uid)
         }
     }
 
-    fun sendGenrePreferences(uid: String) {
-        viewModelScope.launch {
-            MovienderApi.userClient.sendGenrePreferences(
-                UserGenrePreferences(
-                    uid,
-                    selectedGenres
-                )
+    private suspend fun sendRatings(ratings: UserRatings) {
+        MovienderApi.userClient.sendStarterRating(ratings).let { response ->
+            if (response.isSuccessful) _progress.emit(50)
+        }
+    }
+
+    private suspend fun sendGenrePreferences(uid: String) {
+        MovienderApi.userClient.sendGenrePreferences(
+            UserGenrePreferences(
+                uid,
+                selectedGenres
             )
+        ).let { response ->
+            if (response.isSuccessful) _progress.emit(100)
         }
     }
 }

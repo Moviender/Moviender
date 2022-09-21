@@ -8,6 +8,7 @@
         <variable
             name="genresPreferencesFragment"
             type="com.uniwa.moviender.ui.initialization.genres.GenresPreferencesFragment" />
+
         <variable
             name="viewModel"
             type="com.uniwa.moviender.ui.initialization.genres.GenresPreferencesViewModel" />
@@ -18,15 +19,25 @@
         android:layout_height="match_parent"
         tools:context=".ui.session.movies.genreBased.SessionGenresFragment">
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/initializationProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/genre_header_info"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:text="@string/profile_initialization"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/initializationProgress" />
 
 
         <com.google.android.material.textview.MaterialTextView
@@ -35,39 +46,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/genre_preference_hint"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/genre_header_info"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/genre_header_info" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/genre_preferences_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
             android:clipToPadding="false"
             android:orientation="vertical"
             android:scrollbars="vertical"
             app:genres="@{viewModel.genresList}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="3"
             app:layout_constraintBottom_toTopOf="@id/finish_init_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="8dp"
             app:layout_constraintTop_toBottomOf="@id/genre_info_tv"
+            app:spanCount="3"
             tools:listitem="@layout/genre_item" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/finish_init_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{() -> genresPreferencesFragment.finishInitialization()}"
+            android:text="@string/profile_init_finish"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98"
-            android:gravity="center"
-            android:onClick="@{() -> genresPreferencesFragment.finishInitialization()}"
-            android:text="@string/profile_init_finish"/>
+            app:layout_constraintVertical_bias="0.98" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,10 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentGenresPreferencesBinding
 import com.uniwa.moviender.ui.StartupActivityViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class GenresPreferencesFragment : Fragment() {
 
@@ -42,6 +44,19 @@ class GenresPreferencesFragment : Fragment() {
             genresPreferencesFragment = this@GenresPreferencesFragment
             genrePreferencesRv.adapter = GenresPreferencesAdapter(this@GenresPreferencesFragment)
         }
+
+        observeProgress()
+    }
+
+    private fun observeProgress() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.progress.collectLatest {
+                binding.initializationProgress.progress = it
+
+                if (it == 100)
+                    navigateToHub()
+            }
+        }
     }
 
     fun onCheckedChanged(genre: Int, checked: Boolean) {
@@ -53,18 +68,13 @@ class GenresPreferencesFragment : Fragment() {
     }
 
     fun finishInitialization() {
-        sendRatingsToRemoteServer()
-        sendGenrePreferencesToRemoteServer()
-        navigateToHub()
+        binding.initializationProgress.show()
+
+        sendInitializationData()
     }
 
-    private fun sendRatingsToRemoteServer() {
-        val ratings = sharedViewModel.getUserRatings()
-        viewModel.sendRatings(ratings)
-    }
-
-    private fun sendGenrePreferencesToRemoteServer() {
-        viewModel.sendGenrePreferences(sharedViewModel.getUid())
+    private fun sendInitializationData() {
+        viewModel.sendInitializationData(sharedViewModel.getUserRatings(), sharedViewModel.getUid())
     }
 
     private fun navigateToHub() {
