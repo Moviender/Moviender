@@ -113,9 +113,9 @@ class FriendsFragment : Fragment() {
 
     private fun observeUserState() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.userState.collectLatest { userStatus ->
+            viewModel.userState.collectLatest { userState ->
                 val action = FriendsFragmentDirections.actionNavigationFriendsToSessionNavigation(
-                    userStatus
+                    userState
                 )
                 findNavController().navigate(action)
             }

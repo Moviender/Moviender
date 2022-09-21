@@ -108,8 +108,11 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
     }
 
     fun getUserState() {
-        viewModelScope.launch {
-            _userState.emit(MovienderApi.userClient.getUserState(sessionId, uid).body)
+        viewModelScope.launch(Dispatchers.IO) {
+            MovienderApi.userClient.getUserState(sessionId, uid).let { response ->
+                if (response.isSuccessful)
+                    _userState.emit(response.body)
+            }
         }
     }
 }
