@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.FriendRequestStatus
 import com.uniwa.moviender.databinding.FriendRequestDialogBinding
+import kotlinx.coroutines.flow.collectLatest
 
 class FriendRequestDialogFragment : DialogFragment() {
 
@@ -32,7 +33,7 @@ class FriendRequestDialogFragment : DialogFragment() {
 
         observeFriendRequest()
 
-        val dialog =  activity?.let { fragmentActivity ->
+        val dialog = activity?.let { fragmentActivity ->
             val builder = AlertDialog.Builder(fragmentActivity)
 
             builder.setView(binding.root)
@@ -67,14 +68,14 @@ class FriendRequestDialogFragment : DialogFragment() {
         super.onCancel(dialog)
         // if user cancel reset text input and set error to false
         viewModel.clearUserInput()
-        viewModel.setError(false)
+        binding.usernameTi.isErrorEnabled = false
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         // if user dismiss reset text input and set error to false
         viewModel.clearUserInput()
-        viewModel.setError(false)
+        binding.usernameTi.isErrorEnabled = false
     }
 
     private fun DialogFragment.observeFriendRequest() {

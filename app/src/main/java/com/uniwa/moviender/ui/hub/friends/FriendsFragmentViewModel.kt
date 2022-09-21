@@ -16,9 +16,6 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
     private val _friendList = MutableLiveData<List<Friend>>()
     val friendList: LiveData<List<Friend>> = _friendList
 
-    private val _isErrorEnabled = MutableLiveData<Boolean>()
-    val isErrorEnabled: LiveData<Boolean> = _isErrorEnabled
-
     val friendUsername = MutableLiveData<String>()
 
     private val _friendRequestStatus = MutableSharedFlow<Int>()
@@ -62,10 +59,6 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
             fetchFriends()
         }
 
-    }
-
-    fun setError(isError: Boolean) {
-        _isErrorEnabled.value = isError
     }
 
     fun setFriendUid(uid: String) {

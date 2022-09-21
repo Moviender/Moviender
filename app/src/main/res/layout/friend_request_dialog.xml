@@ -17,7 +17,6 @@
             android:id="@+id/username_ti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="@{viewModel.isErrorEnabled}"
             app:errorTextColor="@color/red"
             app:boxStrokeErrorColor="@color/red"
             app:layout_constraintStart_toStartOf="parent"
