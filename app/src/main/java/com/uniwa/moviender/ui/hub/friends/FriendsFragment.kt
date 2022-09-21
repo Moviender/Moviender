@@ -93,7 +93,7 @@ class FriendsFragment : Fragment() {
     private fun observeSessionState() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.sessionState.collectLatest { sessionStatus ->
-                sharedViewModel.sessionId = viewModel.sessionId.value!!
+                sharedViewModel.sessionId = viewModel.sessionId
                 when (sessionStatus) {
                     SessionStatus.WAITING_FOR_VOTES.code -> {
                         viewModel.getUserState()

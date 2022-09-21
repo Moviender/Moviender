@@ -86,8 +86,8 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
 
     fun closeSession() {
         viewModelScope.launch {
-            _sessionId.value = MovienderApi.sessionClient.getSessionId(uid, friendUid).body
-            MovienderApi.sessionClient.closeSession(_sessionId.value!!)
+            sessionId = MovienderApi.sessionClient.getSessionId(uid, friendUid).body
+            MovienderApi.sessionClient.closeSession(sessionId)
             fetchFriends()
         }
     }
@@ -109,7 +109,7 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
 
     fun getUserState() {
         viewModelScope.launch {
-            _userState.emit(MovienderApi.userClient.getUserState(_sessionId.value!!, uid).body)
+            _userState.emit(MovienderApi.userClient.getUserState(sessionId, uid).body)
         }
     }
 }
