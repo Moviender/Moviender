@@ -7,17 +7,17 @@
 
         <variable
             name="MoviesFragment"
-            type="com.uniwa.moviender.ui.fragment.MoviesFragment" />
+            type="com.uniwa.moviender.ui.hub.movies.MoviesFragment" />
 
         <variable
             name="viewModel"
-            type="com.uniwa.moviender.ui.viewmodel.MoviesViewModel" />
+            type="com.uniwa.moviender.ui.hub.movies.MoviesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.MoviesFragment">
+        tools:context=".ui.hub.movies.MoviesFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/movies_fragment_appbar"

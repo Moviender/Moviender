@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.uniwa.moviender.ui.viewmodel.InitializationViewModel" />
+            type="com.uniwa.moviender.ui.initialization.InitializationViewModel" />
     </data>
 
         <com.google.android.material.card.MaterialCardView

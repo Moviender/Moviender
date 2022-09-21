@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import android.widget.ScrollView
 import com.google.android.material.card.MaterialCardView
 import com.uniwa.moviender.R
-import com.uniwa.moviender.ui.adapters.VoteCardStackViewAdapter
-import com.uniwa.moviender.ui.viewmodel.VotingViewModel
+import com.uniwa.moviender.ui.session.movies.voting.VoteCardStackViewAdapter
+import com.uniwa.moviender.ui.session.movies.voting.VotingViewModel
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
 

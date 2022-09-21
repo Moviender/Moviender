@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/firebaseLoginFragment"
-        android:name="com.uniwa.moviender.ui.fragment.FirebaseLoginFragment"
+        android:name="com.uniwa.moviender.ui.auth.FirebaseLoginFragment"
         android:label="fragment_firebase_login"
         tools:layout="@layout/fragment_firebase_login" >
         <action
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/initializationFragment"
-        android:name="com.uniwa.moviender.ui.fragment.InitializationFragment"
+        android:name="com.uniwa.moviender.ui.initialization.InitializationFragment"
         android:label="fragment_initialization"
         tools:layout="@layout/fragment_initialization" >
         <action
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/genresPreferencesFragment"
-        android:name="com.uniwa.moviender.ui.fragment.GenresPreferencesFragment"
+        android:name="com.uniwa.moviender.ui.initialization.genres.GenresPreferencesFragment"
         android:label="GenresPreferencesFragment"
         tools:layout="@layout/genre_preferences_item">
         <action

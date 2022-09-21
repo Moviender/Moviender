@@ -7,7 +7,7 @@
 
         <variable
             name="sessionGenresFragment"
-            type="com.uniwa.moviender.ui.fragment.SessionGenresFragment" />
+            type="com.uniwa.moviender.ui.session.movies.genreBased.SessionGenresFragment" />
 
         <variable
             name="genre"

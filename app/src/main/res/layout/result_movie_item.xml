@@ -10,7 +10,7 @@
             type="com.uniwa.moviender.network.Movie" />
         <variable
             name="sessionMoviesFragment"
-            type="com.uniwa.moviender.ui.fragment.SessionMoviesFragment" />
+            type="com.uniwa.moviender.ui.session.movies.result.SessionMoviesFragment" />
     </data>
 
         <com.google.android.material.card.MaterialCardView

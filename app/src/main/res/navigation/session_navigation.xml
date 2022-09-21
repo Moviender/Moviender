@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/sessionGenresFragment"
-        android:name="com.uniwa.moviender.ui.fragment.SessionGenresFragment"
+        android:name="com.uniwa.moviender.ui.session.movies.genreBased.SessionGenresFragment"
         android:label="SessionGenresFragment"
         tools:layout="@layout/fragment_session_genres">
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/votingFragment"
-        android:name="com.uniwa.moviender.ui.fragment.VotingFragment"
+        android:name="com.uniwa.moviender.ui.session.movies.voting.VotingFragment"
         android:label="fragment_voting"
         tools:layout="@layout/fragment_voting">
         <action
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/moviesSessionFragment"
-        android:name="com.uniwa.moviender.ui.fragment.SessionMoviesFragment"
+        android:name="com.uniwa.moviender.ui.session.movies.result.SessionMoviesFragment"
         android:label="SessionMoviesFragment"
         tools:layout="@layout/fragment_session_movies">
         <argument
@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/similarMoviesFragment"
-        android:name="com.uniwa.moviender.ui.fragment.SimilarMoviesFragment"
+        android:name="com.uniwa.moviender.ui.session.movies.similar.SimilarMoviesFragment"
         android:label="SimilarMoviesFragment"
         tools:layout="@layout/fragment_similar_movies">
         <action

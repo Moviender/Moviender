@@ -7,11 +7,11 @@
 
         <variable
             name="friendsFragment"
-            type="com.uniwa.moviender.ui.fragment.FriendsFragment" />
+            type="com.uniwa.moviender.ui.hub.friends.FriendsFragment" />
 
         <variable
             name="viewModel"
-            type="com.uniwa.moviender.ui.viewmodel.FriendsFragmentViewModel" />
+            type="com.uniwa.moviender.ui.hub.friends.FriendsFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

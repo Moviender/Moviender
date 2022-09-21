@@ -7,17 +7,17 @@
 
         <variable
             name="sessionGenresFragment"
-            type="com.uniwa.moviender.ui.fragment.SessionGenresFragment" />
+            type="com.uniwa.moviender.ui.session.movies.genreBased.SessionGenresFragment" />
 
         <variable
             name="viewModel"
-            type="com.uniwa.moviender.ui.viewmodel.SessionGenresViewModel" />
+            type="com.uniwa.moviender.ui.session.movies.genreBased.SessionGenresViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.SessionGenresFragment">
+        tools:context=".ui.session.movies.genreBased.SessionGenresFragment">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/genre_header_info_tv"

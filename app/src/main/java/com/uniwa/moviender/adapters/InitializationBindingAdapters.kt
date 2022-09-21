@@ -14,14 +14,17 @@ import androidx.transition.TransitionManager
 import coil.load
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.textview.MaterialTextView
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.data.placeholdersIndexes
 import com.uniwa.moviender.data.placeholdersMap
 import com.uniwa.moviender.model.Friend
 import com.uniwa.moviender.network.Movie
-import com.uniwa.moviender.ui.adapters.*
+import com.uniwa.moviender.ui.hub.friends.ProfileAdapter
+import com.uniwa.moviender.ui.initialization.MoviesRowAdapter
+import com.uniwa.moviender.ui.initialization.genres.GenresPreferencesAdapter
+import com.uniwa.moviender.ui.session.movies.genreBased.SessionGenresAdapter
+import com.uniwa.moviender.ui.session.movies.similar.SimilarMoviesAdapter
 import de.hdodenhof.circleimageview.CircleImageView
 
 @BindingAdapter("listData")

@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@id/navigation_movies"
-        android:name="com.uniwa.moviender.ui.fragment.MoviesFragment"
+        android:name="com.uniwa.moviender.ui.hub.movies.MoviesFragment"
         android:label="MoviesFragment"
         tools:layout="@layout/fragment_movies"/>
     <fragment
         android:id="@id/navigation_friends"
-        android:name="com.uniwa.moviender.ui.fragment.FriendsFragment"
+        android:name="com.uniwa.moviender.ui.hub.friends.FriendsFragment"
         tools:layout="@layout/fragment_friends"
         android:label="FriendsFragment" >
         <action
@@ -43,4 +43,5 @@
                 app:argType="integer" />
         </action>
     </dialog>
+
 </navigation>

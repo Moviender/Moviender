@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.uniwa.moviender.ui.viewmodel.VotingViewModel" />
+            type="com.uniwa.moviender.ui.session.movies.voting.VotingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.VotingFragment">
+        tools:context=".ui.session.movies.voting.VotingFragment">
 
         <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/voting_stack_view"

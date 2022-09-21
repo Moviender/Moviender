@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.uniwa.moviender.ui.viewmodel.SimilarMoviesViewModel" />
+            type="com.uniwa.moviender.ui.session.movies.similar.SimilarMoviesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.SimilarMoviesFragment">
+        tools:context=".ui.session.movies.similar.SimilarMoviesFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/search_appbar"

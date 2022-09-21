@@ -7,7 +7,7 @@
 
         <variable
             name="moviesFragment"
-            type="com.uniwa.moviender.ui.fragment.MoviesFragment" />
+            type="com.uniwa.moviender.ui.hub.movies.MoviesFragment" />
 
         <variable
             name="movie"
