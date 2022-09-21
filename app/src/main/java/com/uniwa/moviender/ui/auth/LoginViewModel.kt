@@ -1,7 +1,5 @@
 package com.uniwa.moviender.ui.auth
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
@@ -10,20 +8,23 @@ import com.uniwa.moviender.data.placeholdersIndexes
 import com.uniwa.moviender.model.User
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.apiservice.response.ResponseWrapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import java.net.ConnectException
 
 class LoginViewModel : ViewModel() {
     private lateinit var user: FirebaseUser
 
-    private val _isInitialized = MutableLiveData<Boolean>()
-    val isInitialized: LiveData<Boolean> = _isInitialized
+    private val _isInitialized = MutableSharedFlow<Boolean>()
+    val isInitialized: SharedFlow<Boolean> = _isInitialized
 
-    private val _error = MutableLiveData<Int>()
-    val error: LiveData<Int> = _error
+    private val _error = MutableSharedFlow<Int>()
+    val error: SharedFlow<Int> = _error
 
-    private val _userInserted = MutableLiveData<Boolean>()
-    val userInserted: LiveData<Boolean> = _userInserted
+    private val _userInserted = MutableSharedFlow<Boolean>()
+    val userInserted: SharedFlow<Boolean> = _userInserted
 
     fun setUser(user: FirebaseUser) {
         this@LoginViewModel.user = user
@@ -32,7 +33,7 @@ class LoginViewModel : ViewModel() {
     fun insertUser() {
         val profilePic =
             if (user.photoUrl != null) user.photoUrl.toString() else placeholdersIndexes.shuffled()[0]
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val response = MovienderApi.userClient.insertUser(
                 User(
                     user.uid,
@@ -42,26 +43,27 @@ class LoginViewModel : ViewModel() {
             )
 
             if (isUserCreatedInRemoteDb(response)) {
-                _userInserted.value = true
-            }
-            else {
+                _userInserted.emit(true)
+            } else {
                 user.delete()
-                _error.value = Error.USER_NOT_CREATED.code
+                _error.emit(Error.USER_NOT_CREATED.code)
             }
         }
     }
 
     fun isUserInitialized() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val response = MovienderApi.userClient.isInitialized(user.uid)
 
             if (response.failed) {
-                _error.value = when (response.exception) {
+                val errorType = when (response.exception) {
                     is ConnectException -> Error.CANNOT_CONNECT.code
                     else -> Error.NETWORK_ERROR.code
                 }
+
+                _error.emit(errorType)
             } else {
-                _isInitialized.value = response.body
+                _isInitialized.emit(response.body)
             }
         }
     }

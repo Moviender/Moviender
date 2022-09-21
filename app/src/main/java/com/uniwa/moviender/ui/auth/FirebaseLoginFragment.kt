@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.errorMessages
 import com.uniwa.moviender.ui.StartupActivityViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class FirebaseLoginFragment : Fragment() {
 
@@ -43,25 +45,8 @@ class FirebaseLoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // set observer
-        viewModel.isInitialized.observe(viewLifecycleOwner) { initialized ->
-            if (initialized) {
-                sharedViewModel.storeToken(firebaseUser!!.uid)
-                findNavController().navigate(R.id.action_firebaseLoginFragment_to_hub_navigation)
-            } else {
-                viewModel.setUser(firebaseUser!!)
-                sharedViewModel.setUid(firebaseUser!!.uid)
-                findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
-            }
-        }
-
-        viewModel.error.observe(viewLifecycleOwner) {
-            Toast.makeText(
-                requireContext(),
-                getString(errorMessages[it]!!),
-                Toast.LENGTH_LONG
-            ).show()
-        }
+        observeIsInitialized()
+        observeError()
 
         if (isUserSignedIn()) {
             viewModel.setUser(firebaseUser!!)
@@ -99,10 +84,7 @@ class FirebaseLoginFragment : Fragment() {
             viewModel.setUser(firebaseUser!!)
             sharedViewModel.setUid(firebaseUser!!.uid)
             if (response?.isNewUser == true) {
-                viewModel.userInserted.observe(viewLifecycleOwner) { inserted ->
-                    sharedViewModel.storeToken(firebaseUser!!.uid)
-                    findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
-                }
+                observeUserInserted()
                 viewModel.insertUser()
             } else {
                 checkInitialization()
@@ -112,6 +94,42 @@ class FirebaseLoginFragment : Fragment() {
             // sign-in flow using the back button. Otherwise check
             // response.getError().getErrorCode() and handle the error.
             // ...
+        }
+    }
+
+    private fun observeIsInitialized() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.isInitialized.collectLatest { initialized ->
+                if (initialized) {
+                    sharedViewModel.storeToken(firebaseUser!!.uid)
+                    findNavController().navigate(R.id.action_firebaseLoginFragment_to_hub_navigation)
+                } else {
+                    viewModel.setUser(firebaseUser!!)
+                    sharedViewModel.setUid(firebaseUser!!.uid)
+                    findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
+                }
+            }
+        }
+    }
+
+    private fun observeError() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.error.collectLatest { errorType ->
+                Toast.makeText(
+                    requireContext(),
+                    getString(errorMessages[errorType]!!),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    private fun observeUserInserted() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.userInserted.collectLatest { inserted ->
+                sharedViewModel.storeToken(firebaseUser!!.uid)
+                findNavController().navigate(R.id.action_firebaseLoginFragment_to_initializationFragment)
+            }
         }
     }
 
