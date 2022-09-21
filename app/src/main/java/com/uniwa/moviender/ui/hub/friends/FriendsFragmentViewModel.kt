@@ -24,9 +24,6 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
     private val _friendRequestStatus = MutableSharedFlow<Int>()
     val friendRequestStatus: SharedFlow<Int> = _friendRequestStatus
 
-    private val _sessionId = MutableLiveData<String>()
-    val sessionId: LiveData<String> = _sessionId
-
     private val _sessionState = MutableSharedFlow<Int>()
     val sessionState: SharedFlow<Int> = _sessionState
 
@@ -34,6 +31,9 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
     val userState: SharedFlow<Int> = _userState
 
     private lateinit var friendUid: String
+
+    lateinit var sessionId: String
+        private set
 
     init {
         fetchFriends()
@@ -93,9 +93,17 @@ class FriendsFragmentViewModel(private val uid: String) : ViewModel() {
     }
 
     fun getSessionState() {
-        viewModelScope.launch {
-            _sessionId.value = MovienderApi.sessionClient.getSessionId(uid, friendUid).body
-            _sessionState.emit(MovienderApi.sessionClient.getSessionState(_sessionId.value!!).body)
+        viewModelScope.launch(Dispatchers.IO) {
+            MovienderApi.sessionClient.getSessionId(uid, friendUid).let { response ->
+                if (response.isSuccessful) {
+                    sessionId = response.body
+                    MovienderApi.sessionClient.getSessionState(sessionId)
+                        .let { sessionStateResponse ->
+                            if (response.isSuccessful)
+                                _sessionState.emit(sessionStateResponse.body)
+                        }
+                }
+            }
         }
     }
 
