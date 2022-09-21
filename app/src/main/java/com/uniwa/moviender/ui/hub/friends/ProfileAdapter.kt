@@ -66,7 +66,7 @@ class ProfileAdapter(
                 binding.showSessionBtn.visibility = View.VISIBLE
                 binding.showSessionBtn.setOnClickListener {
                     friendsFragment.setFriendUid(friend.uid)
-                    friendsFragment.navigate()
+                    friendsFragment.navigateToSession()
                 }
                 binding.closeSessionBtn.visibility = View.VISIBLE
                 binding.closeSessionBtn.setOnClickListener {
