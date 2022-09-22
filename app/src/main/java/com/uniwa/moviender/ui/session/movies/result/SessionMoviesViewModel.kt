@@ -28,7 +28,7 @@ class SessionMoviesViewModel(
                 if (response.isSuccessful) {
                     val matchedMoviesIds = response.body
 
-                    _matchedMovies.value = matchedMoviesIds.map { movielensId ->
+                    matchedMoviesIds.map { movielensId ->
                         val movieDetails = getMovieDetails(movielensId)
 
                         Movie(
@@ -36,7 +36,7 @@ class SessionMoviesViewModel(
                             null,
                             movieDetails
                         )
-                    }
+                    }.also { _matchedMovies.postValue(it) }
                 }
             }
         }
