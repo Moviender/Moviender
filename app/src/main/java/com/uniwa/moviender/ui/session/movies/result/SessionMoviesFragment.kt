@@ -31,8 +31,7 @@ class SessionMoviesFragment : Fragment() {
     private val viewModel: SessionMoviesViewModel by viewModels {
         SessionMoviesViewModelFactory(
             sharedViewModel.sessionId,
-            sharedViewModel.getUid(),
-            SessionDatabase.getInstance(requireContext())
+            sharedViewModel.getUid()
         )
     }
 

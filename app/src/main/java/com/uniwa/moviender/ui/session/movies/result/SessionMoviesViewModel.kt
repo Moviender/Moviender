@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.network.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,8 +12,7 @@ import kotlinx.coroutines.launch
 
 class SessionMoviesViewModel(
     private val sessionId: String,
-    private val uid: String,
-    private val database: SessionDatabase
+    private val uid: String
 ) : ViewModel() {
     private val _matchedMovies = MutableLiveData<List<Movie>>()
     val matchedMovies: LiveData<List<Movie>> = _matchedMovies

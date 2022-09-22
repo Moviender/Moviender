@@ -6,10 +6,9 @@ import com.uniwa.moviender.database.SessionDatabase
 
 class SessionMoviesViewModelFactory(
     private val sessionId: String,
-    private val uid: String,
-    private val database: SessionDatabase
+    private val uid: String
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SessionMoviesViewModel(sessionId, uid, database) as T
+        return SessionMoviesViewModel(sessionId, uid) as T
     }
 }
