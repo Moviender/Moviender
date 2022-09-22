@@ -31,7 +31,7 @@
 
     <dialog
         android:id="@+id/startSessionDialogFragment"
-        android:name="com.uniwa.moviender.ui.fragment.StartSessionDialogFragment"
+        android:name="com.uniwa.moviender.ui.hub.friends.StartSessionDialogFragment"
         android:label="StartSessionDialogFragment"
         tools:layout="@layout/session_dialog">
         <action

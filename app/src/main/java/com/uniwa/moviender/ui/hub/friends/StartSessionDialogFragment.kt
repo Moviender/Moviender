@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.RecommendationType
 import com.uniwa.moviender.databinding.SessionDialogBinding
-import com.uniwa.moviender.ui.fragment.StartSessionDialogFragmentDirections
 
 class StartSessionDialogFragment : DialogFragment() {
     private lateinit var binding: SessionDialogBinding
