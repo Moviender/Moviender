@@ -8,23 +8,31 @@ import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.helper.SessionInitResponse
 import com.uniwa.moviender.network.helper.SessionRequestBodySim
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 class SimilarMoviesViewModel : ViewModel() {
-    private val _searchedResults = MutableLiveData<List<Movie>>()
-    val searchedResults: LiveData<List<Movie>> = _searchedResults
+    private val _similarMovies = MutableSharedFlow<List<Movie>>()
+    val similarMovies: SharedFlow<List<Movie>> = _similarMovies
 
     private val _response = MutableLiveData<SessionInitResponse>()
     val response: LiveData<SessionInitResponse> = _response
 
     fun searchByTitle(title: String) {
-        viewModelScope.launch {
-            _searchedResults.value = MovienderApi.movieClient.searchByTitle(title).body
+        viewModelScope.launch(Dispatchers.IO) {
+            MovienderApi.movieClient.searchByTitle(title).let { response ->
+                if (response.isSuccessful)
+                    _similarMovies.emit(response.body)
+            }
         }
     }
 
     fun clearSearchResult() {
-        _searchedResults.value = listOf()
+        viewModelScope.launch(Dispatchers.Default) {
+            _similarMovies.emit(listOf())
+        }
     }
 
     fun startSession(uid: String, friendUid: String, movielensId: String) {

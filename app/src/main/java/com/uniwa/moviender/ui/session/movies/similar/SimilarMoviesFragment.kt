@@ -10,18 +10,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentSimilarMoviesBinding
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.StartupActivityViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class SimilarMoviesFragment : Fragment() {
 
     private lateinit var binding: FragmentSimilarMoviesBinding
     private val viewModel: SimilarMoviesViewModel by viewModels()
     private val sharedViewModel: StartupActivityViewModel by activityViewModels()
+
+    private lateinit var similarMoviesAdapter: SimilarMoviesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,19 +47,15 @@ class SimilarMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SimilarMoviesAdapter(this@SimilarMoviesFragment)
+        similarMoviesAdapter = SimilarMoviesAdapter(this@SimilarMoviesFragment)
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            searchResultMovies.adapter = adapter
+            searchResultMovies.adapter = similarMoviesAdapter
             viewModel = this@SimilarMoviesFragment.viewModel
         }
 
-        viewModel.searchedResults.observe(viewLifecycleOwner) { newList ->
-            adapter.submitList(newList) {
-                binding.searchResultMovies.layoutManager?.scrollToPosition(0)
-            }
-        }
+        observeSimilarMovies()
     }
 
     fun startSession(view: View) {
@@ -79,5 +79,15 @@ class SimilarMoviesFragment : Fragment() {
             sharedViewModel.friendUid,
             movie.movielensId
         )
+    }
+
+    private fun observeSimilarMovies() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.similarMovies.collectLatest { movies ->
+                similarMoviesAdapter.submitList(movies) {
+                    binding.searchResultMovies.layoutManager?.scrollToPosition(0)
+                }
+            }
+        }
     }
 }
