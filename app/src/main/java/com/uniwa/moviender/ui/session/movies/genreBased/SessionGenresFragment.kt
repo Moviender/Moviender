@@ -53,6 +53,8 @@ class SessionGenresFragment : Fragment() {
     }
 
     fun startSession() {
+        binding.startSessionGenresProgress.show()
+
         observeSessionStarted()
         viewModel.startSession(sharedViewModel.getUid(), sharedViewModel.friendUid)
     }
