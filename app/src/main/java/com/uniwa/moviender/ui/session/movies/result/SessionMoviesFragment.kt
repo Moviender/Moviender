@@ -59,15 +59,11 @@ class SessionMoviesFragment : Fragment() {
     }
 
     private fun showMatchedMovies() {
-        val adapter = ResultMovieAdapter(this@SessionMoviesFragment)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            matchedMovies.adapter = adapter
+            viewModel = this@SessionMoviesFragment.viewModel
+            matchedMovies.adapter = ResultMovieAdapter(this@SessionMoviesFragment)
             resultGroup.visibility = View.VISIBLE
-        }
-
-        viewModel.matchedMovies.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
         }
 
         viewModel.getMovies()

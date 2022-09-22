@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.uniwa.moviender.ui.session.movies.result.SessionMoviesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,6 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/results_tv"
+            app:listResults="@{viewModel.matchedMovies}"
             tools:listitem="@layout/result_movie_item" />
 
         <com.google.android.material.textview.MaterialTextView

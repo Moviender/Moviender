@@ -24,6 +24,7 @@ import com.uniwa.moviender.ui.hub.friends.ProfileAdapter
 import com.uniwa.moviender.ui.initialization.MoviesRowAdapter
 import com.uniwa.moviender.ui.initialization.genres.GenresPreferencesAdapter
 import com.uniwa.moviender.ui.session.movies.genreBased.SessionGenresAdapter
+import com.uniwa.moviender.ui.session.movies.result.ResultMovieAdapter
 import com.uniwa.moviender.ui.session.movies.similar.SimilarMoviesAdapter
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -125,5 +126,14 @@ fun bindProfilePic(circleImageView: CircleImageView, profilePicUrl: String?) {
         if (placeholdersIndexes.contains(profilePicUrl)) placeholdersMap[profilePicUrl] else profilePicUrl
     circleImageView.load(img) {
 
+    }
+}
+
+@BindingAdapter("listResults")
+fun bindMovieResults(recyclerView: RecyclerView, movies: List<Movie>?) {
+    movies?.let {
+        val adapter = recyclerView.adapter as ResultMovieAdapter
+
+        adapter.submitList(movies)
     }
 }
