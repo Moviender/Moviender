@@ -80,13 +80,12 @@ class SessionMoviesFragment : Fragment() {
 
     private fun showVotingAgainDialog() {
         activity?.let {
-            val builder = AlertDialog.Builder(it)
-            builder.apply {
+            AlertDialog.Builder(it).apply {
                 setMessage(getString(R.string.vote_again_msg))
-                setPositiveButton(getString(R.string.vote_again_positive)) { dialog, id ->
+                setPositiveButton(getString(R.string.vote_again_positive)) { _, _ ->
                     findNavController().navigate(R.id.action_moviesSessionFragment_to_votingFragment)
                 }
-                setNegativeButton(getString(R.string.vote_again_negative)) { dialog, id ->
+                setNegativeButton(getString(R.string.vote_again_negative)) { _, _ ->
                     findNavController().navigate(R.id.action_moviesSessionFragment_to_hub_navigation)
                 }
             }
