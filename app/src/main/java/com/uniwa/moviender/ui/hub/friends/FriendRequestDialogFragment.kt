@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -21,6 +23,8 @@ class FriendRequestDialogFragment : DialogFragment() {
 
     private val viewModel: FriendsFragmentViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
+    private lateinit var dialogView: View
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
@@ -31,7 +35,7 @@ class FriendRequestDialogFragment : DialogFragment() {
         binding.viewModel = this@FriendRequestDialogFragment.viewModel
         binding.lifecycleOwner = this
 
-        observeFriendRequest()
+        dialogView = binding.root
 
         val dialog = activity?.let { fragmentActivity ->
             val builder = AlertDialog.Builder(fragmentActivity)
@@ -46,6 +50,20 @@ class FriendRequestDialogFragment : DialogFragment() {
 
         dialog.window?.setDimAmount(0.2f)
         return dialog
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return dialogView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        observeFriendRequest()
     }
 
     override fun onStart() {
@@ -78,8 +96,8 @@ class FriendRequestDialogFragment : DialogFragment() {
         binding.usernameTi.isErrorEnabled = false
     }
 
-    private fun DialogFragment.observeFriendRequest() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+    private fun observeFriendRequest() {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.friendRequestStatus.collectLatest { status ->
                 when (status) {
                     FriendRequestStatus.SUCCESSFUL_FRIEND_REQUEST.code -> {
