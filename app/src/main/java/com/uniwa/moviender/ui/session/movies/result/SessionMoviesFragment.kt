@@ -18,7 +18,6 @@ import com.uniwa.moviender.R
 import com.uniwa.moviender.data.RecommendationType
 import com.uniwa.moviender.data.SessionStatus
 import com.uniwa.moviender.data.SessionUserStatus
-import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentSessionMoviesBinding
 import com.uniwa.moviender.ui.StartupActivityViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -100,7 +99,7 @@ class SessionMoviesFragment : Fragment() {
     }
 
     private fun determineNavigation(status: Int) {
-        val destination: Int? = when (status) {
+        when (status) {
             SessionUserStatus.VOTING.code -> {
                 R.id.action_moviesSessionFragment_to_votingFragment
             }
@@ -113,10 +112,8 @@ class SessionMoviesFragment : Fragment() {
             else -> {
                 null
             }
-        }
-
-        destination?.let {
-            findNavController().navigate(it)
+        }?.let { destination ->
+            findNavController().navigate(destination)
         }
     }
 
