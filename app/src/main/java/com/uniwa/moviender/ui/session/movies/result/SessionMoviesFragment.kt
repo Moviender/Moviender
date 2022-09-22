@@ -65,8 +65,6 @@ class SessionMoviesFragment : Fragment() {
             matchedMovies.adapter = ResultMovieAdapter(this@SessionMoviesFragment)
             resultGroup.visibility = View.VISIBLE
         }
-
-        viewModel.getMovies()
     }
 
     fun updateRating(rating: Float, ratingBar: RatingBar) {
