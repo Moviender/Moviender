@@ -9,10 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentSessionGenresBinding
 import com.uniwa.moviender.ui.StartupActivityViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class SessionGenresFragment : Fragment() {
 
@@ -51,19 +53,25 @@ class SessionGenresFragment : Fragment() {
     }
 
     fun startSession() {
-        viewModel.response.observe(this) { response ->
-            if (response.sessionId != null) {
-                sharedViewModel.sessionId = response.sessionId
-                findNavController().navigate(R.id.action_sessionGenresFragment_to_votingFragment)
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.session_already_exists),
-                    Toast.LENGTH_LONG
-                ).show()
-                findNavController().navigate(R.id.action_sessionGenresFragment_to_hub_navigation)
+        observeSessionStarted()
+        viewModel.startSession(sharedViewModel.getUid(), sharedViewModel.friendUid)
+    }
+
+    private fun observeSessionStarted() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.sessionId.collectLatest { response ->
+                if (response.sessionId != null) {
+                    sharedViewModel.sessionId = response.sessionId
+                    findNavController().navigate(R.id.action_sessionGenresFragment_to_votingFragment)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.session_already_exists),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    findNavController().navigate(R.id.action_sessionGenresFragment_to_hub_navigation)
+                }
             }
         }
-        viewModel.startSession(sharedViewModel.getUid(), sharedViewModel.friendUid)
     }
 }
