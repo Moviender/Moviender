@@ -1,7 +1,5 @@
 package com.uniwa.moviender.ui.session.movies.similar
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.uniwa.moviender.network.Movie
@@ -17,8 +15,8 @@ class SimilarMoviesViewModel : ViewModel() {
     private val _similarMovies = MutableSharedFlow<List<Movie>>()
     val similarMovies: SharedFlow<List<Movie>> = _similarMovies
 
-    private val _response = MutableLiveData<SessionInitResponse>()
-    val response: LiveData<SessionInitResponse> = _response
+    private val _sessionId = MutableSharedFlow<SessionInitResponse>()
+    val sessionId: SharedFlow<SessionInitResponse> = _sessionId
 
     fun searchByTitle(title: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -36,12 +34,14 @@ class SimilarMoviesViewModel : ViewModel() {
     }
 
     fun startSession(uid: String, friendUid: String, movielensId: String) {
-        viewModelScope.launch {
-            _response.value =
+        viewModelScope.launch(Dispatchers.IO) {
                 MovienderApi.sessionClient.initFriendsSessionSim(
                     uid,
                     SessionRequestBodySim(friendUid, movielensId)
-                ).body
+                ).let { response ->
+                    if (response.isSuccessful)
+                        _sessionId.emit(response.body)
+                }
         }
     }
 }

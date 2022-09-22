@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentSimilarMoviesBinding
@@ -59,20 +58,8 @@ class SimilarMoviesFragment : Fragment() {
     }
 
     fun startSession(view: View) {
-        viewModel.response.observe(this) { response ->
-            if (response.sessionId != null) {
-                sharedViewModel.sessionId = response.sessionId
-                findNavController().navigate(R.id.action_similarMoviesFragment_to_votingFragment)
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.session_already_exists),
-                    Toast.LENGTH_LONG
-                ).show()
-                findNavController().navigate(R.id.action_similarMoviesFragment_to_hub_navigation)
-                ActivityNavigator(requireContext()).popBackStack()
-            }
-        }
+        observeSessionStarted()
+
         val movie = view.tag as Movie
         viewModel.startSession(
             sharedViewModel.getUid(),
@@ -86,6 +73,24 @@ class SimilarMoviesFragment : Fragment() {
             viewModel.similarMovies.collectLatest { movies ->
                 similarMoviesAdapter.submitList(movies) {
                     binding.searchResultMovies.layoutManager?.scrollToPosition(0)
+                }
+            }
+        }
+    }
+
+    private fun observeSessionStarted() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.sessionId.collectLatest { response ->
+                if (response.sessionId != null) {
+                    sharedViewModel.sessionId = response.sessionId
+                    findNavController().navigate(R.id.action_similarMoviesFragment_to_votingFragment)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.session_already_exists),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    findNavController().navigate(R.id.action_similarMoviesFragment_to_hub_navigation)
                 }
             }
         }
