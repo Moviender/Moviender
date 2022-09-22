@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.network.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 class SessionMoviesViewModel(
@@ -16,6 +18,9 @@ class SessionMoviesViewModel(
 ) : ViewModel() {
     private val _matchedMovies = MutableLiveData<List<Movie>>()
     val matchedMovies: LiveData<List<Movie>> = _matchedMovies
+
+    private val _ratingStored = MutableSharedFlow<Boolean>()
+    val ratingStored: SharedFlow<Boolean> = _ratingStored
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -46,14 +51,16 @@ class SessionMoviesViewModel(
         }
     }
 
-    fun sendRating(movielensId: String, rating: Float) {
-        viewModelScope.launch {
+    fun storeRaring(movielensId: String, rating: Float) {
+        viewModelScope.launch(Dispatchers.IO) {
             MovienderApi.movieClient.updateRating(
                 UserRatings(
                     uid,
                     listOf(Rating(movielensId, rating))
                 )
-            )
+            ).let { response ->
+                _ratingStored.emit(response.isSuccessful)
+            }
         }
     }
 }

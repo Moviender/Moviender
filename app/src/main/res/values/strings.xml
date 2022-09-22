@@ -78,5 +78,7 @@
     <string name="error_network">A network error occurred</string>
     <string name="error_general">An error occurred!</string>
     <string name="error_user_insert">Could not insert user</string>
+    <string name="rating_stored">Rating stored!</string>
+    <string name="rating_store_err">Error while storing vote</string>
 
 </resources>

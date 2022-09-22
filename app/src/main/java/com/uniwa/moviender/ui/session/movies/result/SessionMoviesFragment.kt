@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.uniwa.moviender.R
@@ -19,6 +21,7 @@ import com.uniwa.moviender.data.SessionUserStatus
 import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.databinding.FragmentSessionMoviesBinding
 import com.uniwa.moviender.ui.StartupActivityViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class SessionMoviesFragment : Fragment() {
 
@@ -65,10 +68,12 @@ class SessionMoviesFragment : Fragment() {
             matchedMovies.adapter = ResultMovieAdapter(this@SessionMoviesFragment)
             resultGroup.visibility = View.VISIBLE
         }
+
+        observeRatingStored()
     }
 
     fun updateRating(rating: Float, ratingBar: RatingBar) {
-        viewModel.sendRating(ratingBar.tag as String, rating)
+        viewModel.storeRaring(ratingBar.tag as String, rating)
     }
 
     private fun showWaitingMessage() {
@@ -113,6 +118,20 @@ class SessionMoviesFragment : Fragment() {
 
         destination?.let {
             findNavController().navigate(it)
+        }
+    }
+
+    private fun observeRatingStored() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.ratingStored.collectLatest { stored ->
+                val text =
+                    if (stored)
+                        getString(R.string.rating_stored)
+                    else
+                        getString(R.string.rating_store_err)
+
+                Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
