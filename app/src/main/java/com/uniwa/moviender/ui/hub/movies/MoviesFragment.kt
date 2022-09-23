@@ -17,6 +17,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.network.Movie
@@ -26,13 +27,6 @@ private const val SPAN_SEARCH = 3
 
 class MoviesFragment : Fragment() {
 
-    private lateinit var binding: FragmentMoviesBinding
-    private lateinit var adapter: MoviesGenresAdapter
-    private lateinit var searchAdapter: MoviesSearchAdapter
-    private lateinit var moviesLayout: LinearLayoutManager
-    private lateinit var searchLayout: GridLayoutManager
-    private lateinit var callback: OnBackPressedCallback
-
     private val sharedViewModel: StartupActivityViewModel by activityViewModels()
 
     private val viewModel: MoviesViewModel by viewModels {
@@ -40,6 +34,13 @@ class MoviesFragment : Fragment() {
             sharedViewModel.getUid()
         )
     }
+    private lateinit var binding: FragmentMoviesBinding
+
+    private lateinit var moviesAdapter: MoviesGenresAdapter
+    private lateinit var searchAdapter: MoviesSearchAdapter
+    private val moviesLayout = LinearLayoutManager(requireContext())
+    private val searchLayout = GridLayoutManager(requireContext(), SPAN_SEARCH)
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +62,7 @@ class MoviesFragment : Fragment() {
             override fun onMenuItemClick(p0: MenuItem?): Boolean {
                 return when (p0?.itemId) {
                     R.id.search_action -> {
-                        prepareForSearch()
+                        searchMode()
                         true
                     }
                     else -> false
@@ -71,7 +72,7 @@ class MoviesFragment : Fragment() {
 
         callback =
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, false) {
-                prepareForMovies()
+                moviesMode()
             }
 
         return binding.root
@@ -80,26 +81,19 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MoviesGenresAdapter(this) { adapter, genreId ->
+        binding.apply {
+            moviesFragment = this@MoviesFragment
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = this@MoviesFragment.viewModel
+        }
+
+        moviesAdapter = MoviesGenresAdapter(this) { adapter, genreId ->
             viewModel.associateAdapter(adapter, genreId)
         }
 
         searchAdapter = MoviesSearchAdapter(this)
 
-        moviesLayout = LinearLayoutManager(requireContext())
-        searchLayout = GridLayoutManager(requireContext(), SPAN_SEARCH)
-
-        viewModel.changeLayoutManager(moviesLayout)
-
-        binding.apply {
-            moviesFragment = this@MoviesFragment
-            lifecycleOwner = viewLifecycleOwner
-            hubMoviesGrid.adapter = adapter
-
-            viewModel = this@MoviesFragment.viewModel
-        }
-
-        adapter.submitList(viewModel.genres)
+        moviesAdapter.submitList(viewModel.genres)
     }
 
     fun setSelectedMovie(movie: Movie) {
@@ -117,12 +111,14 @@ class MoviesFragment : Fragment() {
         viewModel.sendRating(rating)
     }
 
-    fun prepareForSearch() {
-        binding.closeSearch.visibility = View.VISIBLE
-        binding.searchTv.visibility = View.VISIBLE
-        binding.moviesToolbarTitle.visibility = View.GONE
-        binding.hubMoviesGrid.adapter = searchAdapter
-        viewModel.changeLayoutManager(searchLayout)
+    private fun searchMode() {
+        binding.apply {
+            closeSearch.visibility = View.VISIBLE
+            searchTv.visibility = View.VISIBLE
+            moviesToolbarTitle.visibility = View.GONE
+            hubMoviesGrid.searchMode()
+        }
+
         viewModel.searchedResults.observe(viewLifecycleOwner) { newList ->
             searchAdapter.submitList(newList) {
                 searchLayout.scrollToPosition(0)
@@ -131,19 +127,31 @@ class MoviesFragment : Fragment() {
         callback.isEnabled = true
     }
 
-    fun prepareForMovies() {
-        binding.closeSearch.visibility = View.GONE
-        binding.searchTv.visibility = View.GONE
-        binding.moviesToolbarTitle.visibility = View.VISIBLE
-        binding.hubMoviesGrid.adapter = adapter
-        binding.searchTv.text.clear()
-        viewModel.changeLayoutManager(moviesLayout)
+    fun moviesMode() {
+        binding.apply {
+            closeSearch.visibility = View.GONE
+            searchTv.visibility = View.GONE
+            moviesToolbarTitle.visibility = View.VISIBLE
+            searchTv.text.clear()
+            hubMoviesGrid.moviesMode()
+        }
+
         viewModel.clearSearchResult()
         callback.isEnabled = false
 
         val imm =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+    }
+
+    private fun RecyclerView.searchMode() {
+        adapter = searchAdapter
+        layoutManager = searchLayout
+    }
+
+    private fun RecyclerView.moviesMode() {
+        adapter = moviesAdapter
+        layoutManager = moviesLayout
     }
 
 }
