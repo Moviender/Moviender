@@ -75,6 +75,7 @@ class SimilarMoviesFragment : Fragment() {
 
     fun startSession() {
         binding.selectedMoviePoster.sendAnimation()
+        binding.submitSelection.makeInvisible()
 
         viewModel.startSession(
             sharedViewModel.getUid(),
@@ -137,6 +138,17 @@ class SimilarMoviesFragment : Fragment() {
         animate().alpha(1f).apply {
             duration = 500
             start()
+        }
+    }
+
+    private fun ExtendedFloatingActionButton.makeInvisible() {
+        isEnabled = false
+
+        animate().alpha(0f).apply {
+            duration = 250
+            withEndAction {
+                visibility = View.GONE
+            }
         }
     }
 
