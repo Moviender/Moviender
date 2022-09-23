@@ -87,7 +87,7 @@ class MoviesViewModel(
     }
 
     fun sendRating(rating: Float) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             MovienderApi.movieClient.updateRating(
                 UserRatings(
                     uid,
