@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.data.Genres
 import com.uniwa.moviender.data.ServerPagingSource
 import com.uniwa.moviender.network.*
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -21,7 +23,7 @@ class MoviesViewModel(
     private val uid: String
 ) : ViewModel() {
 
-    private val _genres = listOf(
+    val genres = listOf(
         Genres.PERSONALIZED_RECOMMENDATIONS.code,
         Genres.ACTION.code,
         Genres.ANIMATION.code,
@@ -33,25 +35,27 @@ class MoviesViewModel(
         Genres.WESTERN.code
     )
 
-    private val _movies = _genres.map { genre ->
-        Pager(
-            config = PagingConfig(pageSize = PAGE_SIZE),
-            pagingSourceFactory = {
-                ServerPagingSource(
-                    MovienderApi.movieClient,
-                    listOf(genre),
-                    uid
-                )
-            }
-        ).flow.cachedIn(viewModelScope)
+    private val _movies = hashMapOf<Int, Flow<PagingData<Movie>>>()
+
+    init {
+        genres.forEach { genre ->
+            _movies[genre] = Pager(
+                config = PagingConfig(pageSize = PAGE_SIZE),
+                pagingSourceFactory = {
+                    ServerPagingSource(
+                        MovienderApi.movieClient,
+                        listOf(genre),
+                        uid
+                    )
+                }
+            ).flow.cachedIn(viewModelScope)
+        }
     }
 
     var movies = _movies
 
     private val _searchedResults = MutableLiveData<List<Movie>>()
     val searchedResults: LiveData<List<Movie>> = _searchedResults
-
-    val genres = _genres
 
     private val _selectedMovie = MutableLiveData<Movie>()
     val selectedMovie: LiveData<Movie> = _selectedMovie
