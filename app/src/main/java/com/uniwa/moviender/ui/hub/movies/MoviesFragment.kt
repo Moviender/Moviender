@@ -2,8 +2,6 @@ package com.uniwa.moviender.ui.hub.movies
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toolbar
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -51,23 +50,13 @@ class MoviesFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false)
 
-        binding.searchTv.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+        binding.searchTv.doOnTextChanged { text, _, _, _ ->
+            if (!text.isNullOrEmpty()) {
+                viewModel.searchByTitle(text.toString())
+            } else {
+                viewModel.clearSearchResult()
             }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (!p0.isNullOrEmpty()) {
-                    viewModel.searchByTitle(p0.toString())
-                } else {
-                    viewModel.clearSearchResult()
-                }
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-        })
+        }
 
         binding.moviesSearchToolbar.setOnMenuItemClickListener(object :
             Toolbar.OnMenuItemClickListener,
