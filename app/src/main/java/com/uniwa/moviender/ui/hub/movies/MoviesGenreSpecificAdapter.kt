@@ -11,7 +11,7 @@ import com.uniwa.moviender.network.Movie
 class MoviesGenreSpecificAdapter(
     private val moviesFragment: MoviesFragment
 ) :
-    PagingDataAdapter<Movie, MoviesGenreSpecificAdapter.MoviesViewHolder>(Diffcallback) {
+    PagingDataAdapter<Movie, MoviesGenreSpecificAdapter.MoviesViewHolder>(DiffCallback) {
 
         inner class MoviesViewHolder(
             private val binding: MovieItemThumbnailBinding
@@ -23,7 +23,7 @@ class MoviesGenreSpecificAdapter(
             }
         }
 
-    companion object Diffcallback : DiffUtil.ItemCallback<Movie>() {
+    companion object DiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.movielensId == newItem.movielensId
         }

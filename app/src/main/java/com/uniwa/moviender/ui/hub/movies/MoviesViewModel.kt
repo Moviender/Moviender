@@ -86,9 +86,9 @@ class MoviesViewModel(
         changeFrameVisibility(View.VISIBLE)
     }
 
-    fun submitData(adapter: MoviesGenreSpecificAdapter, dataPosition: Int) {
+    fun associateAdapter(adapter: MoviesGenreSpecificAdapter, genreId: Int) {
         viewModelScope.launch {
-            _movies[dataPosition].collectLatest { pageData ->
+            _movies[genreId]?.collectLatest { pageData ->
                 adapter.submitData(pageData)
             }
         }

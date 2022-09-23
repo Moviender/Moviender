@@ -1,38 +1,34 @@
 package com.uniwa.moviender.ui.hub.movies
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.uniwa.moviender.R
 import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.databinding.MovieCategoryRowBinding
 
 class MoviesGenresAdapter(
-    private val context: Context,
-    private val viewModel: MoviesViewModel,
     private val moviesFragment: MoviesFragment,
-) : ListAdapter<Int, MoviesGenresAdapter.MoviesGridViewHolder>(Diffcallback) {
+    private val associateAdapter: (adapter: MoviesGenreSpecificAdapter, genreId: Int) -> Unit
+) : ListAdapter<Int, MoviesGenresAdapter.MoviesGridViewHolder>(DiffCallback) {
 
     inner class MoviesGridViewHolder(
         private val binding: MovieCategoryRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(dataPosition: Int) {
-            if (dataPosition != 0) {
-                binding.genreResourceId = genres[viewModel.genres[dataPosition]]!!
-            } else {
-                binding.genreResourceId = R.string.genre_recommendations
+        fun bind(genreId: Int) {
+            binding.genreResourceId = genres[genreId]!!
+
+            MoviesGenreSpecificAdapter(moviesFragment).also { adapter ->
+                associateAdapter(adapter, genreId)
+                binding.movieRowRv.adapter = adapter
             }
-            val adapter = MoviesGenreSpecificAdapter(moviesFragment)
-            viewModel.submitData(adapter, dataPosition)
-            binding.movieRowRv.adapter = adapter
+
             binding.executePendingBindings()
         }
     }
 
-    companion object Diffcallback : DiffUtil.ItemCallback<Int>() {
+    companion object DiffCallback : DiffUtil.ItemCallback<Int>() {
         override fun areItemsTheSame(oldItem: Int, newItem: Int): Boolean {
             return oldItem == newItem
         }
@@ -50,8 +46,7 @@ class MoviesGenresAdapter(
     }
 
     override fun onBindViewHolder(holder: MoviesGridViewHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(getItem(position))
     }
-
 
 }

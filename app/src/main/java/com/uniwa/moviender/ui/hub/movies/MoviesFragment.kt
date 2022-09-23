@@ -80,7 +80,10 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MoviesGenresAdapter(requireContext(), viewModel, this)
+        adapter = MoviesGenresAdapter(this) { adapter, genreId ->
+            viewModel.associateAdapter(adapter, genreId)
+        }
+
         searchAdapter = MoviesSearchAdapter(this)
 
         moviesLayout = LinearLayoutManager(requireContext())
