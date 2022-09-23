@@ -3,11 +3,13 @@ package com.uniwa.moviender.ui.session.movies.voting
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.updateLayoutParams
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import com.google.android.material.card.MaterialCardView
 import com.uniwa.moviender.database.session.Movie
 import com.uniwa.moviender.databinding.MovieVotingItemBinding
 
@@ -19,25 +21,20 @@ class VoteCardStackViewAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             binding.movie = movie
-            binding.voteMoviePoster.setOnClickListener { cardView ->
-                if (binding.voteMovieDetails.visibility == View.GONE) {
-                    TransitionManager.beginDelayedTransition(
-                        binding.voteMovieCard,
-                        AutoTransition()
-                    )
-                    binding.voteMovieOverview.visibility = View.VISIBLE
-                    binding.voteMovieDetails.visibility = View.VISIBLE
-                    setCardHeight(binding, 0)
-                } else {
-                    TransitionManager.beginDelayedTransition(
-                        binding.voteMovieCard,
-                        AutoTransition()
-                    )
-                    binding.voteMovieOverview.visibility = View.GONE
-                    binding.voteMovieDetails.visibility = View.GONE
-                    setCardHeight(binding, WRAP_CONTENT)
-                }
+            binding.voteMovieCard.setOnClickListener {
+                val voteMovieCard = it as MaterialCardView
+
+                TransitionManager.beginDelayedTransition(
+                    binding.voteMovieCard,
+                    AutoTransition()
+                )
+
+                if (binding.voteMovieDetails.visibility == View.GONE)
+                    voteMovieCard.expand(binding)
+                else
+                    voteMovieCard.collapse(binding)
             }
+
             binding.executePendingBindings()
         }
     }
@@ -50,9 +47,6 @@ class VoteCardStackViewAdapter :
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.overview == newItem.overview
         }
-
-        private const val WRAP_CONTENT =  ViewGroup.LayoutParams.WRAP_CONTENT
-
     }
 
     override fun onBindViewHolder(holder: MovieVoteViewHolder, position: Int) {
@@ -66,10 +60,26 @@ class VoteCardStackViewAdapter :
         )
     }
 
-    private fun setCardHeight(binding: MovieVotingItemBinding, height: Int){
-        val Mylayoutparams = binding.voteMovieCard.layoutParams
-        Mylayoutparams.height = height
-        binding.voteMovieCard.layoutParams = Mylayoutparams
+    private fun MaterialCardView.expand(binding: MovieVotingItemBinding) {
+        binding.apply {
+            voteMovieOverview.visibility = View.VISIBLE
+            voteMovieDetails.visibility = View.VISIBLE
+        }
+
+        updateLayoutParams<ViewGroup.LayoutParams> {
+            height = 0
+        }
+    }
+
+    private fun MaterialCardView.collapse(binding: MovieVotingItemBinding) {
+        binding.apply {
+            voteMovieOverview.visibility = View.GONE
+            voteMovieDetails.visibility = View.GONE
+        }
+
+        updateLayoutParams<ViewGroup.LayoutParams> {
+            height = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
     }
 
 }
