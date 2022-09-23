@@ -69,7 +69,7 @@ class SimilarMoviesFragment : Fragment() {
         binding.apply {
             selectedMoviePoster.show()
             submitSelection.makeVisible()
-            searchResultMovies.alpha = 0.5f
+            searchResultMovies.animate().alpha(0.5f).duration = 370
         }
     }
 
