@@ -65,7 +65,6 @@ class VotingFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@VotingFragment.viewModel
 
-            // Todo move them to xml
             prevMovieBtn.setOnClickListener(
                 VotingButtonListener(
                     manager,
@@ -80,15 +79,14 @@ class VotingFragment : Fragment() {
                     votingStackView
                 )
             )
+
             saveMoviesBtn.setOnClickListener {
                 this@VotingFragment.viewModel.sendVotes()
             }
         }
 
         observeMovies()
-
         viewModel.getVotes()
-
         setupObservers()
     }
 
