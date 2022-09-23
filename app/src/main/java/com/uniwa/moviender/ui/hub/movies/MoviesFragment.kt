@@ -100,15 +100,14 @@ class MoviesFragment : Fragment() {
         observeResults()
     }
 
-    fun setSelectedMovie(movie: Movie) {
-        val imm =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+    fun showMovieInfo(movie: Movie) {
+        hideKeyboard()
+        binding.movieDetailsFrame.visibility = View.VISIBLE
         viewModel.setSelectedMovie(movie)
     }
 
     fun closeMovieDetailsFrame() {
-        viewModel.changeFrameVisibility(View.GONE)
+        binding.movieDetailsFrame.visibility = View.GONE
     }
 
     fun updateRating(rating: Float) {
@@ -138,9 +137,7 @@ class MoviesFragment : Fragment() {
         viewModel.clearSearchResult()
         callback.isEnabled = false
 
-        val imm =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+        hideKeyboard()
     }
 
     private fun RecyclerView.searchMode() {
@@ -151,6 +148,12 @@ class MoviesFragment : Fragment() {
     private fun RecyclerView.moviesMode() {
         adapter = moviesAdapter
         layoutManager = moviesLayout
+    }
+
+    private fun hideKeyboard() {
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
     private fun observeResults() {

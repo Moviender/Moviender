@@ -25,7 +25,7 @@
                 android:id="@+id/thumbnail.poster_iv"
                 android:layout_width="@dimen/poster_image_width"
                 android:layout_height="@dimen/poster_image_height"
-                android:onClick="@{() -> moviesFragment.setSelectedMovie(movie)}"
+                android:onClick="@{() -> moviesFragment.showMovieInfo(movie)}"
                 android:scaleType="fitXY"
                 app:imageUrl="@{movie.posterPath}"
                 tools:src="@drawable/sample_poster" />

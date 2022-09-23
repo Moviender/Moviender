@@ -1,6 +1,5 @@
 package com.uniwa.moviender.ui.hub.movies
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -65,24 +64,18 @@ class MoviesViewModel(
     private val _selectedMovieDetails = MutableLiveData<MovieDetails>()
     val selectedMovieDetails: LiveData<MovieDetails> = _selectedMovieDetails
 
-    private fun getMovieDetails(movie: Movie) {
-        viewModelScope.launch {
-            _selectedMovieDetails.value =
-                MovienderApi.movieClient.getMovieDetails(movie.movielensId, uid).body
+    private fun getMovieInfo(movie: Movie) {
+        viewModelScope.launch(Dispatchers.IO) {
+            MovienderApi.movieClient.getMovieDetails(movie.movielensId, uid).let { response ->
+                if (response.isSuccessful)
+                    _selectedMovieDetails.postValue(response.body)
+            }
         }
     }
 
-    private val _frameVisibility = MutableLiveData<Int>(View.GONE)
-    val frameVisibility: LiveData<Int> = _frameVisibility
-
-    fun changeFrameVisibility(visibility: Int) {
-        _frameVisibility.value = visibility
-    }
-
     fun setSelectedMovie(movie: Movie) {
-        getMovieDetails(movie)
+        getMovieInfo(movie)
         _selectedMovie.value = movie
-        changeFrameVisibility(View.VISIBLE)
     }
 
     fun associateAdapter(adapter: MoviesGenreSpecificAdapter, genreId: Int) {

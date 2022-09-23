@@ -94,8 +94,9 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:focusedByDefault="false"
-                android:visibility="@{viewModel.frameVisibility}"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+                android:visibility="gone"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+                tools:visibility="visible">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
