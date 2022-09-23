@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.network.Movie
-import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.ui.StartupActivityViewModel
 
 class MoviesFragment : Fragment() {
@@ -38,7 +37,6 @@ class MoviesFragment : Fragment() {
 
     private val viewModel: MoviesViewModel by viewModels {
         MoviesViewModelFactory(
-            MovienderApi.movieClient,
             listOf(-1, 28, 16, 80, 18, 27, 9648, 878, 37),
             sharedViewModel.getUid()
         )

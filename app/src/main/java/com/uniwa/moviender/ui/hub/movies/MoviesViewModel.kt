@@ -10,16 +10,12 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.data.ServerPagingSource
-import com.uniwa.moviender.network.Movie
-import com.uniwa.moviender.network.MovieDetails
-import com.uniwa.moviender.network.Rating
-import com.uniwa.moviender.network.UserRatings
+import com.uniwa.moviender.network.*
 import com.uniwa.moviender.network.client.MovieClient
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(
-    private val service: MovieClient,
     _genres: List<Int>,
     private val uid: String
 ) : ViewModel() {
@@ -29,7 +25,7 @@ class MoviesViewModel(
     private val _movies = _genres.map { genre ->
         Pager(
             config = PagingConfig(pageSize = PAGE_SIZE),
-            pagingSourceFactory = { ServerPagingSource(service, listOf(genre), uid) }
+            pagingSourceFactory = { ServerPagingSource(MovienderApi.movieClient, listOf(genre), uid) }
         ).flow.cachedIn(viewModelScope)
     }
 
@@ -51,7 +47,7 @@ class MoviesViewModel(
 
     private fun getMovieDetails(movie: Movie) {
         viewModelScope.launch {
-            _selectedMovieDetails.value = service.getMovieDetails(movie.movielensId, uid).body
+            _selectedMovieDetails.value = MovienderApi.movieClient.getMovieDetails(movie.movielensId, uid).body
         }
     }
 
@@ -78,7 +74,7 @@ class MoviesViewModel(
 
     fun sendRating(rating: Float) {
         viewModelScope.launch {
-            service.updateRating(
+            MovienderApi.movieClient.updateRating(
                 UserRatings(
                     uid,
                     listOf(Rating(_selectedMovie.value!!.movielensId, rating))
@@ -89,7 +85,7 @@ class MoviesViewModel(
 
     fun searchByTitle(title: String) {
         viewModelScope.launch {
-            _searchedResults.value = service.searchByTitle(title).body
+            _searchedResults.value = MovienderApi.movieClient.searchByTitle(title).body
         }
     }
 
