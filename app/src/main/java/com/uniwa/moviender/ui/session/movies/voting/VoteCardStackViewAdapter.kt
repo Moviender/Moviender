@@ -12,7 +12,8 @@ import com.uniwa.moviender.database.session.Movie
 import com.uniwa.moviender.databinding.MovieVotingItemBinding
 
 class VoteCardStackViewAdapter :
-    PagingDataAdapter<Movie, VoteCardStackViewAdapter.MovieVoteViewHolder>(Diffcallback) {
+    PagingDataAdapter<Movie, VoteCardStackViewAdapter.MovieVoteViewHolder>(DiffCallback) {
+
     inner class MovieVoteViewHolder(
         private val binding: MovieVotingItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -41,7 +42,7 @@ class VoteCardStackViewAdapter :
         }
     }
 
-    companion object Diffcallback : DiffUtil.ItemCallback<Movie>() {
+    companion object DiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.movielensId == newItem.movielensId
         }

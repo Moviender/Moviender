@@ -86,10 +86,6 @@ class VotingFragment : Fragment() {
         }
 
         observeMovies()
-        setupObservers()
-    }
-
-    private fun setupObservers() {
         setupSessionStateObserver()
         setupUserStateObserver()
     }
