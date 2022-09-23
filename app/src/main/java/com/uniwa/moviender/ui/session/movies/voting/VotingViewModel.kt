@@ -12,7 +12,6 @@ import com.uniwa.moviender.network.helper.UsersVotesBody
 import com.uniwa.moviender.repository.SessionRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class VotingViewModel(
@@ -35,14 +34,6 @@ class VotingViewModel(
 
     private val _userState = MutableSharedFlow<Int>()
     val userState: SharedFlow<Int> = _userState
-
-    fun submitData(adapter: VoteCardStackViewAdapter) {
-        viewModelScope.launch {
-            movies.collectLatest { pageData ->
-                adapter.submitData(pageData)
-            }
-        }
-    }
 
     fun newVote(liked: Boolean, itemCount: Int) {
         viewModelScope.launch {

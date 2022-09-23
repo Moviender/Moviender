@@ -36,6 +36,8 @@ class VotingFragment : Fragment() {
 
     private lateinit var votingListener: VotingCardListener
 
+    private lateinit var votingMoviesAdapter: VoteCardStackViewAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,8 +49,8 @@ class VotingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = VoteCardStackViewAdapter()
-        votingListener = VotingCardListener(viewModel, adapter)
+        votingMoviesAdapter = VoteCardStackViewAdapter()
+        votingListener = VotingCardListener(viewModel, votingMoviesAdapter)
 
         val manager = CardStackLayoutManager(requireContext(), votingListener).apply {
             setDirections(Direction.HORIZONTAL)
@@ -58,7 +60,7 @@ class VotingFragment : Fragment() {
         }
 
         binding.apply {
-            votingStackView.adapter = adapter
+            votingStackView.adapter = votingMoviesAdapter
             votingStackView.layoutManager = manager
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@VotingFragment.viewModel
@@ -83,7 +85,7 @@ class VotingFragment : Fragment() {
             }
         }
 
-        viewModel.submitData(adapter)
+        observeMovies()
 
         viewModel.getVotes()
 
@@ -105,7 +107,9 @@ class VotingFragment : Fragment() {
                     SessionStatus.SUCCESSFUL_FINISH.code,
                     SessionStatus.FAILED_FINISH.code -> {
                         val action =
-                            VotingFragmentDirections.actionVotingFragmentToMoviesSessionFragment(sessionStatus)
+                            VotingFragmentDirections.actionVotingFragmentToMoviesSessionFragment(
+                                sessionStatus
+                            )
                         findNavController().navigate(action)
                     }
                 }
@@ -116,8 +120,17 @@ class VotingFragment : Fragment() {
     private fun setupUserStateObserver() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.userState.collectLatest { userStatus ->
-                val action = VotingFragmentDirections.actionVotingFragmentToMoviesSessionFragment(userStatus)
+                val action =
+                    VotingFragmentDirections.actionVotingFragmentToMoviesSessionFragment(userStatus)
                 findNavController().navigate(action)
+            }
+        }
+    }
+
+    private fun observeMovies() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.movies.collectLatest { pageData ->
+                votingMoviesAdapter.submitData(pageData)
             }
         }
     }
