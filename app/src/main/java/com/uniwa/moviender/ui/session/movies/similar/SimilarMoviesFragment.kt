@@ -125,6 +125,9 @@ class SimilarMoviesFragment : Fragment() {
     private fun FrameLayout.sendAnimation() {
         animate().translationYBy((-800f).dp).apply {
             duration = 230
+            withEndAction {
+                binding.similarMoviesProgress.show()
+            }
         }
     }
 

@@ -10,22 +10,21 @@ import com.uniwa.moviender.network.Movie
 
 class SimilarMoviesAdapter(
     private val selectMovie: (movie: Movie) -> Unit
-) : ListAdapter<Movie, SimilarMoviesAdapter.SimilarMoviesViewHolder>(Diffcallback)  {
+) : ListAdapter<Movie, SimilarMoviesAdapter.SimilarMoviesViewHolder>(DiffCallback)  {
 
     inner class SimilarMoviesViewHolder(
         private val binding: SimilarMovieItemSearchBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind (movie: Movie) {
             binding.movie = movie
-//            binding.similarMoviesFragment = similarMoviesFragment
-//            binding.resultMoviePosterIv.tag = movie
+
             binding.resultMoviePosterIv.setOnClickListener {
                 selectMovie(movie)
             }
         }
     }
 
-    companion object Diffcallback : DiffUtil.ItemCallback<Movie>() {
+    companion object DiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.movielensId == newItem.movielensId
         }
