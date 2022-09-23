@@ -22,7 +22,7 @@ class MoviesViewModel(
 ) : ViewModel() {
 
     private val _genres = listOf(
-        Genres.ALL.code,
+        Genres.PERSONALIZED_RECOMMENDATIONS.code,
         Genres.ACTION.code,
         Genres.ANIMATION.code,
         Genres.CRIME.code,
@@ -82,7 +82,7 @@ class MoviesViewModel(
         changeFrameVisibility(View.VISIBLE)
     }
 
-    fun submitData(adapter: MoviesHorizontalAdapter, dataPosition: Int) {
+    fun submitData(adapter: MoviesGenreSpecificAdapter, dataPosition: Int) {
         viewModelScope.launch {
             _movies[dataPosition].collectLatest { pageData ->
                 adapter.submitData(pageData)

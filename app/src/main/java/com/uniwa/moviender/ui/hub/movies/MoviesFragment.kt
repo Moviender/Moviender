@@ -27,7 +27,7 @@ private const val SPAN_SEARCH = 3
 class MoviesFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesBinding
-    private lateinit var adapter: MoviesGridAdapter
+    private lateinit var adapter: MoviesGenresAdapter
     private lateinit var searchAdapter: MoviesSearchAdapter
     private lateinit var moviesLayout: LinearLayoutManager
     private lateinit var searchLayout: GridLayoutManager
@@ -80,7 +80,7 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MoviesGridAdapter(requireContext(), viewModel, this)
+        adapter = MoviesGenresAdapter(requireContext(), viewModel, this)
         searchAdapter = MoviesSearchAdapter(this)
 
         moviesLayout = LinearLayoutManager(requireContext())

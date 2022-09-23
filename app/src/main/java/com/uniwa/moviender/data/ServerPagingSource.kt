@@ -25,15 +25,14 @@ class ServerPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         val position = params.key ?: API_STARTING_PAGE_INDEX
         return try {
-            val movies = if (genres[0] != -1) {
+            val movies = if (genres[0] != Genres.PERSONALIZED_RECOMMENDATIONS.code) {
                 service.getMovies(position, genres).body
             } else {
                 service.getUserRecommendations(position, uid).body
             }
             val nextKey = if (movies.size < 15 || movies.isEmpty()) {
                 null
-            }
-            else {
+            } else {
                 position + PAGE_INCREMENT
             }
 

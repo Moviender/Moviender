@@ -4,18 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.databinding.MovieCategoryRowBinding
 
-class MoviesGridAdapter(
+class MoviesGenresAdapter(
     private val context: Context,
     private val viewModel: MoviesViewModel,
     private val moviesFragment: MoviesFragment,
-) : ListAdapter<Int, MoviesGridAdapter.MoviesGridViewHolder>(Diffcallback) {
+) : ListAdapter<Int, MoviesGenresAdapter.MoviesGridViewHolder>(Diffcallback) {
 
     inner class MoviesGridViewHolder(
         private val binding: MovieCategoryRowBinding
@@ -26,10 +25,8 @@ class MoviesGridAdapter(
             } else {
                 binding.genreResourceId = R.string.genre_recommendations
             }
-            val adapter = MoviesHorizontalAdapter(moviesFragment)
+            val adapter = MoviesGenreSpecificAdapter(moviesFragment)
             viewModel.submitData(adapter, dataPosition)
-            binding.movieRowRv.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.movieRowRv.adapter = adapter
             binding.executePendingBindings()
         }

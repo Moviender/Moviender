@@ -44,7 +44,7 @@ enum class Error(val code: Int) {
 }
 
 enum class Genres(val code: Int) {
-    ALL(-1),
+    PERSONALIZED_RECOMMENDATIONS(-1),
     ACTION(28),
     ADVENTURE(12),
     ANIMATION(16),

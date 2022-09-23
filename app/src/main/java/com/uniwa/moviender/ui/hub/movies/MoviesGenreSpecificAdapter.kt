@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uniwa.moviender.databinding.MovieItemThumbnailBinding
 import com.uniwa.moviender.network.Movie
 
-class MoviesHorizontalAdapter(
+class MoviesGenreSpecificAdapter(
     private val moviesFragment: MoviesFragment
 ) :
-    PagingDataAdapter<Movie, MoviesHorizontalAdapter.MoviesViewHolder>(Diffcallback) {
+    PagingDataAdapter<Movie, MoviesGenreSpecificAdapter.MoviesViewHolder>(Diffcallback) {
 
         inner class MoviesViewHolder(
             private val binding: MovieItemThumbnailBinding
