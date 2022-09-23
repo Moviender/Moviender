@@ -72,10 +72,10 @@ class MoviesFragment : Fragment() {
             }
         })
 
-        callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            prepareForMovies()
-        }
-        callback.isEnabled = false
+        callback =
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, false) {
+                prepareForMovies()
+            }
 
         return binding.root
     }
