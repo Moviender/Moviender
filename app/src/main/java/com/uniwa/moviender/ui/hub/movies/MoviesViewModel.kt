@@ -9,23 +9,40 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.recyclerview.widget.RecyclerView
+import com.uniwa.moviender.data.Genres
 import com.uniwa.moviender.data.ServerPagingSource
 import com.uniwa.moviender.network.*
-import com.uniwa.moviender.network.client.MovieClient
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+private const val PAGE_SIZE = 15
+
 class MoviesViewModel(
-    _genres: List<Int>,
     private val uid: String
 ) : ViewModel() {
 
-    private val PAGE_SIZE = 15
+    private val _genres = listOf(
+        Genres.ALL.code,
+        Genres.ACTION.code,
+        Genres.ANIMATION.code,
+        Genres.CRIME.code,
+        Genres.DRAMA.code,
+        Genres.HORROR.code,
+        Genres.MYSTERY.code,
+        Genres.SCI_FI.code,
+        Genres.WESTERN.code
+    )
 
     private val _movies = _genres.map { genre ->
         Pager(
             config = PagingConfig(pageSize = PAGE_SIZE),
-            pagingSourceFactory = { ServerPagingSource(MovienderApi.movieClient, listOf(genre), uid) }
+            pagingSourceFactory = {
+                ServerPagingSource(
+                    MovienderApi.movieClient,
+                    listOf(genre),
+                    uid
+                )
+            }
         ).flow.cachedIn(viewModelScope)
     }
 
@@ -47,7 +64,8 @@ class MoviesViewModel(
 
     private fun getMovieDetails(movie: Movie) {
         viewModelScope.launch {
-            _selectedMovieDetails.value = MovienderApi.movieClient.getMovieDetails(movie.movielensId, uid).body
+            _selectedMovieDetails.value =
+                MovienderApi.movieClient.getMovieDetails(movie.movielensId, uid).body
         }
     }
 

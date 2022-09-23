@@ -37,7 +37,6 @@ class MoviesFragment : Fragment() {
 
     private val viewModel: MoviesViewModel by viewModels {
         MoviesViewModelFactory(
-            listOf(-1, 28, 16, 80, 18, 27, 9648, 878, 37),
             sharedViewModel.getUid()
         )
     }
