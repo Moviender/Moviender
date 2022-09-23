@@ -10,6 +10,7 @@ import com.uniwa.moviender.database.SessionDatabase
 import com.uniwa.moviender.network.MovienderApi
 import com.uniwa.moviender.network.helper.UsersVotesBody
 import com.uniwa.moviender.repository.SessionRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class VotingViewModel(
 ) : ViewModel() {
     val MINIMUM_VOTES = 10
 
-    private val _sendBtnVisibility = MutableLiveData<Int>(View.GONE)
+    private val _sendBtnVisibility = MutableLiveData(View.GONE)
     val sendBtnVisibility: LiveData<Int> = _sendBtnVisibility
 
     private var votesCount = 0
@@ -34,6 +35,18 @@ class VotingViewModel(
 
     private val _userState = MutableSharedFlow<Int>()
     val userState: SharedFlow<Int> = _userState
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            val remoteDbVotesCount =
+                MovienderApi.sessionClient.getUserNumVotes(sessionId, uid).body
+            val localDbVotesCount = database.sessionDao().getVotes(sessionId).size
+
+            votesCount = remoteDbVotesCount.coerceAtLeast(localDbVotesCount)
+
+            changeVisibility()
+        }
+    }
 
     fun newVote(liked: Boolean, itemCount: Int) {
         viewModelScope.launch {
@@ -66,21 +79,9 @@ class VotingViewModel(
         }
     }
 
-    fun getVotes() {
-        viewModelScope.launch {
-            val remoteDbVotesCount =
-                MovienderApi.sessionClient.getUserNumVotes(sessionId, uid).body
-            val localDbVotesCount = database.sessionDao().getVotes(sessionId).size
-
-            votesCount = remoteDbVotesCount.coerceAtLeast(localDbVotesCount)
-
-            changeVisibility()
-        }
-    }
-
     private fun changeVisibility() {
         if (votesCount >= MINIMUM_VOTES && _sendBtnVisibility.value != View.VISIBLE) {
-            _sendBtnVisibility.value = View.VISIBLE
+            _sendBtnVisibility.postValue(View.VISIBLE)
         }
     }
 }

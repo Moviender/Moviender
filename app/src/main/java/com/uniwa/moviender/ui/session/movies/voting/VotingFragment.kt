@@ -86,7 +86,6 @@ class VotingFragment : Fragment() {
         }
 
         observeMovies()
-        viewModel.getVotes()
         setupObservers()
     }
 
