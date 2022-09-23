@@ -13,9 +13,7 @@ class VotingCardListener(
     private val newVote: (liked: Boolean) -> Unit
 ) : CardStackListener {
 
-    override fun onCardDragging(direction: Direction?, ratio: Float) {
-
-    }
+    override fun onCardDragging(direction: Direction?, ratio: Float) {}
 
     override fun onCardSwiped(direction: Direction?) {
         when (direction) {
@@ -27,17 +25,11 @@ class VotingCardListener(
         }
     }
 
-    override fun onCardRewound() {
+    override fun onCardRewound() {}
 
-    }
+    override fun onCardCanceled() {}
 
-    override fun onCardCanceled() {
-
-    }
-
-    override fun onCardAppeared(view: View?, position: Int) {
-
-    }
+    override fun onCardAppeared(view: View?, position: Int) {}
 
     override fun onCardDisappeared(view: View?, position: Int) {
         view?.findViewById<ScrollView>(R.id.vote_movie_details)!!.visibility = View.GONE
