@@ -40,8 +40,8 @@ class MoviesFragment : Fragment() {
 
     private lateinit var moviesAdapter: MoviesGenresAdapter
     private lateinit var searchAdapter: MoviesSearchAdapter
-    private val moviesLayout = LinearLayoutManager(requireContext())
-    private val searchLayout = GridLayoutManager(requireContext(), SPAN_SEARCH)
+    private lateinit var moviesLayout: LinearLayoutManager
+    private lateinit var searchLayout: GridLayoutManager
     private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
@@ -93,9 +93,13 @@ class MoviesFragment : Fragment() {
             viewModel.associateAdapter(adapter, genreId)
         }
 
-        searchAdapter = MoviesSearchAdapter(this)
+        moviesLayout = LinearLayoutManager(requireContext())
+        searchLayout = GridLayoutManager(requireContext(), SPAN_SEARCH)
 
+        searchAdapter = MoviesSearchAdapter(this)
         moviesAdapter.submitList(viewModel.genres)
+
+        moviesMode()
 
         observeResults()
     }
