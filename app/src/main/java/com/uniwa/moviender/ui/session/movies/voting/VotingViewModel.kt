@@ -20,7 +20,7 @@ class VotingViewModel(
     private val sessionId: String,
     private val database: SessionDatabase
 ) : ViewModel() {
-    val MINIMUM_VOTES = 10
+    private val MINIMUM_VOTES = 10
 
     private val _sendBtnVisibility = MutableLiveData(View.GONE)
     val sendBtnVisibility: LiveData<Int> = _sendBtnVisibility
@@ -44,7 +44,7 @@ class VotingViewModel(
 
             votesCount = remoteDbVotesCount.coerceAtLeast(localDbVotesCount)
 
-            changeVisibility()
+            changeSendVotesBtnVisibility()
         }
     }
 
@@ -55,7 +55,7 @@ class VotingViewModel(
             }
         }
         votesCount++
-        changeVisibility()
+        changeSendVotesBtnVisibility()
 
         if (itemCount == 1) {
             sendVotes()
@@ -79,7 +79,7 @@ class VotingViewModel(
         }
     }
 
-    private fun changeVisibility() {
+    private fun changeSendVotesBtnVisibility() {
         if (votesCount >= MINIMUM_VOTES && _sendBtnVisibility.value != View.VISIBLE) {
             _sendBtnVisibility.postValue(View.VISIBLE)
         }
