@@ -22,9 +22,9 @@ import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.StartupActivityViewModel
 
-class MoviesFragment : Fragment() {
+private const val SPAN_SEARCH = 3
 
-    private val SPAN_SEARCH = 3
+class MoviesFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesBinding
     private lateinit var adapter: MoviesGridAdapter
