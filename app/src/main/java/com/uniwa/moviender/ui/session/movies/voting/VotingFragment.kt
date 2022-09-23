@@ -34,8 +34,6 @@ class VotingFragment : Fragment() {
         )
     }
 
-    private lateinit var votingListener: VotingCardListener
-
     private lateinit var votingMoviesAdapter: VoteCardStackViewAdapter
 
     override fun onCreateView(
@@ -50,7 +48,9 @@ class VotingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         votingMoviesAdapter = VoteCardStackViewAdapter()
-        votingListener = VotingCardListener(viewModel, votingMoviesAdapter)
+        val votingListener = VotingCardListener { liked ->
+            viewModel.newVote(liked, votingMoviesAdapter.itemCount)
+        }
 
         val manager = CardStackLayoutManager(requireContext(), votingListener).apply {
             setDirections(Direction.HORIZONTAL)
