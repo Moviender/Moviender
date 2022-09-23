@@ -9,7 +9,7 @@ import com.uniwa.moviender.databinding.SimilarMovieItemSearchBinding
 import com.uniwa.moviender.network.Movie
 
 class SimilarMoviesAdapter(
-    private val similarMoviesFragment: SimilarMoviesFragment
+    private val selectMovie: (movie: Movie) -> Unit
 ) : ListAdapter<Movie, SimilarMoviesAdapter.SimilarMoviesViewHolder>(Diffcallback)  {
 
     inner class SimilarMoviesViewHolder(
@@ -17,8 +17,11 @@ class SimilarMoviesAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind (movie: Movie) {
             binding.movie = movie
-            binding.similarMoviesFragment = similarMoviesFragment
-            binding.resultMoviePosterIv.tag = movie
+//            binding.similarMoviesFragment = similarMoviesFragment
+//            binding.resultMoviePosterIv.tag = movie
+            binding.resultMoviePosterIv.setOnClickListener {
+                selectMovie(movie)
+            }
         }
     }
 

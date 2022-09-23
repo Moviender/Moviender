@@ -27,7 +27,6 @@
                 android:layout_height="@dimen/poster_image_search_height"
                 android:scaleType="fitXY"
                 app:imageUrl="@{movie.posterPath}"
-                android:onClick="@{(view) -> similarMoviesFragment.startSession(view)}"
                 tools:src="@drawable/sample_poster" />
 
         </com.google.android.material.card.MaterialCardView>

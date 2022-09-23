@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="similarMoviesFragment"
+            type="com.uniwa.moviender.ui.session.movies.similar.SimilarMoviesFragment" />
+
+        <variable
             name="viewModel"
             type="com.uniwa.moviender.ui.session.movies.similar.SimilarMoviesViewModel" />
     </data>
@@ -60,6 +64,37 @@
             app:layout_constraintTop_toBottomOf="@id/search_appbar"
             app:spanCount="3"
             tools:listitem="@layout/similar_movie_item_search" />
+
+        <FrameLayout
+            android:id="@+id/selected_movie_poster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="350dp"
+                android:layout_height="550dp"
+                app:imageUrl="@{viewModel.selectedMovie.posterPath}"
+                tools:src="@drawable/sample_poster" />
+        </FrameLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/submit_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{() -> similarMoviesFragment.startSession()}"
+            android:text="@string/submit_similar_movie_btn"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/selected_movie_poster"
+            app:layout_constraintStart_toStartOf="@id/selected_movie_poster"
+            app:layout_constraintTop_toBottomOf="@id/selected_movie_poster"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

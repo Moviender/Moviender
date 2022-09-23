@@ -1,9 +1,11 @@
 package com.uniwa.moviender.ui.session.movies.similar
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
@@ -12,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentSimilarMoviesBinding
 import com.uniwa.moviender.network.Movie
@@ -46,27 +49,40 @@ class SimilarMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        similarMoviesAdapter = SimilarMoviesAdapter(this@SimilarMoviesFragment)
+        similarMoviesAdapter = SimilarMoviesAdapter { movie ->
+            showSelectedMovie(movie)
+        }
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             searchResultMovies.adapter = similarMoviesAdapter
+            similarMoviesFragment = this@SimilarMoviesFragment
             viewModel = this@SimilarMoviesFragment.viewModel
         }
 
         observeSimilarMovies()
+        observeSessionStarted()
     }
 
-    fun startSession(view: View) {
-        observeSessionStarted()
+    private fun showSelectedMovie(movie: Movie) {
+        viewModel.setSelectedMovie(movie)
+        binding.apply {
+            selectedMoviePoster.show()
+            submitSelection.makeVisible()
+            searchResultMovies.alpha = 0.5f
+        }
+    }
 
-        val movie = view.tag as Movie
+    fun startSession() {
+        binding.selectedMoviePoster.sendAnimation()
+
         viewModel.startSession(
             sharedViewModel.getUid(),
             sharedViewModel.friendUid,
-            movie.movielensId
+            viewModel.selectedMovie.value!!.movielensId
         )
     }
+
 
     private fun observeSimilarMovies() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -95,4 +111,36 @@ class SimilarMoviesFragment : Fragment() {
             }
         }
     }
+
+    private fun FrameLayout.show() {
+        scaleX = 0f
+        scaleY = 0f
+        visibility = View.VISIBLE
+        animate().scaleXBy(1f).scaleYBy(1f).apply {
+            duration = 300
+            start()
+        }
+    }
+
+    private fun FrameLayout.sendAnimation() {
+        animate().translationYBy((-800f).dp).apply {
+            duration = 230
+        }
+    }
+
+    private fun ExtendedFloatingActionButton.makeVisible() {
+        alpha = 0f
+        visibility = View.VISIBLE
+        animate().alpha(1f).apply {
+            duration = 500
+            start()
+        }
+    }
+
+    private val Float.dp
+        get() = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            toFloat(),
+            resources.displayMetrics
+        )
 }

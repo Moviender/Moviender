@@ -80,5 +80,6 @@
     <string name="error_user_insert">Could not insert user</string>
     <string name="rating_stored">Rating stored!</string>
     <string name="rating_store_err">Error while storing vote</string>
+    <string name="submit_similar_movie_btn">select</string>
 
 </resources>
