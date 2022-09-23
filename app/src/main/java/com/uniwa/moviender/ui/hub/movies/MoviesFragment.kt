@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.StartupActivityViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 private const val SPAN_SEARCH = 3
 
@@ -94,6 +96,8 @@ class MoviesFragment : Fragment() {
         searchAdapter = MoviesSearchAdapter(this)
 
         moviesAdapter.submitList(viewModel.genres)
+
+        observeResults()
     }
 
     fun setSelectedMovie(movie: Movie) {
@@ -119,11 +123,6 @@ class MoviesFragment : Fragment() {
             hubMoviesGrid.searchMode()
         }
 
-        viewModel.searchedResults.observe(viewLifecycleOwner) { newList ->
-            searchAdapter.submitList(newList) {
-                searchLayout.scrollToPosition(0)
-            }
-        }
         callback.isEnabled = true
     }
 
@@ -152,6 +151,16 @@ class MoviesFragment : Fragment() {
     private fun RecyclerView.moviesMode() {
         adapter = moviesAdapter
         layoutManager = moviesLayout
+    }
+
+    private fun observeResults() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.searchedResults.collectLatest { movies ->
+                searchAdapter.submitList(movies) {
+                    searchLayout.scrollToPosition(0)
+                }
+            }
+        }
     }
 
 }

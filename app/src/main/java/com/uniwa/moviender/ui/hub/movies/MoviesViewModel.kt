@@ -12,7 +12,10 @@ import androidx.paging.cachedIn
 import com.uniwa.moviender.data.Genres
 import com.uniwa.moviender.data.ServerPagingSource
 import com.uniwa.moviender.network.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -53,8 +56,8 @@ class MoviesViewModel(
 
     var movies = _movies
 
-    private val _searchedResults = MutableLiveData<List<Movie>>()
-    val searchedResults: LiveData<List<Movie>> = _searchedResults
+    private val _searchedResults = MutableSharedFlow<List<Movie>>()
+    val searchedResults: SharedFlow<List<Movie>> = _searchedResults
 
     private val _selectedMovie = MutableLiveData<Movie>()
     val selectedMovie: LiveData<Movie> = _selectedMovie
@@ -102,13 +105,18 @@ class MoviesViewModel(
     }
 
     fun searchByTitle(title: String) {
-        viewModelScope.launch {
-            _searchedResults.value = MovienderApi.movieClient.searchByTitle(title).body
+        viewModelScope.launch(Dispatchers.IO) {
+            MovienderApi.movieClient.searchByTitle(title).let { response ->
+                if (response.isSuccessful)
+                    _searchedResults.emit(response.body)
+            }
         }
     }
 
     fun clearSearchResult() {
-        _searchedResults.value = listOf()
+        viewModelScope.launch(Dispatchers.Default) {
+            _searchedResults.emit(listOf())
+        }
     }
 
 }
