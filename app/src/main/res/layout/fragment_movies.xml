@@ -75,7 +75,8 @@
             <LinearLayout
                 android:id="@+id/genres_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/blue_light">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/genres_chips"
@@ -105,6 +106,7 @@
                     android:id="@+id/hub_movies_grid"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:background="@drawable/rounded_top_corners"
                     android:clipToPadding="false"
                     android:scrollbars="vertical"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
