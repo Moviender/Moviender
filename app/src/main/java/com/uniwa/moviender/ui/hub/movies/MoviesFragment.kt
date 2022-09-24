@@ -20,7 +20,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.uniwa.moviender.R
+import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.StartupActivityViewModel
@@ -165,6 +168,18 @@ class MoviesFragment : Fragment() {
         layoutManager = moviesLayout
     }
 
+    private fun ChipGroup.populate(selectedGenres: List<Int>) {
+        genres.forEach { genre ->
+            val chip = layoutInflater.inflate(R.layout.genre_chip, this, false) as Chip
+            chip.apply {
+                id = genre.key
+                text = getString(genre.value)
+                selectedGenres.find { it == genre.key }?.let { isChecked = true }
+                this@populate.addView(this@apply)
+            }
+        }
+    }
+
     private fun hideKeyboard() {
         val imm =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -185,6 +200,7 @@ class MoviesFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.genres.collectLatest { genres ->
                 moviesAdapter.submitList(genres)
+                binding.genresChips.populate(genres)
             }
         }
     }

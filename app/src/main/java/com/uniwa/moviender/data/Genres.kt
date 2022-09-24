@@ -3,7 +3,6 @@ package com.uniwa.moviender.data
 import com.uniwa.moviender.R
 
 val genres: HashMap<Int, Int> = hashMapOf(
-    Genres.PERSONALIZED_RECOMMENDATIONS.code to R.string.genre_recommendations,
     Genres.ACTION.code to R.string.genre_action,
     Genres.ADVENTURE.code to R.string.genre_adventure,
     Genres.ANIMATION.code to R.string.genre_animations,
@@ -17,6 +16,7 @@ val genres: HashMap<Int, Int> = hashMapOf(
     Genres.HORROR.code to R.string.genre_horror,
     Genres.MUSIC.code to R.string.genre_music,
     Genres.MYSTERY.code to R.string.genre_mystery,
+    Genres.PERSONALIZED_RECOMMENDATIONS.code to R.string.genre_recommendations,
     Genres.ROMANCE.code to R.string.genre_romance,
     Genres.SCI_FI.code to R.string.genre_science_fiction,
     Genres.TV_MOVIE.code to R.string.genre_tv_movie,
@@ -26,7 +26,6 @@ val genres: HashMap<Int, Int> = hashMapOf(
 )
 
 val nameToId: HashMap<Int, Int> = hashMapOf(
-    R.string.genre_recommendations to Genres.PERSONALIZED_RECOMMENDATIONS.code,
     R.string.genre_action to Genres.ACTION.code,
     R.string.genre_adventure to Genres.ADVENTURE.code,
     R.string.genre_animations to Genres.ANIMATION.code,
@@ -41,6 +40,7 @@ val nameToId: HashMap<Int, Int> = hashMapOf(
     R.string.genre_music to Genres.MUSIC.code,
     R.string.genre_mystery to Genres.MYSTERY.code,
     R.string.genre_romance to Genres.ROMANCE.code,
+    R.string.genre_recommendations to Genres.PERSONALIZED_RECOMMENDATIONS.code,
     R.string.genre_science_fiction to Genres.SCI_FI.code,
     R.string.genre_tv_movie to Genres.TV_MOVIE.code,
     R.string.genre_thriller to Genres.THRILLER.code,
