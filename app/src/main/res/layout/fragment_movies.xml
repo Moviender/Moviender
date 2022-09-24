@@ -34,6 +34,12 @@
                 android:layout_height="?attr/actionBarSize"
                 app:menu="@menu/appbar_search_menu">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> MoviesFragment.showGenreFilters()}"
+                    android:src="@drawable/ic_filter_list_24" />
+
                 <TextView
                     android:id="@+id/movies_toolbar_title"
                     style="@style/TextAppearance.MaterialComponents.Headline6"

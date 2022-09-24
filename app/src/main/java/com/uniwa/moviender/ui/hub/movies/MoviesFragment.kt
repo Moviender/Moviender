@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toolbar
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -47,6 +48,7 @@ class MoviesFragment : Fragment() {
     private lateinit var moviesLayout: LinearLayoutManager
     private lateinit var searchLayout: GridLayoutManager
     private lateinit var callback: OnBackPressedCallback
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -111,7 +113,7 @@ class MoviesFragment : Fragment() {
     }
 
     private fun setMoviesBottomSheetBehavior() {
-        BottomSheetBehavior.from(binding.moviesBottomSheet).apply {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.moviesBottomSheet).apply {
             isFitToContents = false
             isHideable = false
             state = BottomSheetBehavior.STATE_EXPANDED
@@ -156,6 +158,15 @@ class MoviesFragment : Fragment() {
         callback.isEnabled = false
 
         hideKeyboard()
+    }
+
+    fun showGenreFilters() {
+        bottomSheetBehavior.apply {
+            if (state == BottomSheetBehavior.STATE_EXPANDED)
+                state = BottomSheetBehavior.STATE_COLLAPSED
+            else
+                state = BottomSheetBehavior.STATE_EXPANDED
+        }
     }
 
     private fun RecyclerView.searchMode() {
