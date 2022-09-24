@@ -69,7 +69,17 @@ class SimilarMoviesFragment : Fragment() {
         binding.apply {
             selectedMoviePoster.show()
             submitSelection.makeVisible()
-            searchResultMovies.animate().alpha(0.5f).duration = 370
+            recyclerOverlay.activate()
+            closeSelectedMovie.showCloseButton()
+        }
+    }
+
+    fun hideSelectedMovie() {
+        binding.apply {
+            selectedMoviePoster.hide()
+            submitSelection.makeInvisible()
+            recyclerOverlay.deactivate()
+            closeSelectedMovie.hideCloseButton()
         }
     }
 
@@ -123,6 +133,29 @@ class SimilarMoviesFragment : Fragment() {
         }
     }
 
+    private fun FrameLayout.hide() {
+        animate().scaleX(0f).scaleY(0f).apply {
+            duration = 300
+            withEndAction { visibility = View.GONE }
+        }
+    }
+
+    private fun FrameLayout.showCloseButton() {
+        visibility = View.VISIBLE
+        animate().translationXBy((-50f).dp).duration = 300
+        animate().rotation(-90f).apply {
+            startDelay = 50
+            duration = 250
+        }
+    }
+
+    private fun FrameLayout.hideCloseButton() {
+        animate().translationXBy(50f.dp).rotation(90f).apply {
+            duration = 300
+            withEndAction { visibility = View.GONE }
+        }
+    }
+
     private fun FrameLayout.sendAnimation() {
         animate().translationYBy((-800f).dp).apply {
             duration = 230
@@ -142,14 +175,25 @@ class SimilarMoviesFragment : Fragment() {
     }
 
     private fun ExtendedFloatingActionButton.makeInvisible() {
-        isEnabled = false
-
         animate().alpha(0f).apply {
             duration = 250
             withEndAction {
                 visibility = View.GONE
             }
         }
+    }
+
+    private fun FrameLayout.deactivate() {
+        animate().alpha(0f).apply {
+            duration = 370
+            withEndAction { visibility = View.GONE }
+        }
+    }
+
+    private fun FrameLayout.activate() {
+        alpha = 0f
+        visibility = View.VISIBLE
+        animate().alpha(1f).duration = 370
     }
 
     private val Float.dp
