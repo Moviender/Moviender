@@ -20,6 +20,9 @@ interface UserService : ApiService {
         @Query("uid") uid: String
     ): Response<Int>
 
+    @GET("/genrePreferences/{uid}")
+    suspend fun getGenrePreferences(@Path("uid") uid: String): Response<List<Int>>
+
     @POST("/fcm_token/{uid}")
     suspend fun storeToken(
         @Path("uid") uid: String,

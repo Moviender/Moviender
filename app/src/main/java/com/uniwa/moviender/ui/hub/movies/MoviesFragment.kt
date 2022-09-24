@@ -100,11 +100,11 @@ class MoviesFragment : Fragment() {
         searchLayout = GridLayoutManager(requireContext(), SPAN_SEARCH)
 
         searchAdapter = MoviesSearchAdapter(this)
-        moviesAdapter.submitList(viewModel.genres)
 
         moviesMode()
 
         observeResults()
+        observeGenres()
     }
 
     private fun setMoviesBottomSheetBehavior() {
@@ -177,6 +177,14 @@ class MoviesFragment : Fragment() {
                 searchAdapter.submitList(movies) {
                     searchLayout.scrollToPosition(0)
                 }
+            }
+        }
+    }
+
+    private fun observeGenres() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.genres.collectLatest { genres ->
+                moviesAdapter.submitList(genres)
             }
         }
     }

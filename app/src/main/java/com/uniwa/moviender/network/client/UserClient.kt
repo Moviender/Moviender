@@ -22,6 +22,10 @@ class UserClient(
         return safeApiCall { service.getUserState(sessionId, uid) }
     }
 
+    suspend fun getGenrePreferences(uid: String): ResponseWrapper<List<Int>> {
+        return safeApiCall { service.getGenrePreferences(uid) }
+    }
+
     suspend fun storeToken(uid: String, token: String): ResponseWrapper<Boolean> {
         return safeApiCall { service.storeToken(uid, token) }
     }

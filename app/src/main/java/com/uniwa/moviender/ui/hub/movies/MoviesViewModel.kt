@@ -24,33 +24,13 @@ class MoviesViewModel(
     private val uid: String
 ) : ViewModel() {
 
-    val genres = listOf(
-        Genres.PERSONALIZED_RECOMMENDATIONS.code,
-        Genres.ACTION.code,
-        Genres.ANIMATION.code,
-        Genres.CRIME.code,
-        Genres.DRAMA.code,
-        Genres.HORROR.code,
-        Genres.MYSTERY.code,
-        Genres.SCI_FI.code,
-        Genres.WESTERN.code
-    )
+    private val _genres = MutableSharedFlow<List<Int>>()
+    val genres: SharedFlow<List<Int>> = _genres
 
     private val _movies = hashMapOf<Int, Flow<PagingData<Movie>>>()
 
     init {
-        genres.forEach { genre ->
-            _movies[genre] = Pager(
-                config = PagingConfig(pageSize = PAGE_SIZE),
-                pagingSourceFactory = {
-                    ServerPagingSource(
-                        MovienderApi.movieClient,
-                        listOf(genre),
-                        uid
-                    )
-                }
-            ).flow.cachedIn(viewModelScope)
-        }
+        getUserGenrePreferences()
     }
 
     var movies = _movies
@@ -69,6 +49,34 @@ class MoviesViewModel(
             MovienderApi.movieClient.getMovieDetails(movie.movielensId, uid).let { response ->
                 if (response.isSuccessful)
                     _selectedMovieDetails.postValue(response.body)
+            }
+        }
+    }
+
+    private fun getUserGenrePreferences() {
+        viewModelScope.launch(Dispatchers.IO) {
+            MovienderApi.userClient.getGenrePreferences(uid).let { response ->
+                if (response.isSuccessful) {
+                    val combinedGenres =
+                        mutableListOf(Genres.PERSONALIZED_RECOMMENDATIONS.code).apply {
+                            addAll(response.body)
+                        }
+
+                    combinedGenres.forEach { genre ->
+                        _movies[genre] = Pager(
+                            config = PagingConfig(pageSize = PAGE_SIZE),
+                            pagingSourceFactory = {
+                                ServerPagingSource(
+                                    MovienderApi.movieClient,
+                                    listOf(genre),
+                                    uid
+                                )
+                            }
+                        ).flow.cachedIn(viewModelScope)
+                    }
+
+                    _genres.emit(combinedGenres)
+                }
             }
         }
     }
