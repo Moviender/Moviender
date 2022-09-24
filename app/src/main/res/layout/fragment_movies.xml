@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="MoviesFragment"
+            name="moviesFragment"
             type="com.uniwa.moviender.ui.hub.movies.MoviesFragment" />
 
         <variable
@@ -37,7 +37,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> MoviesFragment.showGenreFilters()}"
+                    android:onClick="@{() -> moviesFragment.showGenreFilters()}"
                     android:src="@drawable/ic_filter_list_24" />
 
                 <TextView
@@ -54,7 +54,7 @@
                     android:id="@+id/close_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> MoviesFragment.moviesMode()}"
+                    android:onClick="@{() -> moviesFragment.moviesMode()}"
                     android:src="@drawable/ic_close_24"
                     android:visibility="gone"
                     app:tint="@color/white"
@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                tools:context=".ui.hub.movies.MoviesFragment">
+                tools:context=".ui.hub.movies.moviesFragment">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/hub_movies_grid"
@@ -186,7 +186,7 @@
                                             android:isIndicator="false"
                                             android:minHeight="27dp"
                                             android:numStars="5"
-                                            android:onRatingChanged="@{(ratingBar, rating, fromUser) -> MoviesFragment.updateRating(rating)}"
+                                            android:onRatingChanged="@{(ratingBar, rating, fromUser) -> moviesFragment.updateRating(rating)}"
                                             android:rating="@{viewModel.selectedMovieDetails.userRating}"
                                             android:stepSize="1"
                                             app:layout_constraintEnd_toEndOf="@id/movie_details_poster"
@@ -204,7 +204,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
                                     android:layout_marginEnd="5dp"
-                                    android:onClick="@{() -> MoviesFragment.closeMovieDetailsFrame()}"
+                                    android:onClick="@{() -> moviesFragment.closeMovieDetailsFrame()}"
                                     android:soundEffectsEnabled="true"
                                     android:src="@drawable/ic_close_24"
                                     app:civ_border_color="@color/light_grey"
