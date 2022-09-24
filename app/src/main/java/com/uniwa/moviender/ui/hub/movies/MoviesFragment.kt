@@ -19,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.uniwa.moviender.R
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.network.Movie
@@ -77,6 +78,8 @@ class MoviesFragment : Fragment() {
                 moviesMode()
             }
 
+        setMoviesBottomSheetBehavior()
+
         return binding.root
     }
 
@@ -102,6 +105,14 @@ class MoviesFragment : Fragment() {
         moviesMode()
 
         observeResults()
+    }
+
+    private fun setMoviesBottomSheetBehavior() {
+        BottomSheetBehavior.from(binding.moviesBottomSheet).apply {
+            isFitToContents = false
+            isHideable = false
+            state = BottomSheetBehavior.STATE_EXPANDED
+        }
     }
 
     fun showMovieInfo(movie: Movie) {
