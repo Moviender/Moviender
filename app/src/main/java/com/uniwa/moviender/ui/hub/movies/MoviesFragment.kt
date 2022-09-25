@@ -28,6 +28,7 @@ import com.uniwa.moviender.data.genres
 import com.uniwa.moviender.databinding.FragmentMoviesBinding
 import com.uniwa.moviender.network.Movie
 import com.uniwa.moviender.ui.StartupActivityViewModel
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
 
 private const val SPAN_SEARCH = 3
@@ -110,6 +111,7 @@ class MoviesFragment : Fragment() {
 
         observeResults()
         observeGenres()
+        observeGenresForPopulation()
     }
 
     private fun setMoviesBottomSheetBehavior() {
@@ -186,6 +188,12 @@ class MoviesFragment : Fragment() {
                 id = genre.key
                 text = getString(genre.value)
                 selectedGenres.find { it == genre.key }?.let { isChecked = true }
+                setOnCheckedChangeListener { _, _ ->
+                    if (this.isChecked)
+                        viewModel.genreSelected(genre.key)
+                    else
+                        viewModel.genreUnselected(genre.key)
+                }
                 this@populate.addView(this@apply)
             }
         }
@@ -209,9 +217,17 @@ class MoviesFragment : Fragment() {
 
     private fun observeGenres() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.genres.collectLatest { genres ->
+            viewModel.selectedGenres.collectLatest { genres ->
                 moviesAdapter.submitList(genres)
+            }
+        }
+    }
+
+    private fun observeGenresForPopulation() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.selectedGenres.collectLatest { genres ->
                 binding.genresChips.populate(genres)
+                cancel()
             }
         }
     }

@@ -24,8 +24,10 @@ class MoviesViewModel(
     private val uid: String
 ) : ViewModel() {
 
-    private val _genres = MutableSharedFlow<List<Int>>()
-    val genres: SharedFlow<List<Int>> = _genres
+    private val _selectedGenres = MutableSharedFlow<List<Int>>()
+    val selectedGenres: SharedFlow<List<Int>> = _selectedGenres
+
+    private val genrePreferences = mutableListOf(Genres.PERSONALIZED_RECOMMENDATIONS.code)
 
     private val _movies = hashMapOf<Int, Flow<PagingData<Movie>>>()
 
@@ -57,29 +59,28 @@ class MoviesViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             MovienderApi.userClient.getGenrePreferences(uid).let { response ->
                 if (response.isSuccessful) {
-                    val combinedGenres =
-                        mutableListOf(Genres.PERSONALIZED_RECOMMENDATIONS.code).apply {
-                            addAll(response.body)
-                        }
+                    genrePreferences.addAll(response.body)
 
-                    combinedGenres.forEach { genre ->
-                        _movies[genre] = Pager(
-                            config = PagingConfig(pageSize = PAGE_SIZE),
-                            pagingSourceFactory = {
-                                ServerPagingSource(
-                                    MovienderApi.movieClient,
-                                    listOf(genre),
-                                    uid
-                                )
-                            }
-                        ).flow.cachedIn(viewModelScope)
+                    genrePreferences.forEach { genre ->
+                        _movies[genre] = getGenrePager(genre)
                     }
 
-                    _genres.emit(combinedGenres)
+                    _selectedGenres.emit(genrePreferences.toList())
                 }
             }
         }
     }
+
+    private fun getGenrePager(genreId: Int) = Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE),
+        pagingSourceFactory = {
+            ServerPagingSource(
+                MovienderApi.movieClient,
+                listOf(genreId),
+                uid
+            )
+        }
+    ).flow.cachedIn(viewModelScope)
 
     fun setSelectedMovie(movie: Movie) {
         getMovieInfo(movie)
@@ -117,6 +118,24 @@ class MoviesViewModel(
     fun clearSearchResult() {
         viewModelScope.launch(Dispatchers.Default) {
             _searchedResults.emit(listOf())
+        }
+    }
+
+    fun genreSelected(genreId: Int) {
+        _movies[genreId] = getGenrePager(genreId)
+
+        genrePreferences.add(genreId)
+        viewModelScope.launch {
+            _selectedGenres.emit(genrePreferences.toList())
+        }
+    }
+
+    fun genreUnselected(genreId: Int) {
+        _movies.remove(genreId)
+
+        genrePreferences.remove(genreId)
+        viewModelScope.launch {
+            _selectedGenres.emit(genrePreferences.toList())
         }
     }
 
