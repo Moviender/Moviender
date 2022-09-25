@@ -108,7 +108,7 @@
                 android:id="@+id/movies_bottom_sheet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:behavior_peekHeight="420dp"
+                app:behavior_peekHeight="320dp"
                 app:layout_behavior="com.uniwa.moviender.ui.hub.movies.GestureLockedBottomSheetBehavior"
                 tools:context=".ui.hub.movies.moviesFragment">
 
