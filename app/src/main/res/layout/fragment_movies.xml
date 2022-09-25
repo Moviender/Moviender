@@ -105,9 +105,9 @@
                 android:id="@+id/movies_bottom_sheet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                tools:context=".ui.hub.movies.moviesFragment"
-                app:behavior_peekHeight="420dp">
+                app:behavior_peekHeight="420dp"
+                app:layout_behavior="com.uniwa.moviender.ui.hub.movies.GestureLockedBottomSheetBehavior"
+                tools:context=".ui.hub.movies.moviesFragment">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/hub_movies_grid"
