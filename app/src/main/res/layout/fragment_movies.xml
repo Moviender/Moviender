@@ -81,7 +81,7 @@
             <LinearLayout
                 android:id="@+id/genres_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/blue_light">
 
                 <com.google.android.material.chip.ChipGroup
@@ -106,7 +106,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                tools:context=".ui.hub.movies.moviesFragment">
+                tools:context=".ui.hub.movies.moviesFragment"
+                app:behavior_peekHeight="420dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/hub_movies_grid"
