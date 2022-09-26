@@ -35,6 +35,7 @@
                 app:menu="@menu/appbar_search_menu">
 
                 <ImageView
+                    android:id="@+id/genres_filters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> moviesFragment.showGenreFilters()}"

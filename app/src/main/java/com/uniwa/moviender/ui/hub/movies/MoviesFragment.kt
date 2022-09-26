@@ -141,6 +141,7 @@ class MoviesFragment : Fragment() {
             closeSearch.visibility = View.VISIBLE
             searchTv.visibility = View.VISIBLE
             moviesToolbarTitle.visibility = View.GONE
+            genresFilters.visibility = View.GONE
             hubMoviesGrid.searchMode()
         }
 
@@ -152,6 +153,7 @@ class MoviesFragment : Fragment() {
             closeSearch.visibility = View.GONE
             searchTv.visibility = View.GONE
             moviesToolbarTitle.visibility = View.VISIBLE
+            genresFilters.visibility = View.VISIBLE
             searchTv.text.clear()
             hubMoviesGrid.moviesMode()
         }
