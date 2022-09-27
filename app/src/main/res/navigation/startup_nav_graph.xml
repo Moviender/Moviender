@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/startup_nav_graph"
-    app:startDestination="@id/firebaseLoginFragment">
+    app:startDestination="@id/connectivityFragment">
 
     <fragment
         android:id="@+id/firebaseLoginFragment"
@@ -43,6 +43,17 @@
             app:destination="@id/hub_navigation"
             app:popUpTo="@id/genresPreferencesFragment"
             app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/connectivityFragment"
+        android:name="com.uniwa.moviender.ui.connectivity.ConnectivityFragment"
+        android:label="ConnectivityFragment"
+        tools:layout="@layout/fragment_connectivity">
+        <action
+            android:id="@+id/action_connectivityFragment_to_firebaseLoginFragment"
+            app:destination="@id/firebaseLoginFragment"
+            app:popUpTo="@id/connectivityFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 

@@ -81,5 +81,6 @@
     <string name="rating_stored">Rating stored!</string>
     <string name="rating_store_err">Error while storing vote</string>
     <string name="submit_similar_movie_btn">select</string>
+    <string name="no_internet_err">There is no internet connection</string>
 
 </resources>
