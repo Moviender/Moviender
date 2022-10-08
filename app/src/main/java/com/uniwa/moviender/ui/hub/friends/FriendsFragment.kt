@@ -43,7 +43,10 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        refreshListener = OnRefreshListener { viewModel.fetchFriends() }
+        refreshListener = OnRefreshListener {
+            viewModel.fetchFriends()
+            binding.friendsSwipeRefresh.isRefreshing = false
+        }
 
         binding.apply {
             friendsFragment = this@FriendsFragment
