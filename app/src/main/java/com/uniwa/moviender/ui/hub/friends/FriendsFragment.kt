@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.uniwa.moviender.R
 import com.uniwa.moviender.data.SessionStatus
 import com.uniwa.moviender.databinding.FragmentFriendsBinding
@@ -27,6 +28,8 @@ class FriendsFragment : Fragment() {
         FriendsViewModelFactory(sharedViewModel.getUid())
     }
 
+    private lateinit var refreshListener: OnRefreshListener
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,18 +43,22 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        refreshListener = OnRefreshListener { viewModel.fetchFriends() }
+
         binding.apply {
             friendsFragment = this@FriendsFragment
             fragmentFriendsRv.adapter =
                 ProfileAdapter(this@FriendsFragment.viewModel, this@FriendsFragment)
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@FriendsFragment.viewModel
-            friendsSwipeRefresh.setOnRefreshListener {
-                this@FriendsFragment.viewModel.fetchFriends()
-                friendsSwipeRefresh.isRefreshing = false
-            }
-
+            friendsSwipeRefresh.setOnRefreshListener(refreshListener)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        refreshListener.onRefresh()
     }
 
     fun showFriendRequestDialog() {
