@@ -9,7 +9,7 @@ class VotingViewModelFactory(
     private val sessionId: String,
     private val database: SessionDatabase,
 ) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return VotingViewModel(uid, sessionId, database) as T
     }
 }

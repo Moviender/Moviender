@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 class MoviesViewModelFactory(
     private val uid: String
 ) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MoviesViewModel(uid) as T
     }
 }
